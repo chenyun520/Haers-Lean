@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>哈尔斯带级认证学习系统</title>
+    <style>
+        :root {
+            --klein-blue: #002FA7;
+            --pure-white: #FFFFFF;
+            --bright-yellow: #FFD700;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --gray-bg: #F4F7FF;
+            --success-green: #28a745;
+            --fail-red: #dc3545;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: var(--pure-white); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
+
+        /* --- 布局组件 --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; position: relative; flex: 1; width: 100%; }
+        .top-accent { height: 4px; background: var(--bright-yellow); width: 100%; position: fixed; top: 0; left: 0; z-index: 1000; }
+
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 25px 0; border-bottom: 1px solid #eee; margin-bottom: 30px; background: var(--pure-white); }
+        .logo { color: var(--klein-blue); font-size: 1.8rem; font-weight: 800; cursor: pointer; letter-spacing: -0.5px; }
+        .nav-links { display: flex; gap: 25px; }
+        .nav-item { cursor: pointer; color: var(--text-dark); font-weight: 600; transition: 0.3s; position: relative; }
+        .nav-item:hover { color: var(--klein-blue); }
+        
+        /* --- 按钮系统 --- */
+        .btn { padding: 12px 28px; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 1rem; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn:active { transform: scale(0.98); }
+        .btn-primary { background: var(--klein-blue); color: white; box-shadow: 0 4px 10px rgba(0, 47, 167, 0.2); }
+        .btn-primary:hover { background: #002585; box-shadow: 0 6px 15px rgba(0, 47, 167, 0.3); }
+        .btn-outline { background: transparent; border: 2px solid var(--klein-blue); color: var(--klein-blue); }
+        .btn-outline:hover { background: var(--gray-bg); }
+        .btn-ghost { background: var(--bright-yellow); color: var(--klein-blue); }
+        .btn-ghost:hover { background: #e6c200; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* --- 英雄页 --- */
+        #hero-page { text-align: center; padding: 60px 20px; animation: fadeIn 0.8s ease-out; }
+        .hero-title { font-size: 3rem; color: var(--klein-blue); margin-bottom: 15px; font-weight: 900; letter-spacing: -1px; }
+        .hero-subtitle { font-size: 1.2rem; color: var(--text-light); margin-bottom: 60px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        
+        .mode-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
+        .mode-card { 
+            background: var(--pure-white); border: 1px solid #e0e0e0; border-radius: 12px; padding: 40px 30px; 
+            cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+        .mode-card:hover { transform: translateY(-10px); border-color: var(--klein-blue); box-shadow: 0 20px 40px rgba(0, 47, 167, 0.15); }
+        .mode-card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: #eee; transition: 0.3s; }
+        .mode-card:hover::before { background: var(--klein-blue); }
+        .mode-icon { font-size: 3.5rem; margin-bottom: 25px; display: block; transition: 0.3s; }
+        .mode-card:hover .mode-icon { transform: scale(1.1); }
+        .mode-card h3 { font-size: 1.5rem; color: var(--text-dark); margin-bottom: 15px; }
+        .mode-card p { color: var(--text-light); font-size: 0.95rem; }
+
+        /* --- 科目选择 --- */
+        .subject-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; animation: slideUp 0.5s ease-out; }
+        .subject-card { 
+            background: var(--pure-white); border: 1px solid #eee; padding: 25px; border-radius: 12px; 
+            cursor: pointer; transition: 0.3s; border-left: 5px solid transparent; 
+            display: flex; flex-direction: column; justify-content: center; height: 140px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+        .subject-card:hover { border-left-color: var(--bright-yellow); transform: translateX(5px); box-shadow: 0 8px 15px rgba(0,0,0,0.05); }
+        .subject-card h4 { color: var(--klein-blue); font-size: 1.3rem; margin-bottom: 8px; }
+        .subject-card p { color: #888; font-size: 0.9rem; }
+
+        /* --- 知识学习 --- */
+        .content-section { display: none; padding-bottom: 60px; animation: fadeIn 0.5s; }
+        .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; border-bottom: 2px solid #f0f0f0; padding-bottom: 20px; }
+        .section-title h2 { font-size: 2rem; color: var(--klein-blue); }
+        .section-tag { background: var(--bright-yellow); color: var(--klein-blue); padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; }
+
+        .knowledge-content { background: var(--pure-white); padding: 50px; border-radius: 16px; border: 1px solid #eee; box-shadow: 0 5px 20px rgba(0,0,0,0.02); }
+        .knowledge-content h3 { color: var(--klein-blue); font-size: 1.6rem; margin: 40px 0 20px 0; border-bottom: 2px solid var(--bright-yellow); padding-bottom: 10px; display: inline-block; }
+        .knowledge-content h3:first-child { margin-top: 0; }
+        .knowledge-content h4 { color: #444; font-size: 1.2rem; margin: 25px 0 10px 0; font-weight: 700; }
+        .knowledge-content p { margin-bottom: 15px; color: #444; text-align: justify; font-size: 1.05rem; }
+        .knowledge-content ul, .knowledge-content ol { margin-left: 25px; margin-bottom: 20px; color: #555; }
+        .knowledge-content li { margin-bottom: 10px; line-height: 1.7; }
+        .knowledge-content table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 0.95rem; border-radius: 8px; overflow: hidden; }
+        .knowledge-content th, .knowledge-content td { border: 1px solid #eee; padding: 15px; text-align: left; }
+        .knowledge-content th { background-color: var(--klein-blue); color: white; border-color: var(--klein-blue); }
+        .knowledge-content tr:nth-child(even) { background-color: #f9f9f9; }
+        .key-concept { background: #fffde7; padding: 2px 6px; border-radius: 4px; color: #b38f00; font-weight: bold; border: 1px solid #ffeeba; }
+
+        /* --- 题库与考试 --- */
+        .question-wrapper { max-width: 950px; margin: 0 auto; display: flex; gap: 20px; align-items: flex-start; }
+        .question-main { flex: 1; }
+        
+        /* 题目导航网格 */
+        .q-nav-grid { 
+            display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; 
+            background: white; padding: 20px; border-radius: 12px; border: 1px solid #eee;
+            width: 280px; position: sticky; top: 80px;
+        }
+        .q-nav-item {
+            aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+            background: var(--gray-bg); border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: 600; color: var(--text-light); transition: 0.2s;
+        }
+        .q-nav-item:hover { background: #e0e7ff; }
+        .q-nav-item.active { border: 2px solid var(--klein-blue); color: var(--klein-blue); }
+        .q-nav-item.answered { background: var(--klein-blue); color: white; }
+        .q-nav-item.flagged { border-color: var(--bright-yellow); }
+
+        .q-card { background: var(--pure-white); padding: 40px; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.04); border: 1px solid #eee; position: relative; min-height: 400px; }
+        .q-header { display: flex; justify-content: space-between; align-items: center; color: #888; font-size: 0.9rem; margin-bottom: 25px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        .q-body { font-size: 1.3rem; font-weight: 600; color: var(--text-dark); margin-bottom: 35px; line-height: 1.5; }
+        
+        .options-grid { display: grid; gap: 15px; }
+        .option { 
+            background: var(--pure-white); border: 2px solid #e0e0e0; padding: 18px 25px; border-radius: 10px; 
+            cursor: pointer; transition: all 0.2s; display: flex; align-items: center; font-size: 1.05rem; 
+        }
+        .option:hover { border-color: var(--klein-blue); background: var(--gray-bg); transform: translateX(5px); }
+        .option.selected { border-color: var(--klein-blue); background: #eef2ff; color: var(--klein-blue); font-weight: 600; }
+        .option.correct { border-color: var(--success-green); background: #e7f9ee; color: #155724; }
+        .option.wrong { border-color: var(--fail-red); background: #fceaea; color: #721c24; }
+        
+        .opt-char { 
+            width: 32px; height: 32px; background: #eee; color: #666; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; margin-right: 20px; font-size: 0.9rem; font-weight: 700; flex-shrink: 0; transition: 0.2s;
+        }
+        .option.selected .opt-char { background: var(--klein-blue); color: white; }
+        .option.correct .opt-char { background: var(--success-green); color: white; }
+        .option.wrong .opt-char { background: var(--fail-red); color: white; }
+
+        .feedback-box { margin-top: 25px; padding: 20px; background: var(--gray-bg); border-radius: 10px; border-left: 4px solid var(--klein-blue); animation: fadeIn 0.3s; display: none; }
+        
+        /* --- 结果页动画 --- */
+        #result-section { text-align: center; display: none; padding-top: 50px; flex: 1; }
+        .result-icon-container { height: 180px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; position: relative; }
+        
+        .trophy-anim { font-size: 8rem; animation: bounceIn 1s cubic-bezier(0.68, -0.55, 0.265, 1.55); display: none; }
+        .fail-anim { font-size: 8rem; animation: shake 0.5s ease-in-out; display: none; filter: grayscale(1); opacity: 0.7; }
+
+        .score-display { font-size: 5rem; font-weight: 900; color: var(--klein-blue); margin-bottom: 10px; line-height: 1; }
+        .score-label { font-size: 1.2rem; color: #888; text-transform: uppercase; letter-spacing: 2px; }
+        .result-msg { font-size: 1.5rem; margin: 20px 0 40px; font-weight: 600; }
+
+        /* 烟花/彩带效果 */
+        .confetti { position: absolute; width: 10px; height: 10px; background-color: var(--bright-yellow); animation: fall linear forwards; opacity: 0; }
+
+        /* --- 动画关键帧 --- */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes bounceIn { 0% { transform: scale(0); opacity: 0; } 60% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1); } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-10px); } 40%, 80% { transform: translateX(10px); } }
+        @keyframes fall { 0% { top: -10%; transform: rotate(0deg) translateX(0); opacity: 1; } 100% { top: 100%; transform: rotate(360deg) translateX(50px); opacity: 0; } }
+
+        /* 工具栏 */
+        .toolbar { display: flex; justify-content: space-between; margin-top: 30px; align-items: center; }
+        #timer-box { font-family: monospace; font-size: 1.5rem; font-weight: bold; background: var(--klein-blue); color: white; padding: 8px 20px; border-radius: 6px; display: none; box-shadow: 0 4px 10px rgba(0,47,167,0.3); }
+
+        /* Footer 样式 */
+        footer { text-align: center; padding: 40px; color: #999; font-size: 0.9rem; border-top: 1px solid #eee; margin-top: auto; transition: all 0.3s; }
+        
+        /* 醒目落款 (仅用于首页) */
+        footer.hero-footer {
+            background: var(--klein-blue);
+            color: white;
+            border-top: none;
+            padding: 60px 20px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            box-shadow: 0 -10px 30px rgba(0,47,167,0.1);
+        }
+        footer.hero-footer p { opacity: 0.9; }
+
+        @media (max-width: 900px) {
+            .question-wrapper { flex-direction: column-reverse; }
+            .q-nav-grid { width: 100%; position: static; grid-template-columns: repeat(10, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-accent"></div>
+
+    <div class="container">
+        <nav>
+            <div class="logo" onclick="goHome()">LEAN ACADEMY</div>
+            <div class="nav-links">
+                <span class="nav-item active" onclick="goHome()">学习中心</span>
+            </div>
+        </nav>
+
+        <!-- 1. 模式选择 (英雄页) -->
+        <section id="hero-page">
+            <h1 class="hero-title">哈尔斯带级认证学习系统</h1>
+            <p class="hero-subtitle">基于哈尔斯集团精益体系打造的数字化认证平台。海量题库，真实模拟，助您快速掌握核心方法论。</p>
+            
+            <div class="mode-grid">
+                <div class="mode-card" onclick="selectMode('study')">
+                    <span class="mode-icon">📖</span>
+                    <h3>深度学习</h3>
+                    <p>6大模块，深度解析。含5W1H定义、计算公式演练与实战案例。</p>
+                </div>
+                <div class="mode-card" onclick="selectMode('practice')">
+                    <span class="mode-icon">⚡</span>
+                    <h3>强化训练</h3>
+                    <p>智能生成海量不重复题目。含单选与判断题，支持跳题与实时解析。</p>
+                </div>
+                <div class="mode-card" onclick="selectMode('exam')">
+                    <span class="mode-icon">🏅</span>
+                    <h3>资格认证</h3>
+                    <p>20题 | 80分及格。严格限时，全真模拟考试环境，系统自动评判。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. 科目选择 -->
+        <section id="subject-page" class="content-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <h2 id="mode-title">选择科目</h2>
+                    <p style="color:#666; margin-top:5px;">当前模式：<span id="current-mode-display" style="color:var(--klein-blue); font-weight:bold;"></span></p>
+                </div>
+                <button class="btn btn-outline" onclick="goHome()">返回首页</button>
+            </div>
+            <div class="subject-grid">
+                <div class="subject-card" onclick="startActivity('DM')">
+                    <h4>DM 日常管理</h4>
+                    <p>班前会、变化点管理、SQDC看板</p>
+                </div>
+                <div class="subject-card" onclick="startActivity('PSP')">
+                    <h4>PSP 问题解决</h4>
+                    <p>5Why、鱼骨图、5W2H、PDCA</p>
+                </div>
+                <div class="subject-card" onclick="startActivity('SW')">
+                    <h4>SW 标准作业</h4>
+                    <p>线平衡、TT计算、三大票据</p>
+                </div>
+                <div class="subject-card" onclick="startActivity('VSM')">
+                    <h4>VSM 价值流</h4>
+                    <p>Lead Time、增值比、未来图规划</p>
+                </div>
+                <div class="subject-card" onclick="startActivity('5S')">
+                    <h4>5S & 目视化</h4>
+                    <p>红牌作战、定置管理、颜色标准</p>
+                </div>
+                <div class="subject-card" onclick="startActivity('TIMWOODS')">
+                    <h4>TIMWOODS 八大浪费</h4>
+                    <p>七大浪费+人才浪费、识别与消除</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 学习界面 -->
+        <section id="study-page" class="content-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <h2 id="study-subject-title">科目名称</h2>
+                </div>
+                <div style="display:flex; gap:10px;">
+                    <button class="btn btn-outline" onclick="backToSubject()">返回目录</button>
+                    <button class="btn btn-primary" onclick="quickPractice()">去练习本章</button>
+                </div>
+            </div>
+            <div id="study-content" class="knowledge-content">
+                <!-- 动态注入 -->
+            </div>
+        </section>
+
+        <!-- 4. 练习/考试界面 -->
+        <section id="quiz-page" class="content-section">
+            <div class="question-wrapper">
+                <div class="question-main">
+                    <div class="q-card">
+                        <div class="q-header">
+                            <span id="quiz-progress">QUESTION 1 / 20</span>
+                            <span id="quiz-mode-badge" class="section-tag">练习模式</span>
+                            <span id="timer-box">20:00</span>
+                        </div>
+                        <div class="q-body" id="question-text">
+                            题目加载中...
+                        </div>
+                        <div class="options-grid" id="options-container">
+                            <!-- 选项 -->
+                        </div>
+                        <div class="feedback-box" id="feedback-container"></div>
+                    </div>
+
+                    <div class="toolbar">
+                        <button class="btn btn-outline" onclick="prevQuestion()" id="prev-btn">上一题</button>
+                        <div>
+                            <button class="btn btn-ghost" onclick="quitQuiz()" style="margin-right:10px;">退出</button>
+                            <!-- 练习模式跳过按钮 -->
+                            <button class="btn btn-outline" id="skip-btn" onclick="nextPracticeQuestion()" style="display:none; margin-right:10px; border-color:#ccc; color:#666;">跳过此题</button>
+                            <button class="btn btn-primary" id="action-btn" onclick="handleAction()">下一题</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 侧边导航 (仅考试模式显示) -->
+                <div class="q-nav-grid" id="q-nav-grid" style="display:none;">
+                    <!-- 动态生成 1-20 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. 结果界面 -->
+        <section id="result-page" class="content-section">
+            <div class="result-overlay">
+                <div class="result-icon-container">
+                    <div class="trophy-anim">🏆</div>
+                    <div class="fail-anim">💪</div>
+                </div>
+                <div class="score-label">FINAL SCORE</div>
+                <div class="score-display"><span id="final-score">0</span><span style="font-size:2rem; color:#999;">/100</span></div>
+                <div class="result-msg" id="result-message"></div>
+                
+                <div style="display:flex; justify-content:center; gap:20px;">
+                    <button class="btn btn-outline" onclick="goHome()">返回首页</button>
+                    <button class="btn btn-primary" onclick="retryExam()">再考一次</button>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 哈尔斯集团精益革新办</p>
+        </footer>
+    </div>
+
+    <script>
+        // ================= 数据中心 (Data Center) =================
+        const KNOWLEDGE_BASE = {
+            "DM": {
+                title: "DM - 日常管理 (Daily Management)",
+                content: `
+                    <h3>一、日常管理体系详解</h3>
+                    <p>日常管理（Daily Management）是企业基层的“稳定器”。它不仅仅是每天开会，而是建立一套完整的<strong>PDCA循环</strong>机制。</p>
+                    <ul>
+                        <li><strong>维持 (Maintain)：</strong>确保当前绩效不下滑，遵守既定标准 (SOP)。</li>
+                        <li><strong>改善 (Improve)：</strong>在维持的基础上，通过小步快跑的方式解决慢性问题。</li>
+                    </ul>
+
+                    <h3>二、班前会管理 (Morning Meeting)</h3>
+                    <h4>1. 黄金法则</h4>
+                    <p>班前会必须在<strong>现场（Gemba）</strong>召开，而不是在会议室。必须对着<strong>目视化看板</strong>讲数据，而不是空口讲道理。</p>
+                    <h4>2. 标准议程 (5-10分钟)</h4>
+                    <ul>
+                        <li><strong>Review (回顾)：</strong>昨日KPI（SQDC）是否达标？如果不达标，原因是什么？</li>
+                        <li><strong>Plan (计划)：</strong>今日产量目标？人员出勤状况？是否有新人或借调人员？</li>
+                        <li><strong>Change Point (变化点)：</strong>4M（人机料法）有无变化？例如：更换了原材料、设备刚修好等。</li>
+                        <li><strong>Safety (安全)：</strong>安全提醒，确认劳保用品佩戴。</li>
+                    </ul>
+
+                    <h3>三、变化点管理 (4M Change)</h3>
+                    <p>绝大多数质量事故都源于“变化”。管理者必须对变化点保持高度敏感。</p>
+                    <ul>
+                        <li><strong>初期流动管理：</strong>当4M发生变化后，必须对首件产品进行更严格的确认，并对后续生产进行高频监控，直到确认稳定为止。</li>
+                    </ul>
+
+                    <h3>四、异常响应机制 (Andon Response)</h3>
+                    <p>异常处理不仅仅是修好机器，更重要的是<strong>流程闭环</strong>。</p>
+                    <ol>
+                        <li><strong>一线员工：</strong>停 (Stop) -> 呼 (Call) -> 等 (Wait)。</li>
+                        <li><strong>班组长：</strong>确认异常 -> 初步处置 (遏制/Containment) -> 恢复生产。</li>
+                        <li><strong>技术/管理层：</strong>根因分析 -> 永久对策 -> 横向展开 (Yokoten)。</li>
+                    </ol>
+                `
+            },
+            "PSP": {
+                title: "PSP - 问题解决流程 (Problem Solving Process)",
+                content: `
+                    <h3>一、问题的定义与描述 (5W2H)</h3>
+                    <p>描述问题时，必须基于<strong>事实 (Fact)</strong>，而非观点 (Opinion)。常用 5W2H 工具：</p>
+                    <ul>
+                        <li><strong>What：</strong>发生了什么不良？（现象描述）</li>
+                        <li><strong>Where：</strong>在哪个工序、哪个部位发生的？</li>
+                        <li><strong>When：</strong>什么时候开始的？是连续的还是间歇的？</li>
+                        <li><strong>Who：</strong>谁发现的？（注意：不是问谁造成的，对事不对人）</li>
+                        <li><strong>Which：</strong>涉及哪些产品型号？</li>
+                        <li><strong>How much：</strong>有多少不良品？损失多少？</li>
+                        <li><strong>How：</strong>是在什么作业状态下发生的？</li>
+                    </ul>
+
+                    <h3>二、遏制 vs 对策</h3>
+                    <ul>
+                        <li><strong>遏制措施 (Containment Action)：</strong>“止血”。目的是防止不良品流出到客户手中。例如：全检、隔离库存。它不能解决问题，只能拦截后果。</li>
+                        <li><strong>永久对策 (Corrective Action)：</strong>“治病”。针对根因采取行动，消除问题再次发生的可能性。例如：修改模具防呆、变更工艺参数。</li>
+                    </ul>
+
+                    <h3>三、5Why 分析法深阶技巧</h3>
+                    <p>5Why 不是随便问 5 个为什么，而是逻辑推理。</p>
+                    <ul>
+                        <li><strong>三现主义：</strong>去现场 (Genba)、看现物 (Genbutsu)、查现实 (Genjitsu)。坐在办公室里是想不出真正原因的。</li>
+                        <li><strong>验证逻辑：</strong>倒推法。如果“原因”消除，“现象”是否还会发生？如果答案是“否”，说明找到了真因。</li>
+                    </ul>
+                `
+            },
+            "SW": {
+                title: "SW - 标准作业 (Standard Work)",
+                content: `
+                    <h3>一、标准作业的三大前提</h3>
+                    <p>在推行标准作业前，必须具备：1. 设备高可靠性（不经常坏）；2. 品质稳定（无大量返工）；3. 物料供应及时。</p>
+
+                    <h3>二、核心计算公式</h3>
+                    <h4>1. 节拍时间 (Takt Time, TT)</h4>
+                    <p>TT = 每天可用工作时间 / 每天客户需求量</p>
+                    <p><em>例：每天工作 450 分钟 (27000秒)，客户需求 900 件。TT = 27000 / 900 = 30 秒/件。这意味着每 30 秒必须产出一个成品。</em></p>
+
+                    <h4>2. 循环时间 (Cycle Time, CT)</h4>
+                    <p>作业员完成一个循环动作实测所需的时间（不含走动、等待）。</p>
+
+                    <h3>三、线平衡 (Line Balancing)</h3>
+                    <p>标准作业的目标之一是实现工序间的平衡，消除瓶颈。</p>
+                    <ul>
+                        <li><strong>瓶颈工序 (Bottleneck)：</strong>CT 最长的工序。它决定了整条线的产出能力。</li>
+                        <li><strong>线平衡率：</strong>(各工序CT总和) / (瓶颈CT × 工序数) × 100%。</li>
+                    </ul>
+
+                    <h3>四、标准手持 (Standard WIP) 计算</h3>
+                    <p>通常 SWIP = (人工CT + 机器加工自动时间) / TT。如果有余数，通常向上取整。这是维持连续流动的最小库存。</p>
+                `
+            },
+            "VSM": {
+                title: "VSM - 价值流图 (Value Stream Mapping)",
+                content: `
+                    <h3>一、价值流图的构成</h3>
+                    <p>VSM 是一张展示“当前是如何工作的”地图。它包含三个流：</p>
+                    <ol>
+                        <li><strong>信息流 (上方)：</strong>订单如何从客户传到计划部，计划如何下达到车间（MRP、看板、周计划）。</li>
+                        <li><strong>物流 (中间)：</strong>原材料如何变成成品（推式/拉式、库存位置）。</li>
+                        <li><strong>时间流 (下方)：</strong>增值时间 (VA) 与 制造周期时间 (Lead Time) 的对比。</li>
+                    </ol>
+
+                    <h3>二、关键术语</h3>
+                    <ul>
+                        <li><strong>C/O (Changeover Time)：</strong>换模时间。从生产上一个型号的最后一件合格品，到生产下一个型号的第一件合格品之间的时间。</li>
+                        <li><strong>Uptime (稼动率)：</strong>设备按计划有效运行的百分比。</li>
+                        <li><strong>FTT (First Time Through)：</strong>一次通过率/直通率。</li>
+                    </ul>
+
+                    <h3>三、未来图规划 (Future State)</h3>
+                    <p>绘制未来图的目的是消除浪费。常见策略：</p>
+                    <ul>
+                        <li>建立<strong>超市 (Supermarket)</strong> 拉动系统，控制库存上限。</li>
+                        <li>引入<strong>连续流 (Continuous Flow)</strong>，消除工序间等待。</li>
+                        <li>实施<strong>平准化 (Heijunka)</strong>，混合生产不同型号。</li>
+                    </ul>
+                `
+            },
+            "5S": {
+                title: "5S & 目视化管理 (VCS)",
+                content: `
+                    <h3>一、5S 的三大支柱</h3>
+                    <p>5S 不仅仅是打扫卫生，它是现场管理的基石。</p>
+                    <ul>
+                        <li><strong>透明化：</strong>让问题暴露出来（如：透明的设备盖板）。</li>
+                        <li><strong>标准化：</strong>让任何人做结果都一样。</li>
+                        <li><strong>纪律性：</strong>说到做到，严格执行。</li>
+                    </ul>
+
+                    <h3>二、各阶段核心要点扩充</h3>
+                    <h4>1. 整理 (Sort) - 腾空间</h4>
+                    <p>策略：<strong>红牌作战 (Red Tag Strategy)</strong>。对车间里所有不确定用途的物品挂红牌，登记造册，设立“红牌区”暂存。1个月后仍未使用的坚决清理。</p>
+                    <h4>2. 整顿 (Set in Order) - 提效率</h4>
+                    <p>策略：<strong>形迹管理 (Shadow Board)</strong>。工具按形状画影，取走后显露阴影，一眼即知缺失。</p>
+                    <h4>3. 清扫 (Shine) - 查隐患</h4>
+                    <p>口号：<strong>清扫即点检</strong>。清扫设备时，顺便检查是否有螺丝松动、漏油、线路破损。</p>
+
+                    <h3>三、目视化标准色</h3>
+                    <ul>
+                        <li><span style="color:red;font-weight:bold;">红色</span>：禁止、消防、不良品、危险。</li>
+                        <li><span style="color:#FFD700;font-weight:bold;">黄色</span>：警告、通道线、区域划分。</li>
+                        <li><span style="color:green;font-weight:bold;">绿色</span>：安全、合格品、通行。</li>
+                        <li><span style="color:blue;font-weight:bold;">蓝色</span>：指令、强制执行（如必须戴安全帽）。</li>
+                    </ul>
+                `
+            },
+            "TIMWOODS": {
+                title: "TIMWOODS - 八大浪费",
+                content: `
+                    <h3>一、办公与服务领域的浪费</h3>
+                    <p>精益不仅适用于车间，也适用于办公室（Lean Office）。</p>
+                    <ul>
+                        <li><strong>库存浪费：</strong>未读的邮件堆积、电脑里杂乱的文件、采购过多的办公用品。</li>
+                        <li><strong>等待浪费：</strong>等待审批签字、电脑开机慢、会议迟到。</li>
+                        <li><strong>缺陷浪费：</strong>数据录入错误、合同打印错误、发票开错。</li>
+                        <li><strong>过度加工：</strong>做过于精美的PPT但没人看、重复抄写数据、过多的签字层级。</li>
+                    </ul>
+
+                    <h3>二、动作浪费 vs 运输浪费</h3>
+                    <p>这是一个高频考点，必须区分清楚：</p>
+                    <ul>
+                        <li><strong>运输 (Transportation)：</strong>是指<strong>物料/产品</strong>的移动。如：叉车搬运托盘、流水线上产品移动距离过长。</li>
+                        <li><strong>动作 (Motion)：</strong>是指<strong>人/设备</strong>的移动。如：员工弯腰拿零件、转身取工具、鼠标点击次数过多。</li>
+                    </ul>
+
+                    <h3>三、消除浪费的顺序 (ECRS)</h3>
+                    <ol>
+                        <li><strong>E (Eliminate) 消除：</strong>完全去掉不必要的步骤（最好的改善）。</li>
+                        <li><strong>C (Combine) 合并：</strong>将两个步骤合二为一。</li>
+                        <li><strong>R (Rearrange) 重排：</strong>改变作业顺序。</li>
+                        <li><strong>S (Simplify) 简化：</strong>让动作更简单、工具更好用。</li>
+                    </ol>
+                `
+            }
+        };
+
+        const QUESTION_SEEDS = {
+            "DM": [
+                { q: "班前会 (Morning Meeting) 的标准时长建议控制在？", a: "5-10分钟", w: ["30分钟以上", "越长越好", "不需要固定", "1小时"] },
+                { q: "SQDC 看板中的 'S' 代表什么？", a: "安全 (Safety)", w: ["标准 (Standard)", "速度 (Speed)", "服务 (Service)"] },
+                { q: "SQDC 看板中的 'C' 代表什么？", a: "成本 (Cost)", w: ["客户 (Customer)", "清洁 (Clean)", "沟通 (Communicate)"] },
+                { q: "一线员工发现质量异常时的正确处理原则是？", a: "停、呼、等", w: ["修、呼、干", "呼、停、修", "记录、继续、报告", "隐瞒、不管、干"] },
+                { q: "日常管理 (DM) 的首要目的是？", a: "维持标准与稳定", w: ["创新标准", "打破规则", "降低工资", "增加产量"] },
+                { q: "以下哪项不属于班前会四要素的内容？", a: "批评某个员工的人格", w: ["回顾昨日产量", "安排今日计划", "传达公司通知"] },
+                { q: "异常管理流程的最后一步通常是？", a: "永久对策与标准化", w: ["临时遏制", "责任人罚款", "填写报表", "口头警告"] },
+                { q: "SQDC中的'D' (Delivery) 主要关注什么？", a: "按时交付率", w: ["交付成本", "运输工具", "司机姓名", "包装颜色"] },
+                { q: "班前会通常在哪里召开？", a: "生产现场班组看板前", w: ["豪华会议室", "食堂", "更衣室", "总经理办公室"] },
+                { q: "标准化作业的前提是？", a: "过程稳定 (4M稳定)", w: ["人员充足", "设备昂贵", "领导在场", "工资翻倍"] },
+                { q: "日常管理与方针管理的关系是？", a: "维持与突破", w: ["对立关系", "包含关系", "没有关系", "因果关系"] },
+                { q: "当发生异常时，'遏制'（Containment）措施的目的是？", a: "防止问题扩大或流出", w: ["彻底解决问题", "寻找责任人", "修改标准", "节约成本"] },
+                { q: "SQDC看板中的'Q'指的是什么？", a: "质量 (Quality)", w: ["数量 (Quantity)", "问题 (Question)", "快速 (Quick)"] },
+                { q: "异常处理中的'呼'是指？", a: "呼叫班组长或支持人员", w: ["大声尖叫", "打电话回家", "呼叫总经理", "呼叫保安"] },
+                { q: "班前会中的'士气'环节主要目的是？", a: "确认状态并提振精神", w: ["发泄情绪", "互相指责", "休息聊天", "吃早餐"] },
+                { q: "初期流动管理主要针对什么情况？", a: "4M发生变化后", w: ["正常生产时", "设备报废时", "节假日"] },
+                { q: "如果发生质量事故，管理者的首要任务是？", a: "止血（遏制）", w: ["写检讨", "开除员工", "修改图纸", "推卸责任"] },
+                { q: "日常管理是哪个层级的职责？", a: "全员参与，特别是基层", w: ["仅总经理", "仅质量部", "仅HR", "外部顾问"] },
+                { q: "4M变化点管理中的4M不包括？", a: "Money (金钱)", w: ["Man (人)", "Machine (机)", "Material (料)", "Method (法)"] },
+                { q: "班前会应当采取什么姿势进行？", a: "站立", w: ["坐着", "躺着", "随意", "蹲着"] }
+            ],
+            "PSP": [
+                { q: "5Why 分析法的核心目的是找到？", a: "根本原因 (Root Cause)", w: ["直接原因", "表面现象", "责任人", "借口"] },
+                { q: "PDCA 循环中的 'C' 指的是？", a: "Check (检查)", w: ["Clean (清洁)", "Cost (成本)", "Control (控制)", "Change (改变)"] },
+                { q: "鱼骨图 (Fishbone) 主要用于什么阶段？", a: "分析原因", w: ["定义问题", "验证结果", "标准化", "庆祝胜利"] },
+                { q: "鱼骨图的 4M1E 维度中，'Man' 指的是？", a: "人", w: ["制造", "金钱", "管理", "测量"] },
+                { q: "鱼骨图的 4M1E 维度中，'Machine' 指的是？", a: "设备/机器", w: ["测量", "方法", "物料", "维护"] },
+                { q: "解决问题的第一步通常是？", a: "明确定义问题", w: ["立即采取行动", "寻找责任人", "购买新设备", "召开庆功会"] },
+                { q: "问题被定义为？", a: "现状与标准的差距", w: ["某种突发事件", "领导不满意的地方", "很难做的事情", "别人的错误"] },
+                { q: "PDCA 中的 'A' (Act) 主要任务是？", a: "标准化或修正计划", w: ["执行计划", "检查结果", "制定目标", "放弃计划"] },
+                { q: "分析问题时，应基于？", a: "数据和事实", w: ["经验和直觉", "领导的看法", "多数人的投票", "网络传言"] },
+                { q: "为了防止问题再次发生，必须？", a: "标准化对策", w: ["加强检验", "口头警告", "更加小心", "增加罚款"] },
+                { q: "SDCA循环中的'S'代表？", a: "Standardize (标准化)", w: ["Safety (安全)", "Speed (速度)", "Study (学习)", "Start (开始)"] },
+                { q: "在鱼骨图中，'Method' 代表什么？", a: "法（方法）", w: ["测量", "管理", "资金", "营销"] },
+                { q: "5Why分析法通常需要问几次为什么？", a: "5次左右，直到找到根因", w: ["固定5次，不能多也不能少", "1次就够了", "问到回答不上来为止", "3次"] },
+                { q: "PDCA循环中的'P'代表？", a: "Plan (计划)", w: ["Process (过程)", "Problem (问题)", "People (人员)", "Practice (练习)"] },
+                { q: "问题的描述应该？", a: "具体且量化 (5W2H)", w: ["模糊笼统", "带有个人情绪", "包含解决方案", "推卸责任"] },
+                { q: "在问题描述中，'Who'通常指的是？", a: "谁发现了问题/涉及谁", w: ["谁的错", "谁来赔偿", "谁是老板", "谁最倒霉"] },
+                { q: "三现主义不包括？", a: "听汇报 (Hear)", w: ["去现场 (Genba)", "看现物 (Genbutsu)", "查现实 (Genjitsu)"] },
+                { q: "遏制措施 (Containment) 的特点是？", a: "治标不治本，临时性", w: ["治本", "永久性", "不需要成本", "解决根本原因"] },
+                { q: "验证根本原因的最佳方法是？", a: "倒推验证（原因消除则现象消失）", w: ["投票决定", "领导拍板", "看书", "问AI"] },
+                { q: "问题解决后，如果不进行标准化 (A阶段)，后果通常是？", a: "问题复发", w: ["效率提高", "成本降低", "员工满意", "设备更新"] }
+            ],
+            "SW": [
+                { q: "计算节拍时间 (Takt Time) 的公式是？", a: "可用工作时间 / 客户需求量", w: ["总产量 / 人数", "工作时间 / 库存量", "设备时间 / 故障率", "人数 / 产量"] },
+                { q: "标准作业三要素不包括？", a: "人员工资", w: ["节拍时间", "作业顺序", "标准手持", "SWIP"] },
+                { q: "如果在制品 (WIP) 超过标准手持量，会导致？", a: "隐藏问题和浪费", w: ["生产效率提高", "客户满意度提高", "成本降低", "质量提升"] },
+                { q: "当周期时间 (CT) 大于节拍时间 (TT) 时，会出现？", a: "产能不足/瓶颈", w: ["产能过剩", "库存积压", "等待浪费", "机器停机"] },
+                { q: "标准作业票通常由谁制定？", a: "班组长协同员工", w: ["总经理", "人事部", "客户", "财务部"] },
+                { q: "标准作业的主要目的是？", a: "作为持续改善的基准", w: ["限制员工自由", "应付审核", "增加工作量", "扣工资依据"] },
+                { q: "节拍时间 (TT) 是由谁决定的？", a: "客户需求", w: ["设备能力", "员工速度", "老板指令", "供应商"] },
+                { q: "标准手持 (Standard WIP) 的定义是？", a: "维持工序连续运转的最少在制品", w: ["仓库里的所有库存", "想放多少放多少", "等于零", "最大库存"] },
+                { q: "作业顺序设计原则是？", a: "安全且高效", w: ["怎么顺手怎么来", "只考虑速度", "只考虑质量", "看员工心情"] },
+                { q: "标准作业不仅是文件，更是？", a: "现场执行的规则", w: ["挂在墙上的装饰", "废纸", "口号", "应付检查的道具"] },
+                { q: "山积图 (Yamazumi Chart) 主要用于？", a: "工序平衡分析", w: ["库存盘点", "质量分析", "设备维护", "人员招聘"] },
+                { q: "如果 CT < TT，意味着？", a: "产能过剩，可能产生等待", w: ["无法满足客户", "需要加班", "设备故障", "急需招人"] },
+                { q: "标准作业三要素中的'作业顺序'是指？", a: "最安全高效的操作步骤", w: ["员工随意的操作习惯", "机器的运行顺序", "产品的运输路线", "搬运顺序"] },
+                { q: "没有标准，就没有？", a: "改善", w: ["生产", "质量", "利润", "工资"] },
+                { q: "标准作业是针对谁的？", a: "人的动作", w: ["机器的动作", "材料的流动", "电脑的程序", "叉车"] },
+                { q: "在标准作业中，SWIP的全称是？", a: "Standard Work in Process (标准手持)", w: ["Safe Work (安全作业)", "Stop Work (停止作业)", "Super Work (超级作业)"] },
+                { q: "线平衡率低通常意味着？", a: "存在明显的瓶颈和等待", w: ["效率很高", "没有浪费", "客户满意", "设备先进"] },
+                { q: "瓶颈工序 (Bottleneck) 决定了？", a: "整条线的产出能力", w: ["最快节拍", "最低成本", "最高质量", "最少库存"] },
+                { q: "实行标准作业的前提条件之一是？", a: "设备稳定", w: ["设备经常坏", "物料经常缺", "品质不稳定", "人员流动大"] },
+                { q: "某工序CT为30秒，TT为28秒，该工序是？", a: "瓶颈工序", w: ["非瓶颈", "由于CT > TT，无法满足需求", "产能过剩", "等待工序"] }
+            ],
+            "VSM": [
+                { q: "VSM 的全称是？", a: "价值流图", w: ["可视化管理", "供应商管理", "车辆速度监控", "视频流媒体"] },
+                { q: "以下哪项属于增值活动 (VA)？", a: "组装零件", w: ["搬运物料", "等待设备", "返工", "寻找工具"] },
+                { q: "以下哪项属于非增值活动 (NVA)？", a: "寻找工具", w: ["喷漆", "焊接", "编写代码", "锁螺丝"] },
+                { q: "Lead Time (L/T) 指的是？", a: "端到端的制造周期", w: ["单一工序加工时间", "员工午休时间", "设备故障时间", "换模时间"] },
+                { q: "绘制 VSM 的第一步是？", a: "选择产品族", w: ["购买软件", "绘制未来图", "消除浪费", "开除员工"] },
+                { q: "价值流图中的 '锯齿线' 下方的时间代表？", a: "增值时间 (VA Time)", w: ["非增值时间", "总时间", "休息时间", "等待时间"] },
+                { q: "VSM 中不仅关注物流，还关注？", a: "信息流", w: ["资金流", "电流", "空气流", "客流"] },
+                { q: "理想的未来图应该追求？", a: "连续流 (Continuous Flow)", w: ["孤岛式生产", "大批量生产", "高库存", "断点生产"] },
+                { q: "推式生产 (Push) 的典型特征是？", a: "基于预测生产", w: ["基于客户拉动", "零库存", "看板管理", "按单生产"] },
+                { q: "世界级企业的增值比通常只有？", a: "5% 左右", w: ["50% 以上", "80% 以上", "100%", "30%"] },
+                { q: "必要非增值活动 (NNVA) 应该如何处理？", a: "尽量减少", w: ["完全消除", "增加", "忽视", "视为增值"] },
+                { q: "价值流图中的三角形图标通常代表？", a: "库存 (Inventory)", w: ["工厂", "卡车", "操作员", "超市"] },
+                { q: "客户愿意付费的活动被称为？", a: "增值活动", w: ["浪费", "辅助工作", "必要劳动", "无效劳动"] },
+                { q: "VSM改善的重点是？", a: "消除非增值浪费，缩短Lead Time", w: ["加快机器运转速度", "增加工人数量", "扩大仓库面积", "购买新设备"] },
+                { q: "拉动系统 (Pull) 的核心是？", a: "下工序向上工序领取", w: ["上工序向下工序推送", "根据计划生产", "随意生产", "批量生产"] },
+                { q: "C/O (Changeover) 指的是？", a: "换模/换型时间", w: ["关机时间", "休息时间", "加班时间", "检查时间"] },
+                { q: "FTT (First Time Through) 指的是？", a: "直通率/一次合格率", w: ["返工率", "废品率", "生产效率", "设备稼动率"] },
+                { q: "Uptime 指的是？", a: "设备稼动率", w: ["停机时间", "换模时间", "维修时间", "休息时间"] },
+                { q: "建立超市 (Supermarket) 的目的是？", a: "实现拉动，控制库存上限", w: ["为了卖东西", "为了堆放更多库存", "为了好看", "为了推式生产"] },
+                { q: "平准化 (Heijunka) 生产的目的是？", a: "应对客户需求的波动", w: ["为了增加库存", "为了让员工更累", "为了大批量生产", "为了减少换型"] }
+            ],
+            "5S": [
+                { q: "5S 中 '整理' (Sort) 的核心动作是？", a: "区分要与不要，清除不要物", w: ["把东西摆整齐", "打扫卫生", "贴标签", "买新柜子"] },
+                { q: "5S 中 '整顿' (Set in order) 的核心原则是？", a: "三定 (定点、定容、定量)", w: ["扔掉东西", "擦洗设备", "制定制度", "全员参与"] },
+                { q: "5S 中 '清扫' (Shine) 的深层意义是？", a: "通过清扫发现微小缺陷", w: ["为了好看", "应付检查", "锻炼身体", "减少灰尘"] },
+                { q: "5S 中 '素养' (Sustain) 指的是？", a: "依规行事，养成习惯", w: ["穿着时尚", "学历高", "说话好听", "工资高"] },
+                { q: "红牌作战通常用于 5S 的哪个阶段？", a: "整理", w: ["整顿", "清洁", "素养", "清扫"] },
+                { q: "目视化管理的最高境界是？", a: "一目了然，无需解释", w: ["贴满文字说明", "使用高科技屏幕", "有人专门讲解", "文件厚度"] },
+                { q: "地面划线属于？", a: "目视化管理", w: ["设备维护", "成本控制", "人力资源", "行政管理"] },
+                { q: "5S 活动是谁的责任？", a: "全体员工", w: ["保洁阿姨", "新员工", "总经理", "5S专员"] },
+                { q: "整顿的一目了然标准是？", a: "30秒内找到并放回", w: ["5分钟内找到", "只有熟练工能找到", "看心情", "1小时内"] },
+                { q: "清洁 (Standardize) 的重点是？", a: "制度化、规范化", w: ["大扫除", "扔垃圾", "开会", "挂横幅"] },
+                { q: "形迹管理主要用于？", a: "工具的整顿", w: ["文件的整理", "地面的清扫", "人员的考勤", "设备的维修"] },
+                { q: "区分'要'与'不要'的标准通常是？", a: "使用频率和价值", w: ["购买价格", "个人喜好", "物品大小", "领导喜好"] },
+                { q: "5S是精益生产的？", a: "基础", w: ["全部", "终点", "装饰", "高阶工具"] },
+                { q: "不要物应该？", a: "坚决清除", w: ["藏起来", "放在角落", "送给别的部门", "留着以后用"] },
+                { q: "三定原则中的'定量'是指？", a: "规定最大和最小数量", w: ["规定重量", "规定质量", "规定价格", "规定体积"] },
+                { q: "目视化管理中，红色的含义通常是？", a: "禁止、不良、危险", w: ["安全、合格", "警告、注意", "指令、强制", "通道"] },
+                { q: "清扫即是？", a: "点检", w: ["运动", "游戏", "浪费", "休息"] },
+                { q: "红牌作战的对象是？", a: "不需要或不确定的物品", w: ["优秀员工", "合格产品", "贵重设备", "需要物品"] },
+                { q: "5S做得好的标志是？", a: "任何时候突击检查都合格", w: ["检查前突击打扫", "只有领导来才干净", "拍照好看", "制度写得好"] },
+                { q: "谁最了解现场需要什么工具？", a: "一线作业员", w: ["总经理", "采购员", "客户", "保洁员"] }
+            ],
+            "TIMWOODS": [
+                { q: "精益生产中认为最大的浪费是？", a: "过量生产 (Over-production)", w: ["等待", "动作", "不良品", "搬运"] },
+                { q: "TIMWOODS 中的 'I' 代表？", a: "库存 (Inventory)", w: ["信息 (Information)", "检查 (Inspection)", "发票 (Invoice)", "互联网"] },
+                { q: "TIMWOODS 中的 'M' 代表？", a: "动作 (Motion)", w: ["金钱 (Money)", "机器 (Machine)", "材料 (Material)", "管理"] },
+                { q: "以下哪种情况属于 '等待浪费'？", a: "员工看着机器运行", w: ["员工在组装", "员工在搬运", "员工在思考改善", "员工在打扫"] },
+                { q: "生产了客户不需要的产品属于？", a: "过量生产", w: ["过度加工", "缺陷", "等待", "动作"] },
+                { q: "为了达到不必要的超高光洁度而多打磨几次，属于？", a: "过度加工 (Over-processing)", w: ["缺陷", "库存", "动作", "等待"] },
+                { q: "员工弯腰捡取地上的零件属于？", a: "动作浪费", w: ["搬运浪费", "加工浪费", "等待浪费", "库存浪费"] },
+                { q: "未被采纳的员工建议属于？", a: "技能/人才浪费 (Skills)", w: ["时间浪费", "管理浪费", "库存浪费", "金钱浪费"] },
+                { q: "将物料从仓库搬到车间，再搬到二楼，属于？", a: "运输浪费", w: ["动作浪费", "加工浪费", "库存浪费", "缺陷"] },
+                { q: "库存过多的最大坏处是？", a: "掩盖了生产过程中的问题", w: ["占用资金", "占用场地", "容易生锈", "难以盘点"] },
+                { q: "动作浪费与运输浪费的主要区别是？", a: "前者是人的移动，后者是物的移动", w: ["前者距离长，后者距离短", "没有区别", "前者发生在办公室，后者在车间", "前者是机器，后者是人"] },
+                { q: "TIMWOODS 中的 'T' 代表？", a: "运输 (Transportation)", w: ["时间 (Time)", "技术 (Technology)", "工具 (Tool)", "目标"] },
+                { q: "TIMWOODS 中的 'D' 代表？", a: "缺陷 (Defects)", w: ["设计 (Design)", "交付 (Delivery)", "延迟 (Delay)", "部门"] },
+                { q: "过量生产也被称为？", a: "万恶之源", w: ["效率之王", "库存之母", "成本之父", "质量之母"] },
+                { q: "多余的审批流程属于？", a: "过度加工 (办公浪费)", w: ["动作浪费", "等待浪费", "运输浪费", "库存浪费"] },
+                { q: "ECRS原则中的'E'代表？", a: "Eliminate (消除)", w: ["Easy (简单)", "Every (每个)", "Energy (能量)", "Earn (赚钱)"] },
+                { q: "ECRS原则中的'C'代表？", a: "Combine (合并)", w: ["Clean (清洁)", "Cut (剪切)", "Cost (成本)", "Control (控制)"] },
+                { q: "只画没人看的精美PPT属于？", a: "过度加工", w: ["等待", "缺陷", "动作", "运输"] },
+                { q: "库存也被称为？", a: "百丑遮", w: ["现金", "资产", "利润", "垃圾"] },
+                { q: "寻找工具属于什么浪费？", a: "动作浪费", w: ["运输浪费", "库存浪费", "加工浪费", "等待浪费"] }
+            ]
+        };
+
+        // ================= 智能题库引擎 (AI Generator 2.0) =================
+        class QuestionEngine {
+            constructor() {
+                this.cache = {};
+            }
+
+            // 生成不重复题目
+            generateForSubject(subj) {
+                let seeds = QUESTION_SEEDS[subj];
+                let generated = [];
+                let questionSet = new Set(); // 用于文本去重
+                let idCounter = 1;
+
+                // 辅助函数：添加题目并查重
+                const addQ = (qObj) => {
+                    if (!questionSet.has(qObj.text)) {
+                        questionSet.add(qObj.text);
+                        generated.push(qObj);
+                        return true;
+                    }
+                    return false;
+                };
+
+                // 1. 基础选择题 (MCQ) - 直接使用种子
+                seeds.forEach(seed => {
+                    addQ(this.createQ(subj, idCounter++, seed.q, seed.a, seed.w));
+                });
+
+                // 2. 判断题 - 正确 (True/False)
+                seeds.forEach(seed => {
+                    let text = "";
+                    if(seed.q.includes("？")) {
+                        let statement = seed.q.replace("？", "");
+                        if(statement.includes("是")) {
+                             text = `判断：${statement.split("是")[0]} 是 ${seed.a}。`;
+                        } else if (statement.includes("属于")) {
+                             text = `判断：${statement.split("属于")[0]} 属于 ${seed.a}。`;
+                        } else {
+                             text = `判断：${statement} 的答案是 ${seed.a}。`;
+                        }
+                    } else {
+                        text = `判断：${seed.q} ${seed.a}。`;
+                    }
+                    
+                    addQ({
+                        id: `${subj}-TF-T-${idCounter++}`,
+                        text: text,
+                        options: [
+                            { text: "正确", isCorrect: true },
+                            { text: "错误", isCorrect: false }
+                        ],
+                        correctIndex: 0
+                    });
+                });
+
+                // 3. 判断题 - 错误 (True/False)
+                seeds.forEach(seed => {
+                    let wrongAns = seed.w[0];
+                    let text = "";
+                    if(seed.q.includes("？")) {
+                        let statement = seed.q.replace("？", "");
+                        if(statement.includes("是")) {
+                             text = `判断：${statement.split("是")[0]} 是 ${wrongAns}。`;
+                        } else if (statement.includes("属于")) {
+                             text = `判断：${statement.split("属于")[0]} 属于 ${wrongAns}。`;
+                        } else {
+                             text = `判断：${statement} 的答案是 ${wrongAns}。`;
+                        }
+                    } else {
+                        text = `判断：${seed.q} ${wrongAns}。`;
+                    }
+
+                    addQ({
+                        id: `${subj}-TF-F-${idCounter++}`,
+                        text: text,
+                        options: [
+                            { text: "正确", isCorrect: false },
+                            { text: "错误", isCorrect: true }
+                        ],
+                        correctIndex: 1
+                    });
+                });
+
+                // 4. 反向选择题 (Inverted MCQ)
+                seeds.forEach(seed => {
+                    if (!seed.q.includes("不") && seed.w.length >= 2) {
+                        let subject = seed.q.split("的")[0].split("中")[0].replace("计算", ""); 
+                        if(subject.length > 2) {
+                            let newQ = `关于“${subject}”，以下说法错误的是？`;
+                            let newA = seed.w[0]; 
+                            let newW = [seed.a, seed.w[1]]; 
+                            addQ(this.createQ(subj, idCounter++, newQ, newA, newW));
+                        }
+                    }
+                });
+
+                return generated;
+            }
+
+            createQ(subj, id, q, a, w) {
+                let options = [
+                    { text: a, isCorrect: true },
+                    { text: w[0] || "以上皆非", isCorrect: false },
+                    { text: w[1] || "以上皆是", isCorrect: false },
+                    { text: w[2] || "不确定", isCorrect: false }
+                ];
+                options.sort(() => Math.random() - 0.5);
+                
+                return {
+                    id: `${subj}-${id}`,
+                    text: q,
+                    options: options,
+                    correctIndex: options.findIndex(o => o.isCorrect)
+                };
+            }
+        }
+
+        const engine = new QuestionEngine();
+
+        // ================= 业务逻辑控制 (Controller) =================
+        
+        let appState = {
+            mode: null,
+            subject: null,
+            questions: [],
+            currentIndex: 0,
+            timer: null,
+            timeLeft: 0,
+            examAnswers: [] 
+        };
+
+        function selectMode(mode) {
+            appState.mode = mode;
+            const titles = { 'study': '知识学习', 'practice': '强化练习', 'exam': '正式考试' };
+            document.getElementById('mode-title').textContent = titles[mode] + " - 选择科目";
+            document.getElementById('current-mode-display').textContent = titles[mode];
+            
+            document.getElementById('hero-page').style.display = 'none';
+            document.getElementById('subject-page').style.display = 'block';
+            
+            // 切换 Footer 样式
+            document.querySelector('footer').classList.remove('hero-footer');
+            
+            window.scrollTo(0,0);
+        }
+
+        function goHome() {
+            stopTimer();
+            document.querySelectorAll('.content-section').forEach(el => el.style.display = 'none');
+            document.getElementById('hero-page').style.display = 'block';
+            document.getElementById('timer-box').style.display = 'none';
+            
+            // 首页 Footer 样式
+            document.querySelector('footer').classList.add('hero-footer');
+            
+            window.scrollTo(0,0);
+        }
+
+        function backToSubject() {
+            document.getElementById('study-page').style.display = 'none';
+            document.getElementById('subject-page').style.display = 'block';
+        }
+
+        function startActivity(subj) {
+            appState.subject = subj;
+            document.getElementById('subject-page').style.display = 'none';
+
+            if (appState.mode === 'study') {
+                initStudy();
+            } else if (appState.mode === 'practice') {
+                initPractice();
+            } else if (appState.mode === 'exam') {
+                initExam();
+            }
+        }
+
+        function initStudy() {
+            document.getElementById('study-page').style.display = 'block';
+            document.getElementById('study-subject-title').textContent = KNOWLEDGE_BASE[appState.subject].title;
+            document.getElementById('study-content').innerHTML = KNOWLEDGE_BASE[appState.subject].content;
+            window.scrollTo(0,0);
+        }
+
+        function quickPractice() {
+            appState.mode = 'practice';
+            document.getElementById('study-page').style.display = 'none';
+            initPractice();
+        }
+
+        function initPractice() {
+            document.getElementById('quiz-page').style.display = 'block';
+            document.getElementById('quiz-mode-badge').textContent = "强化练习模式";
+            document.getElementById('quiz-mode-badge').style.background = "var(--klein-blue)";
+            document.getElementById('timer-box').style.display = 'none';
+            document.getElementById('q-nav-grid').style.display = 'none';
+            document.getElementById('prev-btn').style.visibility = 'hidden'; 
+            
+            // 练习模式显示跳过按钮
+            document.getElementById('skip-btn').style.display = 'inline-block';
+            
+            // 生成题目并打乱
+            let allQ = engine.generateForSubject(appState.subject);
+            appState.questions = [...allQ].sort(() => 0.5 - Math.random());
+            
+            appState.currentIndex = 0;
+            renderQuestion();
+        }
+
+        function initExam() {
+            document.getElementById('quiz-page').style.display = 'block';
+            document.getElementById('quiz-mode-badge').textContent = "正式考试";
+            document.getElementById('quiz-mode-badge').style.background = "var(--fail-red)";
+            document.getElementById('timer-box').style.display = 'block';
+            document.getElementById('q-nav-grid').style.display = 'grid';
+            document.getElementById('prev-btn').style.visibility = 'visible';
+            
+            // 考试模式隐藏跳过按钮（可以通过导航栏跳转，不需要显式跳过）
+            document.getElementById('skip-btn').style.display = 'none';
+
+            let allQ = engine.generateForSubject(appState.subject);
+            let shuffled = [...allQ].sort(() => 0.5 - Math.random());
+            appState.questions = shuffled.slice(0, 20);
+            
+            appState.currentIndex = 0;
+            appState.examAnswers = new Array(20).fill(null);
+            appState.timeLeft = 1200; 
+
+            renderNavGrid();
+            startTimer();
+            renderQuestion();
+        }
+
+        function renderNavGrid() {
+            const grid = document.getElementById('q-nav-grid');
+            grid.innerHTML = '';
+            appState.questions.forEach((_, idx) => {
+                const btn = document.createElement('div');
+                btn.className = 'q-nav-item';
+                btn.textContent = idx + 1;
+                btn.id = `nav-item-${idx}`;
+                btn.onclick = () => {
+                    appState.currentIndex = idx;
+                    renderQuestion();
+                };
+                grid.appendChild(btn);
+            });
+            updateNavGridStatus();
+        }
+
+        function updateNavGridStatus() {
+            if (appState.mode !== 'exam') return;
+            appState.questions.forEach((_, idx) => {
+                const btn = document.getElementById(`nav-item-${idx}`);
+                btn.classList.remove('active', 'answered');
+                if (idx === appState.currentIndex) btn.classList.add('active');
+                if (appState.examAnswers[idx] !== null) btn.classList.add('answered');
+            });
+        }
+
+        function renderQuestion() {
+            let q = appState.questions[appState.currentIndex];
+            let total = appState.questions.length;
+            
+            document.getElementById('quiz-progress').textContent = `QUESTION ${appState.currentIndex + 1} / ${total}`;
+            document.getElementById('question-text').innerHTML = q.text;
+            
+            let container = document.getElementById('options-container');
+            container.innerHTML = '';
+            document.getElementById('feedback-container').style.display = 'none';
+
+            q.options.forEach((opt, idx) => {
+                let div = document.createElement('div');
+                div.className = 'option';
+                div.dataset.idx = idx;
+                div.innerHTML = `<div class="opt-char">${String.fromCharCode(65+idx)}</div><div>${opt.text}</div>`;
+                div.onclick = () => selectOption(div, idx);
+                
+                if (appState.mode === 'exam' && appState.examAnswers[appState.currentIndex] === idx) {
+                    div.classList.add('selected');
+                }
+                container.appendChild(div);
+            });
+
+            const actionBtn = document.getElementById('action-btn');
+            if (appState.mode === 'practice') {
+                actionBtn.textContent = "提交答案";
+                actionBtn.onclick = checkAnswerPractice;
+                document.getElementById('prev-btn').style.visibility = 'hidden';
+            } else {
+                actionBtn.textContent = (appState.currentIndex === 19) ? "交卷" : "下一题";
+                actionBtn.onclick = (appState.currentIndex === 19) ? finishExam : nextQuestionExam;
+                document.getElementById('prev-btn').style.visibility = (appState.currentIndex === 0) ? 'hidden' : 'visible';
+            }
+            updateNavGridStatus();
+        }
+
+        function selectOption(el, idx) {
+            if (appState.mode === 'practice' && document.getElementById('feedback-container').style.display === 'block') return;
+
+            document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+            
+            if (appState.mode === 'exam') {
+                appState.examAnswers[appState.currentIndex] = idx;
+                updateNavGridStatus();
+            }
+        }
+
+        function checkAnswerPractice() {
+            let selected = document.querySelector('.option.selected');
+            if (!selected) return alert("请先选择一个选项");
+
+            let userIdx = parseInt(selected.dataset.idx);
+            let q = appState.questions[appState.currentIndex];
+            let feedback = document.getElementById('feedback-container');
+            let opts = document.querySelectorAll('.option');
+
+            opts.forEach(o => o.style.pointerEvents = 'none');
+
+            if (userIdx === q.correctIndex) {
+                selected.classList.add('correct');
+                feedback.style.background = '#e7f9ee';
+                feedback.style.color = 'var(--success-green)';
+                feedback.innerHTML = "<strong>✅ 回答正确！</strong>";
+            } else {
+                selected.classList.add('wrong');
+                opts[q.correctIndex].classList.add('correct');
+                feedback.style.background = '#fceaea';
+                feedback.style.color = 'var(--fail-red)';
+                feedback.innerHTML = `<strong>❌ 回答错误</strong><br>正确答案是：${String.fromCharCode(65+q.correctIndex)}`;
+            }
+            feedback.style.display = 'block';
+
+            let btn = document.getElementById('action-btn');
+            btn.textContent = "下一题";
+            btn.onclick = () => {
+                if (appState.currentIndex < appState.questions.length - 1) {
+                    appState.currentIndex++;
+                    renderQuestion();
+                } else {
+                    alert("本轮练习结束！");
+                    goHome();
+                }
+            };
+        }
+
+        function nextPracticeQuestion() {
+            if (appState.currentIndex < appState.questions.length - 1) {
+                appState.currentIndex++;
+                renderQuestion();
+            } else {
+                alert("本轮练习结束！");
+                goHome();
+            }
+        }
+
+        function prevQuestion() {
+            if (appState.currentIndex > 0) {
+                appState.currentIndex--;
+                renderQuestion();
+            }
+        }
+
+        function nextQuestionExam() {
+            if (appState.currentIndex < 19) {
+                appState.currentIndex++;
+                renderQuestion();
+            }
+        }
+
+        function handleAction() {
+            // Placeholder
+        }
+
+        function startTimer() {
+            appState.timer = setInterval(() => {
+                appState.timeLeft--;
+                let m = Math.floor(appState.timeLeft / 60);
+                let s = appState.timeLeft % 60;
+                document.getElementById('timer-box').textContent = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+                
+                if (appState.timeLeft <= 0) {
+                    clearInterval(appState.timer);
+                    alert("时间到！自动交卷。");
+                    finishExam();
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (appState.timer) clearInterval(appState.timer);
+        }
+
+        function quitQuiz() {
+            if (appState.mode === 'exam') {
+                if(!confirm("考试正在进行中，退出将不记录成绩。确定退出吗？")) return;
+            }
+            goHome();
+        }
+
+        function finishExam() {
+            let unanswered = appState.examAnswers.filter(a => a === null).length;
+            if (unanswered > 0) {
+                if(!confirm(`您还有 ${unanswered} 道题未作答，确定要交卷吗？`)) return;
+            }
+
+            stopTimer();
+            let correctCount = 0;
+            appState.questions.forEach((q, i) => {
+                if (appState.examAnswers[i] === q.correctIndex) correctCount++;
+            });
+
+            let score = correctCount * 5;
+            let passed = score >= 80;
+
+            document.getElementById('quiz-page').style.display = 'none';
+            document.getElementById('result-page').style.display = 'block';
+            
+            animateScore(score);
+
+            const trophy = document.querySelector('.trophy-anim');
+            const failIcon = document.querySelector('.fail-anim');
+            const msg = document.getElementById('result-message');
+
+            trophy.style.display = 'none';
+            failIcon.style.display = 'none';
+            document.querySelectorAll('.confetti').forEach(e => e.remove());
+
+            if (passed) {
+                trophy.style.display = 'block';
+                msg.textContent = "恭喜通过认证！您已掌握该模块核心技能。";
+                msg.style.color = "var(--success-green)";
+                createConfetti();
+            } else {
+                failIcon.style.display = 'block';
+                msg.textContent = "很遗憾未通过，请复习知识点后再试。";
+                msg.style.color = "var(--fail-red)";
+            }
+        }
+
+        function animateScore(target) {
+            let current = 0;
+            const el = document.getElementById('final-score');
+            const step = () => {
+                if (current < target) {
+                    current += 1;
+                    el.textContent = current;
+                    requestAnimationFrame(step);
+                } else {
+                    el.textContent = target;
+                }
+            };
+            requestAnimationFrame(step);
+        }
+
+        function createConfetti() {
+            const colors = ['#FFD700', '#002FA7', '#28a745', '#ff0055'];
+            for (let i = 0; i < 50; i++) {
+                const conf = document.createElement('div');
+                conf.className = 'confetti';
+                conf.style.left = Math.random() * 100 + 'vw';
+                conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                conf.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                conf.style.animationDelay = (Math.random() * 1) + 's';
+                document.body.appendChild(conf);
+            }
+        }
+
+        function retryExam() {
+            initExam();
+        }
+
+        // 初始化
+        window.onload = function() {
+            goHome(); // 确保加载时应用正确的 Footer 样式
+        };
+    </script>
+</body>
+</html>
