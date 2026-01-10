@@ -71,6 +71,25 @@
         .subject-card h4 { color: var(--klein-blue); font-size: 1.3rem; margin-bottom: 8px; }
         .subject-card p { color: #888; font-size: 0.9rem; }
 
+        /* --- 考生信息录入弹窗 --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 2000; display: none;
+            align-items: center; justify-content: center; backdrop-filter: blur(5px);
+        }
+        .login-card {
+            background: white; padding: 40px; border-radius: 16px; width: 90%; max-width: 400px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2); animation: bounceIn 0.5s; text-align: center;
+        }
+        .login-title { font-size: 1.5rem; color: var(--klein-blue); margin-bottom: 20px; font-weight: 800; }
+        .input-group { margin-bottom: 20px; text-align: left; }
+        .input-group label { display: block; margin-bottom: 8px; color: #666; font-weight: 600; font-size: 0.9rem; }
+        .input-field {
+            width: 100%; padding: 12px; border: 2px solid #eee; border-radius: 8px;
+            font-size: 1rem; transition: 0.3s; outline: none;
+        }
+        .input-field:focus { border-color: var(--klein-blue); box-shadow: 0 0 0 3px rgba(0, 47, 167, 0.1); }
+
         /* --- 知识学习 (Rich Content Styles) --- */
         .content-section { display: none; padding-bottom: 60px; animation: fadeIn 0.5s; }
         .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; border-bottom: 2px solid #f0f0f0; padding-bottom: 20px; }
@@ -164,6 +183,7 @@
         .score-display { font-size: 5rem; font-weight: 900; color: var(--klein-blue); margin-bottom: 10px; line-height: 1; }
         .score-label { font-size: 1.2rem; color: #888; text-transform: uppercase; letter-spacing: 2px; }
         .result-msg { font-size: 1.5rem; margin: 20px 0 40px; font-weight: 600; }
+        .user-info-display { font-size: 1.2rem; color: #555; background: #f0f0f0; padding: 10px 20px; border-radius: 20px; display: inline-block; margin-bottom: 20px; border: 1px solid #ddd; }
 
         .confetti { position: absolute; width: 10px; height: 10px; background-color: var(--bright-yellow); animation: fall linear forwards; opacity: 0; }
 
@@ -189,6 +209,22 @@
 </head>
 <body>
     <div class="top-accent"></div>
+
+    <div id="login-modal" class="modal-overlay">
+        <div class="login-card">
+            <h2 class="login-title">考生信息录入</h2>
+            <div class="input-group">
+                <label>姓名 Name</label>
+                <input type="text" id="user-name" class="input-field" placeholder="请输入姓名">
+            </div>
+            <div class="input-group">
+                <label>工号 Employee ID</label>
+                <input type="text" id="user-id" class="input-field" placeholder="请输入工号">
+            </div>
+            <button class="btn btn-primary" onclick="submitUserInfo()" style="width:100%;">开始考试</button>
+            <button class="btn btn-outline" onclick="closeLoginModal()" style="width:100%; margin-top:10px;">取消</button>
+        </div>
+    </div>
 
     <div class="container">
         <nav>
@@ -311,6 +347,11 @@
                 </div>
                 <div class="score-label">FINAL SCORE</div>
                 <div class="score-display"><span id="final-score">0</span><span style="font-size:2rem; color:#999;">/100</span></div>
+                
+                <div class="user-info-display">
+                    考生：<span id="res-name"></span> (工号: <span id="res-id"></span>)
+                </div>
+
                 <div class="result-msg" id="result-message"></div>
                 
                 <div style="display:flex; justify-content:center; gap:20px;">
@@ -1159,15 +1200,11 @@
             }
 
             generateForSubject(subj) {
-                // 1. 获取选择题种子
                 let mcqSeeds = QUESTION_SEEDS[subj] || [];
-                // 2. 获取判断题种子
                 let tfSeeds = TF_SEEDS[subj] || [];
-                
                 let generated = [];
                 let idCounter = 1;
 
-                // --- 处理选择题 (MCQ) ---
                 mcqSeeds.forEach(seed => {
                     let options = [
                         { text: seed.a, isCorrect: true },
@@ -1175,35 +1212,31 @@
                         { text: seed.w[1] || "不确定", isCorrect: false },
                         { text: seed.w[2] || "其他", isCorrect: false }
                     ];
-                    // 打乱选项
                     options.sort(() => Math.random() - 0.5);
-                    
                     generated.push({
                         id: `${subj}-MCQ-${idCounter++}`,
                         type: 'MCQ',
                         text: seed.q,
                         options: options,
                         correctIndex: options.findIndex(o => o.isCorrect),
-                        explanation: "" // 选择题暂无详解，可后续扩展
+                        explanation: "" 
                     });
                 });
 
-                // --- 处理判断题 (T/F) ---
                 tfSeeds.forEach(seed => {
                     generated.push({
                         id: `${subj}-TF-${idCounter++}`,
-                        type: 'TF', // 标记类型，用于前端渲染区分
+                        type: 'TF', 
                         text: `【判断题】${seed.q}`,
                         options: [
                             { text: "正确 (Correct)", isCorrect: seed.a === true },
                             { text: "错误 (Incorrect)", isCorrect: seed.a === false }
                         ],
                         correctIndex: seed.a === true ? 0 : 1,
-                        explanation: seed.expl // 包含解析
+                        explanation: seed.expl 
                     });
                 });
 
-                // 混合题目
                 return generated.sort(() => Math.random() - 0.5);
             }
         }
@@ -1219,7 +1252,8 @@
             currentIndex: 0,
             timer: null,
             timeLeft: 0,
-            examAnswers: [] 
+            examAnswers: [],
+            userInfo: { name: "", id: "" } // 新增考生信息
         };
 
         function selectMode(mode) {
@@ -1231,9 +1265,7 @@
             document.getElementById('hero-page').style.display = 'none';
             document.getElementById('subject-page').style.display = 'block';
             
-            // 切换 Footer 样式
             document.querySelector('footer').classList.remove('hero-footer');
-            
             window.scrollTo(0,0);
         }
 
@@ -1242,10 +1274,9 @@
             document.querySelectorAll('.content-section').forEach(el => el.style.display = 'none');
             document.getElementById('hero-page').style.display = 'block';
             document.getElementById('timer-box').style.display = 'none';
+            document.getElementById('login-modal').style.display = 'none'; // 确保弹窗关闭
             
-            // 首页 Footer 样式
             document.querySelector('footer').classList.add('hero-footer');
-            
             window.scrollTo(0,0);
         }
 
@@ -1256,15 +1287,38 @@
 
         function startActivity(subj) {
             appState.subject = subj;
-            document.getElementById('subject-page').style.display = 'none';
-
-            if (appState.mode === 'study') {
-                initStudy();
-            } else if (appState.mode === 'practice') {
-                initPractice();
-            } else if (appState.mode === 'exam') {
-                initExam();
+            
+            // 只有考试模式需要登录
+            if (appState.mode === 'exam') {
+                document.getElementById('login-modal').style.display = 'flex';
+                // 聚焦第一个输入框
+                setTimeout(() => document.getElementById('user-name').focus(), 100);
+            } else {
+                document.getElementById('subject-page').style.display = 'none';
+                if (appState.mode === 'study') initStudy();
+                else if (appState.mode === 'practice') initPractice();
             }
+        }
+
+        function closeLoginModal() {
+            document.getElementById('login-modal').style.display = 'none';
+        }
+
+        function submitUserInfo() {
+            const name = document.getElementById('user-name').value.trim();
+            const id = document.getElementById('user-id').value.trim();
+
+            if (!name || !id) {
+                alert("请填写完整的姓名和工号！");
+                return;
+            }
+
+            appState.userInfo.name = name;
+            appState.userInfo.id = id;
+            
+            document.getElementById('login-modal').style.display = 'none';
+            document.getElementById('subject-page').style.display = 'none';
+            initExam();
         }
 
         function initStudy() {
@@ -1288,12 +1342,10 @@
             document.getElementById('q-nav-grid').style.display = 'none';
             document.getElementById('prev-btn').style.visibility = 'hidden'; 
             
-            // 练习模式显示跳过按钮
             document.getElementById('skip-btn').style.display = 'inline-block';
             
-            // 生成题目并打乱
             let allQ = engine.generateForSubject(appState.subject);
-            appState.questions = [...allQ]; // 已经是打乱的了
+            appState.questions = [...allQ];
             
             appState.currentIndex = 0;
             renderQuestion();
@@ -1307,11 +1359,10 @@
             document.getElementById('q-nav-grid').style.display = 'grid';
             document.getElementById('prev-btn').style.visibility = 'visible';
             
-            // 考试模式隐藏跳过按钮
             document.getElementById('skip-btn').style.display = 'none';
 
             let allQ = engine.generateForSubject(appState.subject);
-            appState.questions = allQ.slice(0, 20); // 取前20题
+            appState.questions = allQ.slice(0, 20); 
             
             appState.currentIndex = 0;
             appState.examAnswers = new Array(20).fill(null);
@@ -1358,12 +1409,10 @@
             
             let container = document.getElementById('options-container');
             container.innerHTML = '';
-            // 重置反馈框
             const feedback = document.getElementById('feedback-container');
             feedback.style.display = 'none';
-            feedback.className = 'feedback-box'; // reset classes
+            feedback.className = 'feedback-box';
 
-            // 设置网格布局：判断题2列，选择题1列
             if (q.type === 'TF') {
                 container.style.gridTemplateColumns = '1fr 1fr';
             } else {
@@ -1375,7 +1424,6 @@
                 div.className = 'option';
                 div.dataset.idx = idx;
                 
-                // 判断题不显示 A/B 
                 if(q.type === 'TF') {
                     div.innerHTML = `<div style="text-align:center; width:100%; font-weight:bold;">${opt.text}</div>`;
                 } else {
@@ -1533,6 +1581,10 @@
             document.getElementById('quiz-page').style.display = 'none';
             document.getElementById('result-page').style.display = 'block';
             
+            // 显示用户信息
+            document.getElementById('res-name').textContent = appState.userInfo.name || "未知考生";
+            document.getElementById('res-id').textContent = appState.userInfo.id || "N/A";
+
             animateScore(score);
 
             const trophy = document.querySelector('.trophy-anim');
@@ -1584,6 +1636,7 @@
         }
 
         function retryExam() {
+            // 重考时不需要重新登录，直接开始
             initExam();
         }
 
