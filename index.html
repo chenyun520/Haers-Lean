@@ -10,14 +10,15 @@
             --pure-white: #FFFFFF;
             --bright-yellow: #FFD700;
             --text-dark: #333333;
-            --text-light: #666666;
-            --gray-bg: #F4F7FF;
+            --text-light: #555555;
+            --gray-bg: #F8F9FA;
             --success-green: #28a745;
             --fail-red: #dc3545;
+            --accent-blue: #E3F2FD;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: var(--pure-white); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
+        body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: var(--pure-white); color: var(--text-dark); line-height: 1.7; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
 
         /* --- 布局组件 --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; position: relative; flex: 1; width: 100%; }
@@ -30,7 +31,7 @@
         .nav-item:hover { color: var(--klein-blue); }
         
         /* --- 按钮系统 --- */
-        .btn { padding: 12px 28px; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 1rem; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn { padding: 10px 24px; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.95rem; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
         .btn:active { transform: scale(0.98); }
         .btn-primary { background: var(--klein-blue); color: white; box-shadow: 0 4px 10px rgba(0, 47, 167, 0.2); }
         .btn-primary:hover { background: #002585; box-shadow: 0 6px 15px rgba(0, 47, 167, 0.3); }
@@ -38,7 +39,6 @@
         .btn-outline:hover { background: var(--gray-bg); }
         .btn-ghost { background: var(--bright-yellow); color: var(--klein-blue); }
         .btn-ghost:hover { background: #e6c200; }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
         /* --- 英雄页 --- */
         #hero-page { text-align: center; padding: 60px 20px; animation: fadeIn 0.8s ease-out; }
@@ -71,30 +71,52 @@
         .subject-card h4 { color: var(--klein-blue); font-size: 1.3rem; margin-bottom: 8px; }
         .subject-card p { color: #888; font-size: 0.9rem; }
 
-        /* --- 知识学习 --- */
+        /* --- 知识学习 (Rich Content Styles) --- */
         .content-section { display: none; padding-bottom: 60px; animation: fadeIn 0.5s; }
         .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; border-bottom: 2px solid #f0f0f0; padding-bottom: 20px; }
         .section-title h2 { font-size: 2rem; color: var(--klein-blue); }
-        .section-tag { background: var(--bright-yellow); color: var(--klein-blue); padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; }
-
+        
         .knowledge-content { background: var(--pure-white); padding: 50px; border-radius: 16px; border: 1px solid #eee; box-shadow: 0 5px 20px rgba(0,0,0,0.02); }
-        .knowledge-content h3 { color: var(--klein-blue); font-size: 1.6rem; margin: 40px 0 20px 0; border-bottom: 2px solid var(--bright-yellow); padding-bottom: 10px; display: inline-block; }
-        .knowledge-content h3:first-child { margin-top: 0; }
-        .knowledge-content h4 { color: #444; font-size: 1.2rem; margin: 25px 0 10px 0; font-weight: 700; }
-        .knowledge-content p { margin-bottom: 15px; color: #444; text-align: justify; font-size: 1.05rem; }
-        .knowledge-content ul, .knowledge-content ol { margin-left: 25px; margin-bottom: 20px; color: #555; }
-        .knowledge-content li { margin-bottom: 10px; line-height: 1.7; }
-        .knowledge-content table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 0.95rem; border-radius: 8px; overflow: hidden; }
-        .knowledge-content th, .knowledge-content td { border: 1px solid #eee; padding: 15px; text-align: left; }
-        .knowledge-content th { background-color: var(--klein-blue); color: white; border-color: var(--klein-blue); }
-        .knowledge-content tr:nth-child(even) { background-color: #f9f9f9; }
-        .key-concept { background: #fffde7; padding: 2px 6px; border-radius: 4px; color: #b38f00; font-weight: bold; border: 1px solid #ffeeba; }
+        
+        .k-title-main { font-size: 1.8rem; color: var(--klein-blue); margin-bottom: 30px; border-bottom: 3px solid var(--bright-yellow); padding-bottom: 10px; display: inline-block; font-weight: 800; }
+        .k-title-sub { font-size: 1.4rem; color: var(--text-dark); margin: 40px 0 20px; font-weight: 700; border-left: 5px solid var(--klein-blue); padding-left: 15px; background: linear-gradient(to right, #f4f7ff, transparent); padding-top: 5px; padding-bottom: 5px;}
+        .k-strong { color: var(--klein-blue); font-weight: 700; background-color: #eef2ff; padding: 0 4px; border-radius: 4px; }
+        .k-term { font-weight: 600; color: #333; }
+        
+        .concept-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 20px 0; }
+        .concept-card { background: #f9f9f9; border: 1px solid #eee; padding: 20px; border-radius: 8px; transition: 0.3s; }
+        .concept-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-color: var(--klein-blue); }
+        .concept-title { font-weight: 700; color: var(--klein-blue); margin-bottom: 8px; display: block; }
+
+        .formula-box { background: var(--text-dark); color: white; padding: 20px; border-radius: 8px; margin: 20px 0; font-family: 'Consolas', monospace; font-size: 1.1rem; text-align: center; border-left: 5px solid var(--bright-yellow); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .formula-desc { font-size: 0.9rem; color: #aaa; margin-top: 5px; font-weight: normal; }
+
+        .k-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
+        .k-table th, .k-table td { border: 1px solid #eee; padding: 15px; text-align: left; }
+        .k-table th { background-color: var(--klein-blue); color: white; font-weight: 600; }
+        .k-table tr:nth-child(even) { background-color: #f8f9fa; }
+        
+        /* 5S 色块 */
+        .color-badge { display: inline-block; width: 120px; padding: 5px; text-align: center; color: white; font-weight: bold; border-radius: 4px; margin-right: 10px; font-size: 0.9rem; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+        .bg-yellow { background-color: #FFD700; color: #333; }
+        .bg-red { background-color: #dc3545; }
+        .bg-blue { background-color: #007bff; }
+        .bg-green { background-color: #28a745; }
+        .bg-zebra { background: repeating-linear-gradient(45deg, #FFD700, #FFD700 10px, #000 10px, #000 20px); color: white; text-shadow: 0 0 3px #000; }
+
+        /* VSM */
+        .vsm-timeline { display: flex; margin: 30px 0; align-items: flex-end; }
+        .vsm-step { text-align: center; flex: 1; position: relative; padding-bottom: 20px; border-bottom: 2px solid #333; }
+        .vsm-step::after { content: ""; position: absolute; bottom: 0; right: 0; width: 2px; height: 10px; background: #333; }
+        .vsm-step:last-child::after { display: none; }
+        .vsm-top { color: var(--fail-red); font-weight: bold; margin-bottom: 5px; font-size: 0.9rem; }
+        .vsm-btm { color: var(--success-green); font-weight: bold; margin-top: 10px; font-size: 0.9rem; position: absolute; bottom: -30px; width: 100%; left: 0; }
+        .vsm-line-container { height: 60px; position: relative; margin-bottom: 40px; border-left: 2px solid #333; }
 
         /* --- 题库与考试 --- */
         .question-wrapper { max-width: 950px; margin: 0 auto; display: flex; gap: 20px; align-items: flex-start; }
         .question-main { flex: 1; }
         
-        /* 题目导航网格 */
         .q-nav-grid { 
             display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; 
             background: white; padding: 20px; border-radius: 12px; border: 1px solid #eee;
@@ -107,7 +129,6 @@
         .q-nav-item:hover { background: #e0e7ff; }
         .q-nav-item.active { border: 2px solid var(--klein-blue); color: var(--klein-blue); }
         .q-nav-item.answered { background: var(--klein-blue); color: white; }
-        .q-nav-item.flagged { border-color: var(--bright-yellow); }
 
         .q-card { background: var(--pure-white); padding: 40px; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.04); border: 1px solid #eee; position: relative; min-height: 400px; }
         .q-header { display: flex; justify-content: space-between; align-items: center; color: #888; font-size: 0.9rem; margin-bottom: 25px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
@@ -133,7 +154,7 @@
 
         .feedback-box { margin-top: 25px; padding: 20px; background: var(--gray-bg); border-radius: 10px; border-left: 4px solid var(--klein-blue); animation: fadeIn 0.3s; display: none; }
         
-        /* --- 结果页动画 --- */
+        /* --- 结果页 --- */
         #result-section { text-align: center; display: none; padding-top: 50px; flex: 1; }
         .result-icon-container { height: 180px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; position: relative; }
         
@@ -144,34 +165,20 @@
         .score-label { font-size: 1.2rem; color: #888; text-transform: uppercase; letter-spacing: 2px; }
         .result-msg { font-size: 1.5rem; margin: 20px 0 40px; font-weight: 600; }
 
-        /* 烟花/彩带效果 */
         .confetti { position: absolute; width: 10px; height: 10px; background-color: var(--bright-yellow); animation: fall linear forwards; opacity: 0; }
 
-        /* --- 动画关键帧 --- */
+        /* 动画 */
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes bounceIn { 0% { transform: scale(0); opacity: 0; } 60% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1); } }
         @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-10px); } 40%, 80% { transform: translateX(10px); } }
         @keyframes fall { 0% { top: -10%; transform: rotate(0deg) translateX(0); opacity: 1; } 100% { top: 100%; transform: rotate(360deg) translateX(50px); opacity: 0; } }
 
-        /* 工具栏 */
         .toolbar { display: flex; justify-content: space-between; margin-top: 30px; align-items: center; }
         #timer-box { font-family: monospace; font-size: 1.5rem; font-weight: bold; background: var(--klein-blue); color: white; padding: 8px 20px; border-radius: 6px; display: none; box-shadow: 0 4px 10px rgba(0,47,167,0.3); }
 
-        /* Footer 样式 */
         footer { text-align: center; padding: 40px; color: #999; font-size: 0.9rem; border-top: 1px solid #eee; margin-top: auto; transition: all 0.3s; }
-        
-        /* 醒目落款 (仅用于首页) */
-        footer.hero-footer {
-            background: var(--klein-blue);
-            color: white;
-            border-top: none;
-            padding: 60px 20px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            box-shadow: 0 -10px 30px rgba(0,47,167,0.1);
-        }
+        footer.hero-footer { background: var(--klein-blue); color: white; border-top: none; padding: 60px 20px; font-size: 1.1rem; font-weight: 700; letter-spacing: 1px; box-shadow: 0 -10px 30px rgba(0,47,167,0.1); }
         footer.hero-footer p { opacity: 0.9; }
 
         @media (max-width: 900px) {
@@ -193,23 +200,23 @@
 
         <section id="hero-page">
             <h1 class="hero-title">哈尔斯带级认证学习系统</h1>
-            <p class="hero-subtitle">基于哈尔斯集团精益体系打造的数字化认证平台。海量题库，真实模拟，助您快速掌握核心方法论。</p>
+            <p class="hero-subtitle">哈尔斯集团精益革新办出品 | 打造全员精益基因</p>
             
             <div class="mode-grid">
                 <div class="mode-card" onclick="selectMode('study')">
                     <span class="mode-icon">📖</span>
                     <h3>深度学习</h3>
-                    <p>6大模块，深度解析。含5W1H定义、计算公式演练与实战案例。</p>
+                    <p>6大核心模块，包含详细定义、公式推导、图解案例。中英对照，扫除语言障碍。</p>
                 </div>
                 <div class="mode-card" onclick="selectMode('practice')">
                     <span class="mode-icon">⚡</span>
                     <h3>强化训练</h3>
-                    <p>智能生成海量不重复题目。含单选与判断题，支持跳题与实时解析。</p>
+                    <p>海量题库智能生成。混合单选与专业判断题，直击知识盲区，实时解析。</p>
                 </div>
                 <div class="mode-card" onclick="selectMode('exam')">
                     <span class="mode-icon">🏅</span>
                     <h3>资格认证</h3>
-                    <p>20题 | 80分及格。严格限时，全真模拟考试环境，系统自动评判。</p>
+                    <p>20题 | 80分及格。模拟真实考试环境，倒计时机制，系统自动评分。</p>
                 </div>
             </div>
         </section>
@@ -225,27 +232,27 @@
             <div class="subject-grid">
                 <div class="subject-card" onclick="startActivity('DM')">
                     <h4>DM 日常管理</h4>
-                    <p>班前会、变化点管理、SQDC看板</p>
+                    <p>班前会、4M变化点、SQDC、Andon</p>
                 </div>
                 <div class="subject-card" onclick="startActivity('PSP')">
                     <h4>PSP 问题解决</h4>
-                    <p>5Why、鱼骨图、5W2H、PDCA</p>
+                    <p>5W2H、5Why、鱼骨图、PDCA</p>
                 </div>
                 <div class="subject-card" onclick="startActivity('SW')">
                     <h4>SW 标准作业</h4>
-                    <p>线平衡、TT计算、三大票据</p>
+                    <p>TT/CT计算、线平衡、标准三票</p>
                 </div>
                 <div class="subject-card" onclick="startActivity('VSM')">
                     <h4>VSM 价值流</h4>
-                    <p>Lead Time、增值比、未来图规划</p>
+                    <p>增值比、Lead Time、未来态规划</p>
                 </div>
                 <div class="subject-card" onclick="startActivity('5S')">
                     <h4>5S & 目视化</h4>
-                    <p>红牌作战、定置管理、颜色标准</p>
+                    <p>红牌作战、三定、颜色标准(VCS)</p>
                 </div>
                 <div class="subject-card" onclick="startActivity('TIMWOODS')">
                     <h4>TIMWOODS 八大浪费</h4>
-                    <p>七大浪费+人才浪费、识别与消除</p>
+                    <p>八大浪费识别、ECRS改善四原则</p>
                 </div>
             </div>
         </section>
@@ -324,211 +331,270 @@
             "DM": {
                 "title": "DM - 日常管理 (Daily Management)",
                 "content": `
-                    <h3>2.1 知识点深度解析</h3>
-                    <p>日常管理是精益生产的“底盘”。如果说方针管理 (Hoshin Kanri) 是为了实现突破性目标，那么日常管理就是为了维持业绩的稳定性。没有稳固的日常管理，所有的改善成果都会随着时间推移而退化。</p>
-                    
-                    <h4>2.1.1 班前会 (Asakai / Pre-shift Meeting)</h4>
-                    <p>班前会不是单纯的“点名集会”，而是生产作战的部署会议。其核心在于“对齐” (Alignment)。</p>
-                    <ul>
-                        <li><strong>标准时长</strong>：5-10 分钟，站立进行。</li>
-                        <li><strong>标准议程</strong>：
-                            <ul>
-                                <li>人员确认：检查出勤及精神状态（4M中的Man）。</li>
-                                <li>安全宣贯：回顾昨日安全隐患或 KYT（危险预知训练）。</li>
-                                <li>业绩回顾：基于 SQDC 看板，红绿区分。红色指标必须说明原因及对策。</li>
-                                <li>今日目标：明确产量、换型计划及重点关注事项。</li>
-                            </ul>
-                        </li>
-                    </ul>
+                    <div class="k-title-main">日常管理：精益的底盘</div>
+                    <p>日常管理 (Daily Management) 的核心目的是<strong>维持现状</strong>并<strong>稳定绩效</strong>。如果说方针管理 (Hoshin Kanri) 是为了实现突破性目标，那么日常管理就是为了防止退步。没有稳固的日常管理，改善成果无法保持。</p>
 
-                    <h4>2.1.2 SQDC 绩效看板逻辑</h4>
-                    <p>SQDC 是现场管理的仪表盘，代表了企业经营的平衡记分卡。</p>
-                    <table>
-                        <tr><th>维度</th><th>关注点</th></tr>
-                        <tr><td><strong>S (Safety 安全)</strong></td><td>永远的第一优先级。通常记录无灾害天数、未遂事故件数。</td></tr>
-                        <tr><td><strong>Q (Quality 质量)</strong></td><td>关注过程质量（如直通率 FPY）和结果质量（如客户投诉）。</td></tr>
-                        <tr><td><strong>D (Delivery 交付)</strong></td><td>关注计划达成率和人均小时产出 (UPPH)。</td></tr>
-                        <tr><td><strong>C (Cost 成本)</strong></td><td>关注辅料消耗、加班工时、废品金额。</td></tr>
+                    <div class="k-title-sub">1. SQDC 绩效看板</div>
+                    <p>SQDC 是现场管理的“仪表盘”，代表了企业经营的平衡记分卡。管理者应遵循<span class="k-strong">“3秒法则”</span>：3秒内通过颜色（红/绿）判断状态。</p>
+                    <table class="k-table">
+                        <tr><th>维度</th><th>全称 (中文)</th><th>关注指标示例</th></tr>
+                        <tr><td><strong>S</strong></td><td>Safety (安全)</td><td>无灾害天数、未遂事故件数 (Near Miss)</td></tr>
+                        <tr><td><strong>Q</strong></td><td>Quality (质量)</td><td>直通率 (FPY)、客诉 (Customer Complaints)</td></tr>
+                        <tr><td><strong>D</strong></td><td>Delivery (交付)</td><td>计划达成率、UPPH (人均时产)</td></tr>
+                        <tr><td><strong>C</strong></td><td>Cost (成本)</td><td>废品金额、加班工时 (Overtime)</td></tr>
                     </table>
-                    <p><span class="key-concept">3秒法则</span>：管理者在3秒内通过颜色（红/绿）判断当前状态是否正常。</p>
 
-                    <h4>2.1.3 4M 变化点管理</h4>
-                    <p>生产不稳定的最大来源是 4M 的变化。精益理论认为，只要 4M 发生变化，产生不良的概率就会指数级上升。</p>
-                    <ul>
-                        <li><strong>Man (人)</strong>：新员工入职、顶岗、情绪波动。</li>
-                        <li><strong>Machine (机)</strong>：设备维修后、刀具更换、新设备引入。</li>
-                        <li><strong>Material (料)</strong>：供应商变更、材料批次变更、代用料。</li>
-                        <li><strong>Method (法)</strong>：工艺参数调整、SOP 变更。</li>
-                    </ul>
-                    <p><strong>初物管理</strong>：当 4M 发生变化时，必须执行“初物管理”流程，对变化后的首件产品进行加严确认。</p>
+                    <div class="k-title-sub">2. 班前会 (Asakai / Pre-shift Meeting)</div>
+                    <p>不是点名会，而是“作战部署会”。核心在于<strong>对齐 (Alignment)</strong>。</p>
+                    <div class="concept-grid">
+                        <div class="concept-card">
+                            <span class="concept-title">⏱️ 标准时长</span>
+                            5-10 分钟，必须<strong>站立 (Stand-up)</strong> 进行，以保持紧迫感。
+                        </div>
+                        <div class="concept-card">
+                            <span class="concept-title">📋 议程重点</span>
+                            1. 人员确认 (Man)<br>2. 安全宣贯 (Safety/KYT)<br>3. 昨日回顾 (SQDC红绿)<br>4. 今日目标 (Target)
+                        </div>
+                    </div>
 
-                    <h4>2.1.4 异常响应闭环 (Andon System)</h4>
-                    <p>异常管理遵循“三现主义”（现场、现物、现实）。</p>
+                    <div class="k-title-sub">3. 4M 变化点管理</div>
+                    <p>生产不稳定的最大来源是 4M 的变化。只要 4M 发生变化，必须执行<strong>初物管理 (First Piece Inspection)</strong>。</p>
                     <ul>
-                        <li><strong>流程</strong>：发现异常 -> 停止生产 -> 呼叫班组长 (Andon) -> 等待/处理。</li>
-                        <li><strong>核心原则</strong>：不接受不良、不制造不良、不流出不良。</li>
+                        <li><span class="k-term">Man (人)</span>：新员工、顶岗、情绪波动。</li>
+                        <li><span class="k-term">Machine (机)</span>：设备维修后、刀具更换、新设备。</li>
+                        <li><span class="k-term">Material (料)</span>：供应商变更、批次变更、代用料。</li>
+                        <li><span class="k-term">Method (法)</span>：工艺参数调整、SOP 变更。</li>
                     </ul>
+
+                    <div class="k-title-sub">4. 异常响应闭环 (Andon System)</div>
+                    <p>遵循“三现主义”：<strong>现场 (Genba)、现物 (Genbutsu)、现实 (Genjitsu)</strong>。</p>
+                    <p>流程：发现异常 → 停止生产 (Stop) → 呼叫班长 (Call) → 等待/处理 (Wait)。<br>原则：<strong>不接受、不制造、不流出不良</strong>。</p>
                 `
             },
             "PSP": {
-                "title": "PSP - 问题解决 (Problem Solving)",
+                "title": "PSP - 问题解决 (Problem Solving Process)",
                 "content": `
-                    <h3>3.1 知识点深度解析</h3>
-                    <p>PSP 模块旨在培养全员的逻辑思维能力，从“救火队员”转变为“防火专家”。本模块的核心在于区分“现象”与“真因”，并强调数据驱动的决策。</p>
+                    <div class="k-title-main">PSP：从救火到防火</div>
+                    <p>PSP 的核心在于逻辑思维，区分“现象”与“真因”，并强调数据驱动。不仅要解决问题，更要防止再发 (Recurrence Prevention)。</p>
 
-                    <h4>3.1.1 5W2H 问题描述法</h4>
-                    <p>一个描述清晰的问题已经解决了一半。5W2H 用于量化“现状”与“标准”之间的差距。</p>
-                    <ul>
-                        <li><strong>What (什么)</strong>：具体是什么缺陷？（例：表面划痕，而非“机器坏了”）。</li>
-                        <li><strong>Where (哪里)</strong>：缺陷在产品的哪个位置？在流程的哪个环节？</li>
-                        <li><strong>When (何时)</strong>：发生的时间？班次？周期点？</li>
-                        <li><strong>Who (谁)</strong>：虽然不指责个人，但需记录相关人员技能等级、供应商信息以排查规律。</li>
-                        <li><strong>Why (为什么)</strong>：这是问题的初步影响（为什么它是问题？）。</li>
-                        <li><strong>How (如何)</strong>：发生的模式是怎样的？</li>
-                        <li><strong>How Much (多少)</strong>：数量、频率、造成的金钱损失。</li>
+                    <div class="k-title-sub">1. 5W2H 问题描述法</div>
+                    <p>一个描述清晰的问题已经解决了一半。用于量化现状与标准之间的差距 (Gap)。</p>
+                    <ul style="line-height:2;">
+                        <li><span class="k-term">What (什么)</span>：具体是什么缺陷？（例：表面划痕，而非“机器坏了”）</li>
+                        <li><span class="k-term">Where (哪里)</span>：缺陷在产品的哪个位置？流程哪一环？</li>
+                        <li><span class="k-term">When (何时)</span>：发生时间、班次、周期点？</li>
+                        <li><span class="k-term">Who (谁)</span>：与人员技能、供应商有关吗？（<span class="k-strong">注意：不是为了指责个人</span>）</li>
+                        <li><span class="k-term">Why (为什么)</span>：为什么这是个问题？影响了什么？</li>
+                        <li><span class="k-term">How (如何)</span>：发生的模式是怎样的？</li>
+                        <li><span class="k-term">How Much (多少)</span>：数量、频率、金钱损失 (Cost)。</li>
                     </ul>
 
-                    <h4>3.1.2 5Why 真因分析</h4>
-                    <p>5Why 是一种挖掘深层原因的钻探技术。</p>
-                    <ul>
-                        <li><strong>逻辑原则</strong>：不仅是问5次，而是问到真因浮现为止。</li>
-                        <li><strong>验证方法</strong>：倒推法。用“因此” (Therefore) 将真因连回现象，逻辑必须通畅。</li>
-                    </ul>
+                    <div class="k-title-sub">2. 根本原因分析工具</div>
+                    <div class="concept-grid">
+                        <div class="concept-card">
+                            <span class="concept-title">🔍 5Why 分析法</span>
+                            一种挖掘深层原因的钻探技术。
+                            <br><strong>原则</strong>：问到真因浮现为止，不一定是5次。
+                            <br><strong>验证</strong>：倒推法 (Therefore)，逻辑必须通畅。
+                        </div>
+                        <div class="concept-card">
+                            <span class="concept-title">🐟 鱼骨图 (Fishbone)</span>
+                            又称石川图 (Ishikawa)，用于头脑风暴。
+                            <br><strong>鱼头</strong>：问题陈述。
+                            <br><strong>大骨 (4M1E)</strong>：人、机、料、法、环。
+                        </div>
+                    </div>
 
-                    <h4>3.1.3 鱼骨图 (4M1E / Ishikawa)</h4>
-                    <p>当原因未知，需要发散思维时使用。</p>
+                    <div class="k-title-sub">3. PDCA 循环</div>
+                    <p>所有改善活动的基础逻辑。</p>
                     <ul>
-                        <li><strong>鱼头</strong>：问题陈述。</li>
-                        <li><strong>大骨</strong>：4M1E（人、机、料、法、环）。</li>
-                        <li><strong>小骨</strong>：具体的潜在因子。</li>
-                    </ul>
-
-                    <h4>3.1.4 PDCA 完整循环</h4>
-                    <ul>
-                        <li><strong>Plan (计划)</strong>：定义问题 -> 分析原因 -> 制定对策。</li>
-                        <li><strong>Do (执行)</strong>：实施对策。</li>
-                        <li><strong>Check (检查)</strong>：验证对策有效性（Gap是否消除？）。</li>
-                        <li><strong>Act (处理)</strong>：如果有效，标准化 (Standardize) 并推广 (Yokoten)；如果无效，重新开始。</li>
+                        <li><span class="k-term">P (Plan)</span>：定义问题、分析原因、制定对策。</li>
+                        <li><span class="k-term">D (Do)</span>：执行对策。</li>
+                        <li><span class="k-term">C (Check)</span>：检查效果，验证 Gap 是否消除。</li>
+                        <li><span class="k-term">A (Act)</span>：如果有效，进行<strong>标准化 (Standardization)</strong> 和横向展开 (Yokoten)；无效则重新开始。</li>
                     </ul>
                 `
             },
             "SW": {
                 "title": "SW - 标准作业 (Standard Work)",
                 "content": `
-                    <h3>4.1 知识点深度解析</h3>
-                    <p>标准作业是改善的起点。它不是僵化的教条，而是当前最佳的作业方法。</p>
+                    <div class="k-title-main">标准作业：改善的起点</div>
+                    <p>标准作业不是僵化的教条，而是<strong>当前最佳</strong>的作业方法。它是管理者与员工之间的契约，也是持续改善 (Kaizen) 的基准。</p>
 
-                    <h4>4.1.1 节拍时间 (Takt Time, TT)</h4>
-                    <p>TT 是客户需求的脉搏。它决定了生产线应该以多快的速度运转。</p>
-                    <div style="background:#eee; padding:15px; border-radius:5px; margin:10px 0;">
-                        <strong>公式：</strong> Takt Time = 净可用工作时间 / 客户需求量
-                    </div>
-                    <p><strong>意义</strong>：如果 TT = 60秒，意味着必须每60秒产出一件成品。快了是过量生产，慢了是延误。</p>
-
-                    <h4>4.1.2 循环时间 (Cycle Time, CT)</h4>
-                    <p>作业者完成一个循环动作实测所需的时间。当 CT > TT 时，为瓶颈；当 CT < TT 时，为产能过剩。</p>
-
-                    <h4>4.1.3 线平衡 (Line Balancing)</h4>
-                    <p>旨在消除工序间的不平衡，提升效率。线平衡率 (LBE) 公式：</p>
-                    <div style="background:#eee; padding:15px; border-radius:5px; margin:10px 0;">
-                        <strong>LBE =</strong> (∑各工序CT) / (瓶颈工序CT × 工序数) × 100%
+                    <div class="k-title-sub">1. 核心计算公式</div>
+                    
+                    <div class="formula-box">
+                        TT (Takt Time 节拍时间) = <br>
+                        净可用工作时间 / 客户需求量
+                        <div class="formula-desc">
+                            * TT 是客户需求的脉搏，决定生产线的速度。<br>
+                            * 净可用时间扣除休息、会议等计划停机，<span class="k-strong">不扣除</span>故障、换型。
+                        </div>
                     </div>
 
-                    <h4>4.1.4 标准手持 (SWIP)</h4>
-                    <p>为维持标准作业循环，线内必须持有的最少在制品数量。</p>
-                    <p><strong>公式</strong>：SWIP = ∑(人工时间 + 自动加工时间) / Takt Time (向上取整)</p>
+                    <div class="formula-box">
+                        LBE (Line Balancing Efficiency 线平衡率) = <br>
+                        (∑各工序CT) / (瓶颈工序CT × 工序数) × 100%
+                        <div class="formula-desc">
+                            * 衡量流水线负荷是否均匀。<br>
+                            * 改善方法：ECRS (削峰填谷)。
+                        </div>
+                    </div>
 
-                    <h4>4.1.5 标准作业三票</h4>
-                    <ul>
-                        <li><strong>工程别能力表</strong>：各工序的加工能力，识别瓶颈。</li>
-                        <li><strong>标准作业组合票</strong>：人机时间的组合，展示作业顺序。</li>
-                        <li><strong>标准作业票</strong>：现场布局图，标注人员动线、SWIP 位置、安全注意点。</li>
-                    </ul>
+                    <div class="formula-box">
+                        SWIP (Standard WIP 标准手持) = <br>
+                        ∑(人工时间 + 自动加工时间) / Takt Time
+                        <div class="formula-desc">
+                            * 结果通常向上取整。<br>
+                            * 定义：维持标准作业循环所需的<span class="k-strong">最小</span>在制品数量。
+                        </div>
+                    </div>
+
+                    <div class="k-title-sub">2. 关键概念辨析</div>
+                    <table class="k-table">
+                        <tr><th>概念</th><th>解释</th></tr>
+                        <tr><td><strong>Cycle Time (CT)</strong></td><td>循环时间。作业者完成一个循环实测所需的时间。当 CT > TT，为瓶颈；CT < TT，为浪费。</td></tr>
+                        <tr><td><strong>标准作业三要素</strong></td><td>1. 节拍时间 (TT)<br>2. 作业顺序 (Work Sequence)<br>3. 标准手持 (SWIP)</td></tr>
+                        <tr><td><strong>标准作业三票</strong></td><td>1. 工程别能力表 (各工序能力)<br>2. 标准作业组合票 (人机时间组合)<br>3. 标准作业票 (布局与动线)</td></tr>
+                    </table>
                 `
             },
             "VSM": {
                 "title": "VSM - 价值流图 (Value Stream Mapping)",
                 "content": `
-                    <h3>5.1 知识点深度解析</h3>
-                    <p>VSM 是精益的“战略地图”。它不同于流程图，因为 VSM 必须包含信息流，并严格区分增值 (VA) 与非增值 (NVA) 时间。</p>
+                    <div class="k-title-main">VSM：精益的战略地图</div>
+                    <p>VSM 不同于流程图，它必须包含<strong>信息流</strong>和<strong>时间线</strong>，且严格区分增值 (VA) 与非增值 (NVA) 时间。核心目的是看清全貌 (Big Picture)。</p>
 
-                    <h4>5.1.1 VSM 核心图标与语义</h4>
+                    <div class="k-title-sub">1. 核心图标与语义</div>
+                    <div class="concept-grid">
+                        <div class="concept-card">
+                            <span class="concept-title">⚠️ 库存三角 (I)</span>
+                            代表工序间的停滞和库存，是 Lead Time 的主要来源。
+                        </div>
+                        <div class="concept-card">
+                            <span class="concept-title">🦓 推式箭头 (Push)</span>
+                            黑白格粗箭头。代表按计划生产，不管下道工序是否需要。
+                        </div>
+                        <div class="concept-card">
+                            <span class="concept-title">🛒 超市 (Supermarket)</span>
+                            开口向右的 U 型。代表受控的拉动库存。
+                        </div>
+                        <div class="concept-card">
+                            <span class="concept-title">⚡ 电子信息流</span>
+                            闪电折线。代表 ERP、EDI、Email 等电子指令。
+                        </div>
+                    </div>
+
+                    <div class="k-title-sub">2. 关键计算与时间线</div>
+                    <p>VSM 底部的时间线分为两部分：</p>
+                    <div class="vsm-line-container">
+                        <div class="vsm-timeline">
+                            <div class="vsm-step">库存<div class="vsm-top">Lead Time (天)</div></div>
+                            <div class="vsm-step">加工<div class="vsm-btm">VA Time (秒)</div></div>
+                            <div class="vsm-step">库存<div class="vsm-top">Lead Time (天)</div></div>
+                            <div class="vsm-step">加工<div class="vsm-btm">VA Time (秒)</div></div>
+                        </div>
+                    </div>
                     <ul>
-                        <li><strong>库存三角 (I)</strong>：工序间的停滞。</li>
-                        <li><strong>推式箭头 (黑白格)</strong>：按照计划生产，不管下道工序是否需要。</li>
-                        <li><strong>超市 (开口U型)</strong>：受控的拉动库存。</li>
-                        <li><strong>电子信息 (闪电折线)</strong>：ERP、EDI、电子邮件。</li>
+                        <li><strong>Lead Time (交付周期)</strong> = 库存数量 / 日客户需求量。</li>
+                        <li><strong>增值比 (VA Ratio)</strong> = 总增值时间 / 总 Lead Time。传统工厂通常 < 1%。</li>
                     </ul>
 
-                    <h4>5.1.2 关键计算逻辑</h4>
+                    <div class="k-title-sub">3. 未来态 (Future State) 关键词</div>
                     <ul>
-                        <li><strong>Lead Time (交付周期)</strong>：库存数量 / 日客户需求量。</li>
-                        <li><strong>Timeline (时间线)</strong>：上部为 Lead Time (天)，下部为 Processing Time (秒)。</li>
-                        <li><strong>增值比</strong>：VA / LT。传统工厂通常小于 1%。</li>
-                    </ul>
-
-                    <h4>5.1.3 未来态 (Future State) 设计八问</h4>
-                    <ul>
-                        <li>Takt Time 是多少？</li>
-                        <li>是建立成品超市还是直接发运？</li>
-                        <li>在哪里实现连续流？</li>
-                        <li>定拍工序 (Pacemaker) 在哪里？</li>
-                        <li>如何均衡生产 (Heijunka)？</li>
+                        <li><span class="k-term">Takt Time</span>：按客户节拍生产。</li>
+                        <li><span class="k-term">Continuous Flow (连续流)</span>：消除停顿。</li>
+                        <li><span class="k-term">Pull System (拉动)</span>：在无法流动处使用超市。</li>
+                        <li><span class="k-term">Pacemaker (定拍工序)</span>：全厂唯一接收计划的工序。</li>
+                        <li><span class="k-term">Heijunka (均衡化)</span>：混合排产，平抑波动。</li>
                     </ul>
                 `
             },
             "5S": {
-                "title": "5S & 目视化 (Foundation)",
+                "title": "5S & 目视化 (Visual Control System)",
                 "content": `
-                    <h3>6.1 知识点深度解析</h3>
-                    <p>5S 绝非大扫除，而是“异常探测系统”的构建。如果在5秒内，无法在现场分辨出什么是正常、什么是异常，那么5S就是失败的。</p>
+                    <div class="k-title-main">5S：异常探测系统</div>
+                    <p>5S 绝非简单的打扫卫生。如果一个陌生人在 5 秒内无法分辨现场的正常与异常，说明 5S 是失败的。</p>
 
-                    <h4>6.1.1 红牌作战 (Red Tag Strategy)</h4>
-                    <p>用于整理 (Seiri) 阶段，通过贴红牌来识别“不要物”。</p>
-                    <p><strong>流程</strong>：挂牌 -> 移送(至红牌区) -> 处置(废弃/变卖)。核心是将隐性库存显性化。</p>
-
-                    <h4>6.1.2 三定原则 (3 Fix)</h4>
-                    <p>用于整顿 (Seiton) 阶段，消除寻找的浪费。</p>
-                    <ul>
-                        <li><strong>定点</strong>：哪里？（地址化）</li>
-                        <li><strong>定品</strong>：什么东西？（标识/形迹管理）</li>
-                        <li><strong>定量</strong>：多少？（最大/最小库存线）</li>
+                    <div class="k-title-sub">1. 5S 定义与核心</div>
+                    <ul style="line-height: 2;">
+                        <li><strong>整理 (Seiri)</strong>：区分要与不要。核心工具：<span class="k-strong">红牌作战 (Red Tag)</span>。</li>
+                        <li><strong>整顿 (Seiton)</strong>：三定原则（<span class="k-strong">定点、定品、定量</span>）。核心：消除“寻找”的浪费。</li>
+                        <li><strong>清扫 (Seiso)</strong>：<span class="k-strong">清扫即点检</span>。目的是发现微缺陷（如漏油、松动）。</li>
+                        <li><strong>清洁 (Seiketsu)</strong>：标准化。将前 3S 制度化、规范化。</li>
+                        <li><strong>素养 (Shitsuke)</strong>：习惯与纪律。守规则。</li>
                     </ul>
 
-                    <h4>6.1.3 目视化颜色标准 (VCS)</h4>
+                    <div class="k-title-sub">2. 目视化颜色标准 (VCS)</div>
+                    <p>哈尔斯工厂通用标准：</p>
+                    <div style="margin-top:20px;">
+                        <p><span class="color-badge bg-yellow">黄色 Yellow</span> 通道线、一般区域分界。</p>
+                        <p><span class="color-badge bg-red">红色 Red</span> 不合格品区、消防设备、危险品、红牌区。</p>
+                        <p><span class="color-badge bg-blue">蓝色 Blue</span> 原材料区、在制品 (WIP)、待检区。</p>
+                        <p><span class="color-badge bg-green">绿色 Green</span> 合格品区、成品区、安全设施。</p>
+                        <p><span class="color-badge bg-zebra">黑黄斑马</span> 警示区域（如电柜前、坑洞边缘）。</p>
+                    </div>
+
+                    <div class="k-title-sub">3. 红牌作战 (Red Tag Strategy)</div>
+                    <p>将隐性库存显性化的强力工具。</p>
                     <ul>
-                        <li><strong>黄色</strong>：通道线、区域分界线。</li>
-                        <li><strong>红色</strong>：不合格品区、消防、危险区。</li>
-                        <li><strong>蓝色</strong>：原材料、在制品 (WIP)。</li>
-                        <li><strong>绿色</strong>：合格品区、成品区。</li>
+                        <li><strong>挂牌</strong>：对不确定或不需要的物品贴红牌。</li>
+                        <li><strong>移送</strong>：移动到暂存区 (Red Tag Area)。</li>
+                        <li><strong>处置</strong>：冻结期满后，废弃、变卖或归位。</li>
                     </ul>
                 `
             },
             "TIMWOODS": {
                 "title": "TIMWOODS - 八大浪费与 ECRS",
                 "content": `
-                    <h3>7.1 知识点深度解析</h3>
-                    <p>精益的核心是消除浪费 (Muda)。哈尔斯采用 TIMWOODS 八大浪费模型，并加入 ECRS 方法论作为消除手段。</p>
+                    <div class="k-title-main">消除浪费 (Muda)</div>
+                    <p>精益的核心是消除浪费。除了增值 (VA) 活动，其他一切不增加价值的活动都是浪费。哈尔斯采用 TIMWOODS 模型。</p>
 
-                    <h4>7.1.1 八大浪费 (TIMWOODS)</h4>
-                    <ul>
-                        <li><strong>T (Transportation 搬运)</strong>：不产生价值的物料移动。</li>
-                        <li><strong>I (Inventory 库存)</strong>：超过即时需求的物料，掩盖问题。</li>
-                        <li><strong>M (Motion 动作)</strong>：人的非增值活动（如弯腰、寻找）。</li>
-                        <li><strong>W (Waiting 等待)</strong>：人或机闲置。</li>
-                        <li><strong>O (Overproduction 过量生产)</strong>：万恶之源，导致所有其他浪费。</li>
-                        <li><strong>O (Over-processing 过加工)</strong>：超出客户要求的加工。</li>
-                        <li><strong>D (Defects 不良)</strong>：返工、报废。</li>
-                        <li><strong>S (Skills 人才浪费)</strong>：未利用员工的智慧。</li>
-                    </ul>
+                    <div class="k-title-sub">1. 八大浪费 (TIMWOODS)</div>
+                    <div class="concept-grid">
+                        <div class="concept-card">
+                            <span class="concept-title">T - Transportation (搬运)</span>
+                            不产生价值的物料移动。如叉车空跑、动线过长。
+                        </div>
+                        <div class="concept-card">
+                            <span class="concept-title">I - Inventory (库存)</span>
+                            掩盖问题（水落石出理论）。占用资金和场地。
+                        </div>
+                        <div class="concept-card">
+                            <span class="concept-title">M - Motion (动作)</span>
+                            <strong>人</strong>的多余活动。如弯腰、转身、找工具。
+                        </div>
+                        <div class="concept-card">
+                            <span class="concept-title">W - Waiting (等待)</span>
+                            人或机器闲置。如缺料、设备故障、等待指令。
+                        </div>
+                        <div class="concept-card">
+                            <span class="concept-title">O - Overproduction (过量生产)</span>
+                            <span class="k-strong">万恶之源</span>。生产多于或早于客户需求。
+                        </div>
+                        <div class="concept-card">
+                            <span class="concept-title">O - Over-processing (过加工)</span>
+                            超出客户要求的加工。如过度抛光、多余检测。
+                        </div>
+                        <div class="concept-card">
+                            <span class="concept-title">D - Defects (不良)</span>
+                            返工、报废、客诉。造成材料、人工倍增。
+                        </div>
+                        <div class="concept-card">
+                            <span class="concept-title">S - Skills (人才浪费)</span>
+                            未利用员工的智慧。只让动手不让动脑。
+                        </div>
+                    </div>
 
-                    <h4>7.1.2 ECRS 改善四原则</h4>
-                    <ul>
-                        <li><strong>E (Eliminate 剔除)</strong>：最好的改善是不做。</li>
-                        <li><strong>C (Combine 合并)</strong>：无法剔除时，能否合并？</li>
-                        <li><strong>R (Rearrange 重排)</strong>：改变顺序。</li>
-                        <li><strong>S (Simplify 简化)</strong>：让动作更简单。</li>
-                    </ul>
+                    <div class="k-title-sub">2. ECRS 改善四原则</div>
+                    <p>一旦识别浪费，按顺序使用 ECRS 进行消除：</p>
+                    <table class="k-table">
+                        <tr><th>原则</th><th>英文 (English)</th><th>说明与案例</th></tr>
+                        <tr><td><strong>E 剔除</strong></td><td>Eliminate</td><td><strong>首选</strong>。最好的改善是不做。例：取消不必要的审批。</td></tr>
+                        <tr><td><strong>C 合并</strong></td><td>Combine</td><td>无法剔除时尝试合并。例：加工与检测合并。</td></tr>
+                        <tr><td><strong>R 重排</strong></td><td>Rearrange</td><td>改变顺序。例：将检验放到瓶颈工序之前。</td></tr>
+                        <tr><td><strong>S 简化</strong></td><td>Simplify</td><td>让动作更简单。例：使用工装夹具、滑槽。</td></tr>
+                    </table>
                 `
             }
         };
@@ -833,202 +899,61 @@
                 { "q": "VSM 适用于？", "a": "多品种小批量和少品种大批量", "w": ["只适合一种模式", "都不适合", "看心情"] },
                 { "q": "VSM 的绘制应该限制在？", "a": "特定的产品族", "w": ["全工厂所有产品", "随便几个产品", "看哪个顺眼"] },
                 { "q": "如果两个工序之间没有库存，VSM 中怎么画？", "a": "不画三角", "w": ["画个空三角", "画个圆", "画个叉"] }
+            ]
+        };
+
+        // ====== 深度定制的判断题库 (逻辑严密) ======
+        const TF_SEEDS = {
+            "DM": [
+                { "q": "班前会 (Asakai) 可以坐着开，只要大家听清楚就行。", "a": false, "expl": "班前会必须站立进行 (Stand-up meeting)，以保持紧迫感和高效。" },
+                { "q": "SQDC 看板中的 'S' 代表 Speed (速度)。", "a": false, "expl": "'S' 代表 Safety (安全)，这是精益生产的第一优先级。" },
+                { "q": "日常管理的 '3秒法则' 指管理者应在3秒内通过目视化判断现场是否正常。", "a": true, "expl": "这是目视化管理的核心标准，通过红绿颜色区分异常。" },
+                { "q": "当 4M 发生变化时，必须执行初物管理 (First Piece Inspection)。", "a": true, "expl": "4M 变化是产生不良的高风险点，必须进行首件确认。" },
+                { "q": "Andon 系统亮红灯时，操作员应继续生产，等待班长到来。", "a": false, "expl": "应立即停止生产 (Stop) 并呼叫 (Call)，遵循不制造不良的原则。" },
+                { "q": "班前会的主要目的是为了点名考勤。", "a": false, "expl": "核心目的是工作对齐 (Alignment)、安全宣贯和目标设定。" },
+                { "q": "KYT (危险预知训练) 属于质量管理的范畴。", "a": false, "expl": "KYT 属于安全 (Safety) 管理范畴。" },
+                { "q": "日常管理是为了维持现状，防止业绩倒退。", "a": true, "expl": "这是日常管理与方针管理（旨在突破）的主要区别。" }
+            ],
+            "PSP": [
+                { "q": "5W2H 中的 Who 是为了找出责任人并进行处罚。", "a": false, "expl": "Who 是为了分析与人员技能、班次等相关的规律，精益强调'对事不对人'。" },
+                { "q": "鱼骨图 (Fishbone) 适合用于定量数据分析。", "a": false, "expl": "鱼骨图是定性分析工具，用于头脑风暴潜在原因；数据分析应使用帕累托图等。" },
+                { "q": "5Why 分析法必须严格问满 5 次为什么。", "a": false, "expl": "原则是问到真因浮现为止，可能是 3 次也可能是 7 次。" },
+                { "q": "PDCA 循环中的 A (Act) 仅指采取纠正措施。", "a": false, "expl": "Act 还包含标准化 (Standardize) 和横向展开，以防止问题再发。" },
+                { "q": "解决问题的最高境界是预防问题发生。", "a": true, "expl": "从救火到防火，是精益管理的最终目标。" },
+                { "q": "能够用数据量化描述问题，是解决问题的第一步。", "a": true, "expl": "模糊的问题描述会导致模糊的解决方案。" },
+                { "q": "暂时的围堵措施 (Containment) 等同于根本对策。", "a": false, "expl": "围堵只是止血，根本对策 (Root Cause Countermeasure) 才能防止再发。" }
+            ],
+            "SW": [
+                { "q": "节拍时间 (Takt Time) 是由设备的最快运行速度决定的。", "a": false, "expl": "TT 由客户需求决定，与设备能力无关。" },
+                { "q": "如果 Cycle Time (CT) 大于 Takt Time (TT)，说明该工序是瓶颈。", "a": true, "expl": "生产速度慢于客户需求速度，无法满足交付。" },
+                { "q": "计算 TT 时，应扣除设备故障和换型时间。", "a": false, "expl": "仅扣除计划停机（如休息、会议）。故障属于管理损失，不应降低 TT 标准。" },
+                { "q": "标准手持 (SWIP) 的数量越多越好，可以防止断料。", "a": false, "expl": "SWIP 应是维持标准作业循环所需的'最小'在制品数量。" },
+                { "q": "标准作业不仅规定了怎么做，还规定了做多少时间。", "a": true, "expl": "包含 TT、作业顺序和 SWIP 三要素。" },
+                { "q": "线平衡率 (LBE) 越低，说明生产线效率越高。", "a": false, "expl": "LBE 越低说明等待浪费越多，效率越低。" },
+                { "q": "ECRS 中的 'C' 代表 Clean (清洁)。", "a": false, "expl": "'C' 代表 Combine (合并)。" }
+            ],
+            "VSM": [
+                { "q": "VSM 与普通流程图的区别在于它包含了信息流和时间线。", "a": true, "expl": "这是 VSM 的核心特征，用于识别系统性浪费。" },
+                { "q": "Lead Time (交付周期) 通常短于 Processing Time (加工时间)。", "a": false, "expl": "由于大量库存和停滞，LT 通常远长于 VA 时间（增值比 < 1%）。" },
+                { "q": "VSM 中的推式箭头 (黑白格) 代表精益的拉动生产。", "a": false, "expl": "推式箭头代表按计划生产 (Push)，容易造成过量生产。" },
+                { "q": "超市 (Supermarket) 是用来存放无限量库存的地方。", "a": false, "expl": "超市是受控的拉动系统，有明确的最高和最低库存水位。" },
+                { "q": "定拍工序 (Pacemaker) 是全厂唯一接收生产计划的工序。", "a": true, "expl": "这是实现连续流和拉动的关键控制点。" },
+                { "q": "未来态 (Future State) 规划应尽量实现单件流。", "a": true, "expl": "单件流是消除库存和等待的最佳方式。" }
             ],
             "5S": [
-                { "q": "5S中的“整顿”是指？", "a": "将要用的东西按规定摆放（三定）", "w": ["区分要与不要", "打扫卫生", "甚至装饰"] },
-                { "q": "5S中的“清扫”是指？", "a": "清除脏污，并进行点检", "w": ["大扫除", "甚至洗澡", "甚至消毒"] },
-                { "q": "5S中的“清洁”是指？", "a": "维持前3S的成果，制度化", "w": ["洗衣服", "甚至洗手", "甚至洗脸"] },
-                { "q": "5S中的“素养”是指？", "a": "养成遵守规则的习惯", "w": ["读书写字", "甚至礼貌用语", "甚至穿西装"] },
-                { "q": "三定原则是？", "a": "定点、定品、定量", "w": ["定人、定机、定料", "定时、定分、定秒", "定天、定地、定人"] },
-                { "q": "红牌作战主要用于哪个阶段？", "a": "整理 (Seiri)", "w": ["整顿", "清扫", "清洁"] },
-                { "q": "形迹管理 (Shadow Board) 属于？", "a": "整顿/目视化", "w": ["整理", "清扫", "清洁"] },
-                { "q": "黄色地胶带通常表示？", "a": "通道或一般区域", "w": ["废品区", "合格品区", "危险区"] },
-                { "q": "红色地胶带通常表示？", "a": "不良品区或消防/危险区", "w": ["通道", "良品区", "原料区"] },
-                { "q": "蓝色地胶带通常表示？", "a": "原材料或WIP区域", "w": ["危险区", "废品区", "通道"] },
-                { "q": "绿色地胶带通常表示？", "a": "合格品或成品区域", "w": ["危险区", "废品区", "原料区"] },
-                { "q": "黑黄斑马线表示？", "a": "警示/小心区域", "w": ["安全区域", "通道", "甚至斑马线"] },
-                { "q": "5S是（）的基础？", "a": "精益生产", "w": ["质量管理", "安全生产", "成本控制"] },
-                { "q": "清扫即（）？", "a": "点检", "w": ["清洁", "整理", "整顿"] },
-                { "q": "目视化管理的目的是？", "a": "让异常显而易见", "w": ["让工厂好看", "甚至炫耀", "甚至花钱"] },
-                { "q": "红牌作战区的物品如果没有人认领，应该？", "a": "按流程废弃或处理", "w": ["放回原处", "甚至藏起来", "甚至送人"] },
-                { "q": "谁负责各自区域的5S？", "a": "该区域的员工", "w": ["清洁工", "甚至保洁阿姨", "甚至总经理"] },
-                { "q": "地面画线属于？", "a": "目视化/整顿", "w": ["整理", "清扫", "甚至涂鸦"] },
-                { "q": "标识牌属于？", "a": "目视化/整顿", "w": ["整理", "清扫", "甚至广告"] },
-                { "q": "5S活动是一次性的吗？", "a": "不是，是持续的", "w": ["是", "甚至一年一次", "甚至检查时做"] },
-                { "q": "整顿的目的是减少（）的浪费？", "a": "寻找", "w": ["搬运", "加工", "甚至等待"] },
-                { "q": "整理的目的是腾出（）？", "a": "空间", "w": ["时间", "甚至金钱", "甚至人员"] },
-                { "q": "5S做得好可以提高？", "a": "安全性与效率", "w": ["工资", "甚至奖金", "甚至职位"] },
-                { "q": "如果一个工具很久不用，应该？", "a": "移出工作现场", "w": ["放在手边", "甚至锁起来", "甚至藏起来"] },
-                { "q": "定量的目的是？", "a": "防止过量库存和缺货", "w": ["数数", "甚至盘点", "甚至好看"] },
-                { "q": "定点的目的是？", "a": "让任何人都能找到", "w": ["固定不动", "甚至粘住", "甚至钉死"] },
-                { "q": "最大/最小库存线属于？", "a": "定量/目视化", "w": ["定点", "定品", "甚至装饰"] },
-                { "q": "5S检查表的作用是？", "a": "标准化检查内容，发现问题", "w": ["打分", "甚至罚款", "甚至应付"] },
-                { "q": "高层管理者在5S中应该？", "a": "以身作则，定期巡查", "w": ["只发命令", "甚至不管", "甚至破坏"] },
-                { "q": "5S需要（）参与？", "a": "全员", "w": ["部分人", "甚至管理者", "甚至一线员工"] },
-                { "q": "办公区域需要做5S吗？", "a": "需要，甚至电脑文件也要做", "w": ["不需要", "甚至只要车间", "甚至只要仓库"] },
-                { "q": "5S与安全的关系？", "a": "5S是安全的前提", "w": ["没关系", "甚至冲突", "甚至对立"] },
-                { "q": "不要物是指？", "a": "在规定时间内不需要的物品", "w": ["垃圾", "甚至坏东西", "甚至旧东西"] },
-                { "q": "必需品是指？", "a": "当前工作必须的物品", "w": ["好东西", "甚至新东西", "甚至贵东西"] },
-                { "q": "5S口号“素养”的核心是？", "a": "守规则", "w": ["有文化", "甚至识字", "甚至礼貌"] },
-                { "q": "通道上能不能放东西？", "a": "绝对不能", "w": ["可以放暂存", "甚至可以放垃圾", "甚至可以坐人"] },
-                { "q": "消防栓前面应该？", "a": "保持畅通，画警示线", "w": ["堆放杂物", "甚至停车", "甚至放桌子"] },
-                { "q": "5S推行初期最难的是？", "a": "整理（舍不得扔）", "w": ["整顿", "清扫", "清洁"] },
-                { "q": "5S推行后期最难的是？", "a": "素养（长期坚持）", "w": ["整理", "整顿", "清扫"] },
-                { "q": "目视化应该让（）也能看懂？", "a": "外行/陌生人", "w": ["专家", "甚至熟练工", "甚至领导"] },
-                { "q": "仪表盘上的红区表示？", "a": "异常/危险范围", "w": ["正常范围", "甚至安全范围", "甚至最佳范围"] },
-                { "q": "旋转件的对准标记（防松标记）属于？", "a": "目视化", "w": ["装饰", "甚至涂鸦", "甚至无聊"] },
-                { "q": "物品的“家”是指？", "a": "固定的存放位置", "w": ["员工的家", "甚至仓库", "甚至垃圾桶"] },
-                { "q": "私人物品应该？", "a": "放入更衣柜，不带入作业区", "w": ["放在工作台", "甚至挂在机器上", "甚至随身带"] },
-                { "q": "泄漏的油渍应该？", "a": "立即清扫并查找源头", "w": ["盖上", "甚至不管", "甚至等干了"] },
-                { "q": "5S标语的作用是？", "a": "营造氛围，提醒注意", "w": ["装饰", "甚至遮丑", "甚至挡风"] },
-                { "q": "5S红牌作战的红牌应该贴在？", "a": "物品上", "w": ["人身上", "甚至墙上", "甚至门上"] },
-                { "q": "透明化管理有利于？", "a": "发现内部异常", "w": ["偷窥", "甚至监视", "甚至透光"] },
-                { "q": "文件柜的斜线标识是为了？", "a": "发现文件缺失或顺序错误", "w": ["美观", "甚至画画", "甚至无聊"] },
-                { "q": "工具使用后应该？", "a": "立即归位", "w": ["下班归位", "甚至明天归位", "甚至不归位"] },
-                { "q": "5S定点摄影是指？", "a": "在同一位置、角度拍摄改善前后的照片", "w": ["随便拍", "甚至自拍", "甚至拍风景"] },
-                { "q": "改善前后的对比照片用于？", "a": "展示成果，激励员工", "w": ["留念", "甚至存档", "甚至发朋友圈"] },
-                { "q": "5S雷达图用于？", "a": "评估5S水平的各维度得分", "w": ["看天气", "甚至打仗", "甚至导航"] },
-                { "q": "不要物处理清单需要？", "a": "领导审批", "w": ["随便处理", "甚至自己拿走", "甚至送人"] },
-                { "q": "5S责任区地图应该？", "a": "张贴在现场，明确责任人", "w": ["锁在柜子里", "甚至不画", "甚至保密"] },
-                { "q": "每天下班前的5S时间通常是？", "a": "5-10分钟", "w": ["1小时", "甚至半天", "甚至不留"] },
-                { "q": "清扫时发现设备螺丝松动，这是？", "a": "清扫即点检", "w": ["多管闲事", "甚至运气好", "甚至眼花"] },
-                { "q": "5S能不能提高产品质量？", "a": "能，减少脏污和错误", "w": ["不能", "甚至降低", "甚至无关"] },
-                { "q": "看板上的字迹应该？", "a": "清晰工整", "w": ["潦草", "甚至艺术", "甚至看不清"] },
-                { "q": "5S咨询顾问的作用是？", "a": "指导方法，传授理念", "w": ["替大家做卫生", "甚至发号施令", "甚至看戏"] },
-                { "q": "参观通道线一般是？", "a": "绿色或特定颜色", "w": ["红色", "甚至黑色", "甚至隐形"] },
-                { "q": "危险化学品柜必须？", "a": "上锁，贴警示标，定点存放", "w": ["敞开", "甚至随便放", "甚至混放"] },
-                { "q": "5S是一项？", "a": "全员工程", "w": ["面子工程", "甚至清洁工程", "甚至土木工程"] },
-                { "q": "整顿的“三要素”是？", "a": "场所、方法、标识", "w": ["时间、地点、人物", "甚至红、黄、蓝"] },
-                { "q": "整理的判断基准是？", "a": "使用频率", "w": ["购买价值", "甚至个人喜好", "甚至体积大小"] },
-                { "q": "不常用的东西（如半年一次）应该？", "a": "入库或远距离存放", "w": ["扔掉", "甚至放手边", "甚至放通道"] },
-                { "q": "每小时都要用的东西应该？", "a": "放手边", "w": ["放仓库", "甚至放工具箱", "甚至放隔壁"] },
-                { "q": "5S能否降低设备故障？", "a": "能，通过清扫发现微缺陷", "w": ["不能", "甚至增加", "甚至无关"] },
-                { "q": "5S是简单的还是复杂的？", "a": "知易行难", "w": ["很简单", "甚至很复杂", "甚至不用学"] },
-                { "q": "目视化管理让问题？", "a": "无处遁形", "w": ["消失", "甚至隐藏", "甚至变小"] },
-                { "q": "5S标准化之后，下一步是？", "a": "持续改善", "w": ["停止", "甚至倒退", "甚至庆祝"] },
-                { "q": "“红牌作战”一词源于？", "a": "日本 (Red Tag Strategy)", "w": ["美国", "甚至德国", "甚至中国"] },
-                { "q": "5S做得好的工厂，给人的感觉是？", "a": "整洁、有序、士气高昂", "w": ["冷清", "甚至恐怖", "甚至杂乱"] },
-                { "q": "5S能不能降低成本？", "a": "能，减少寻找和浪费", "w": ["不能", "甚至增加成本", "甚至浪费钱"] },
-                { "q": "5S中的“定品”需要？", "a": "物品名称和编号", "w": ["价格", "甚至重量", "甚至产地"] },
-                { "q": "5S中的“定量”需要？", "a": "规定最大和最小数量", "w": ["规定价格", "甚至规定重量", "甚至规定颜色"] },
-                { "q": "5S中的“定点”需要？", "a": "区域规划和划线", "w": ["打地基", "甚至盖房子", "甚至买地"] },
-                { "q": "5S是一种？", "a": "管理技术", "w": ["清洁技术", "甚至装修技术", "甚至建筑技术"] },
-                { "q": "6S比5S多了什么？", "a": "Safety (安全)", "w": ["Save (节约)", "Study (学习)", "Speed (速度)"] },
-                { "q": "7S比6S多了什么？", "a": "Save (节约)", "w": ["Service (服务)", "Smart (智能)", "System (系统)"] },
-                { "q": "5S最初起源于？", "a": "丰田 (Toyota)", "w": ["福特", "甚至大众", "甚至通用"] },
-                { "q": "5S不仅仅是现场，还包括？", "a": "人的思维", "w": ["机器", "甚至地板", "甚至墙壁"] },
-                { "q": "整顿之前的步骤是？", "a": "整理", "w": ["清扫", "甚至清洁", "甚至素养"] },
-                { "q": "没有整理就做整顿，后果是？", "a": "把垃圾也整顿得很好", "w": ["效果很好", "甚至更省事", "甚至更整齐"] },
-                { "q": "5S的最终目的是？", "a": "提升企业体质", "w": ["拿奖", "甚至给领导看", "甚至应付检查"] },
-                { "q": "5S活动失败的最常见原因是？", "a": "领导不重视，难以坚持", "w": ["员工不会", "甚至没钱", "甚至没时间"] },
-                { "q": "目视化管理是（）的工具？", "a": "自主管理", "w": ["强制管理", "甚至独裁管理", "甚至放任管理"] },
-                { "q": "区域线脱落应该？", "a": "及时修补", "w": ["不管", "甚至撕掉", "甚至用粉笔画"] },
-                { "q": "5S巡查应该？", "a": "定期进行并打分公示", "w": ["偷偷进行", "甚至不进行", "甚至只表扬"] },
-                { "q": "5S是精益生产的？", "a": "入门券", "w": ["毕业证", "甚至学位", "甚至奖杯"] },
-                { "q": "做好5S可以减少？", "a": "寻找物品的时间 (Motion Waste)", "w": ["加工时间", "甚至设备时间", "甚至吃饭时间"] },
-                { "q": "5S中的颜色管理属于？", "a": "目视化", "w": ["声音管理", "甚至气味管理", "甚至触觉管理"] },
-                { "q": "油漆桶应该放在？", "a": "专门的化学品柜", "w": ["随便放", "甚至机台上", "甚至通道上"] },
-                { "q": "垃圾桶应该？", "a": "分类并定时清理", "w": ["随便扔", "甚至堆满", "甚至不清理"] },
-                { "q": "5S不仅是行动，更是？", "a": "纪律", "w": ["游戏", "甚至娱乐", "甚至表演"] },
-                { "q": "车间里的死角应该？", "a": "彻底清扫并消除", "w": ["藏垃圾", "甚至堆杂物", "甚至不管"] },
-                { "q": "5S做得好，客户会？", "a": "增加信任感", "w": ["觉得浪费", "甚至觉得太贵", "甚至觉得没用"] },
-                { "q": "5S是（）工作？", "a": "每天的", "w": ["每月的", "甚至每年的", "甚至一次性的"] }
+                { "q": "5S 中的清扫 (Seiso) 仅仅是为了让车间看起来干净。", "a": false, "expl": "清扫即点检 (Inspection)，目的是发现微小的异常（如漏油、螺丝松动）。" },
+                { "q": "红牌作战 (Red Tag) 主要用于 5S 的整理阶段。", "a": true, "expl": "用于区分要与不要，将隐性库存显性化。" },
+                { "q": "根据哈尔斯 VCS 标准，红色区域通常用于存放合格品。", "a": false, "expl": "红色通常表示不良品区、危险区或消防设备；合格品一般用绿色。" },
+                { "q": "5S 的最终目的是为了应付客户参观。", "a": false, "expl": "目的是构建异常探测系统，提升企业体质。" },
+                { "q": "三定原则是指：定点、定品、定量。", "a": true, "expl": "这是整顿 (Seiton) 的核心，旨在消除寻找的浪费。" },
+                { "q": "素养 (Shitsuke) 是 5S 中最难坚持的一环。", "a": true, "expl": "因为它涉及到人员习惯和文化的改变。" }
             ],
             "TIMWOODS": [
-                { "q": "TIMWOODS中的I代表？", "a": "Inventory (库存浪费)", "w": ["Idea (想法)", "Internet (网络)", "Inspection (检查)"] },
-                { "q": "TIMWOODS中的M代表？", "a": "Motion (动作浪费)", "w": ["Money (金钱)", "Machine (机器)", "Management (管理)"] },
-                { "q": "TIMWOODS中的W代表？", "a": "Waiting (等待浪费)", "w": ["Work (工作)", "Waste (浪费)", "Walk (走路)"] },
-                { "q": "TIMWOODS中的第一个O代表？", "a": "Overproduction (过量生产)", "w": ["Overtime (加班)", "Office (办公室)", "Order (订单)"] },
-                { "q": "TIMWOODS中的第二个O代表？", "a": "Over-processing (过加工)", "w": ["Operation (操作)", "Option (选项)", "Opportunity (机会)"] },
-                { "q": "TIMWOODS中的D代表？", "a": "Defects (不良/返工)", "w": ["Design (设计)", "Detail (细节)", "Delay (延误)"] },
-                { "q": "TIMWOODS中的S代表？", "a": "Skills (人才/技能浪费)", "w": ["System (系统)", "Standard (标准)", "Safety (安全)"] },
-                { "q": "被精益生产称为“万恶之源”的浪费是？", "a": "过量生产", "w": ["库存", "不良", "等待"] },
-                { "q": "过量生产会导致？", "a": "库存增加，掩盖问题", "w": ["效率提高", "成本降低", "质量变好"] },
-                { "q": "ECRS中的E代表？", "a": "Eliminate (剔除)", "w": ["Easy (简单)", "Enter (进入)", "Edit (编辑)"] },
-                { "q": "ECRS中的C代表？", "a": "Combine (合并)", "w": ["Cut (切割)", "Clean (清洁)", "Control (控制)"] },
-                { "q": "ECRS中的R代表？", "a": "Rearrange (重排)", "w": ["Reduce (减少)", "Repair (修理)", "Report (报告)"] },
-                { "q": "ECRS中的S代表？", "a": "Simplify (简化)", "w": ["Speed (速度)", "Safe (安全)", "Save (节约)"] },
-                { "q": "改善的首选原则是？", "a": "Eliminate (剔除)", "w": ["Combine (合并)", "Rearrange (重排)", "Simplify (简化)"] },
-                { "q": "操作员弯腰去取地上的零件，属于？", "a": "动作浪费", "w": ["搬运浪费", "加工浪费", "等待浪费"] },
-                { "q": "叉车将物料从A仓库搬到B仓库，属于？", "a": "搬运浪费", "w": ["动作浪费", "库存浪费", "加工浪费"] },
-                { "q": "操作员看着机器自动运行，属于？", "a": "等待浪费", "w": ["动作浪费", "加工浪费", "库存浪费"] },
-                { "q": "生产了客户还没下订单的产品，属于？", "a": "过量生产", "w": ["战略储备", "高效生产", "库存浪费"] },
-                { "q": "对产品内部看不见的地方进行抛光，属于？", "a": "过加工浪费", "w": ["不良浪费", "动作浪费", "搬运浪费"] },
-                { "q": "因为做错了而进行返工，属于？", "a": "不良浪费", "w": ["加工浪费", "过加工浪费", "动作浪费"] },
-                { "q": "员工有好的建议没被采纳，属于？", "a": "人才浪费", "w": ["等待浪费", "动作浪费", "加工浪费"] },
-                { "q": "仓库里堆积如山的物料，属于？", "a": "库存浪费", "w": ["资产", "财富", "安全感"] },
-                { "q": "使用滑槽让物料自动滑到下一工序，体现了ECRS的？", "a": "Simplify (简化) / Eliminate (剔除搬运)", "w": ["Combine (合并)", "Rearrange (重排)", "Eliminate (剔除)"] },
-                { "q": "取消不必要的签字审批，体现了ECRS的？", "a": "Eliminate (剔除)", "w": ["Combine (合并)", "Rearrange (重排)", "Simplify (简化)"] },
-                { "q": "将两道工序由一个人完成，体现了ECRS的？", "a": "Combine (合并)", "w": ["Eliminate (剔除)", "Rearrange (重排)", "Simplify (简化)"] },
-                { "q": "调整工序顺序以减少走动，体现了ECRS的？", "a": "Rearrange (重排)", "w": ["Eliminate (剔除)", "Combine (合并)", "Simplify (简化)"] },
-                { "q": "使用工装夹具代替手扶，体现了ECRS的？", "a": "Simplify (简化)", "w": ["Eliminate (剔除)", "Combine (合并)", "Rearrange (重排)"] },
-                { "q": "增值工作 (VA) 是？", "a": "客户愿意付费的、改变产品形态或性能的工作", "w": ["所有工作", "辛苦的工作", "耗时的工作"] },
-                { "q": "非增值但必要 (NNVA) 的工作包括？", "a": "法规要求的检查、发工资等", "w": ["返工", "等待", "搬运"] },
-                { "q": "库存被称为“水”，因为它？", "a": "掩盖了水面下的石头（问题）", "w": ["很清澈", "很流动", "很便宜"] },
-                { "q": "精益生产的目标是消除？", "a": "Muda (浪费)", "w": ["Mura (波动)", "Muri (超负荷)", "Money (钱)"] },
-                { "q": "Mura 是指？", "a": "不均匀/波动", "w": ["浪费", "超负荷", "村庄"] },
-                { "q": "Muri 是指？", "a": "超负荷/不合理", "w": ["浪费", "波动", "无理"] },
-                { "q": "动作浪费与搬运浪费的区别？", "a": "动作是人动，搬运是物动", "w": ["动作是物动，搬运是人动", "没区别", "动作远，搬运近"] },
-                { "q": "提前生产也是？", "a": "过量生产", "w": ["高效", "未雨绸缪", "库存"] },
-                { "q": "检验属于？", "a": "非增值活动 (NVA)", "w": ["增值活动 (VA)", "核心活动", "甚至赚钱活动"] },
-                { "q": "为什么说库存是浪费？", "a": "占用资金、场地，且掩盖问题", "w": ["因为库存会过期", "因为库存难数", "因为库存重"] },
-                { "q": "减少动作浪费的方法通常利用？", "a": "动作经济原则", "w": ["购买机器人", "增加人员", "减少产量"] },
-                { "q": "将工具放在伸手可得的地方，是为了消除？", "a": "动作浪费 (寻找/移动)", "w": ["搬运浪费", "库存浪费", "等待浪费"] },
-                { "q": "如果一个工序CT是30秒，另一个是60秒，会导致？", "a": "等待浪费 (线不平衡)", "w": ["效率提升", "库存减少", "质量变好"] },
-                { "q": "过度包装属于？", "a": "过加工浪费", "w": ["过量生产", "不良浪费", "搬运浪费"] },
-                { "q": "生产线的长度越长，通常会导致？", "a": "搬运和动作浪费增加", "w": ["效率越高", "质量越好", "管理越容易"] },
-                { "q": "大批量生产容易导致？", "a": "过量生产和库存", "w": ["单件流", "低成本", "快速交付"] },
-                { "q": "JIT (Just In Time) 旨在消除？", "a": "库存和等待", "w": ["人工", "设备", "质量"] },
-                { "q": "设备故障会导致？", "a": "等待浪费", "w": ["过加工", "过量生产", "动作浪费"] },
-                { "q": "换型时间长会导致？", "a": "大批量生产 (过量生产)", "w": ["小批量生产", "单件流", "库存降低"] },
-                { "q": "ECRS原则通常用于？", "a": "方法改善", "w": ["设备购买", "人员招聘", "财务核算"] },
-                { "q": "消除浪费的起点是？", "a": "识别浪费 (学习去看)", "w": ["消除浪费", "制造浪费", "忽略浪费"] },
-                { "q": "最难被发现的浪费通常是？", "a": "过加工 (因为看起来在工作)", "w": ["等待", "不良", "搬运"] },
-                { "q": "“假装工作”属于？", "a": "等待/动作浪费", "w": ["增值工作", "辛苦工作", "甚至核心工作"] },
-                { "q": "单手空闲属于？", "a": "动作浪费", "w": ["等待浪费", "搬运浪费", "加工浪费"] },
-                { "q": "转身180度取料属于？", "a": "动作浪费", "w": ["搬运浪费", "加工浪费", "等待浪费"] },
-                { "q": "将设备排成U型可以减少？", "a": "走动 (动作浪费)", "w": ["加工时间", "设备故障", "不良品"] },
-                { "q": "自动化检测设备可以消除？", "a": "人工检验 (NVA) 和 不良 (Defects)", "w": ["库存", "搬运", "等待"] },
-                { "q": "如果Lead Time为10天，实际加工时间为1小时，说明？", "a": "存在大量等待和库存浪费", "w": ["效率很高", "正常现象", "无法改善"] },
-                { "q": "精益生产认为，除了增值活动，其他都是？", "a": "浪费", "w": ["必要", "有用", "资产"] },
-                { "q": "减少批量大小 (Batch Size) 可以？", "a": "暴露问题并减少库存", "w": ["增加库存", "掩盖问题", "降低效率"] },
-                { "q": "看板拉动系统可以防止？", "a": "过量生产", "w": ["不良", "动作浪费", "过加工"] },
-                { "q": "Andon系统有助于减少？", "a": "不良 (及时发现) 和 等待 (及时响应)", "w": ["库存", "搬运", "过加工"] },
-                { "q": "防错装置 (Poka Yoke) 消除？", "a": "不良浪费", "w": ["库存浪费", "搬运浪费", "动作浪费"] },
-                { "q": "改善提案制度旨在减少？", "a": "人才浪费", "w": ["纸张浪费", "时间浪费", "甚至金钱浪费"] },
-                { "q": "价值流图 (VSM) 是识别（）的工具？", "a": "浪费", "w": ["增值", "资产", "人员"] },
-                { "q": "如果一个步骤客户不付钱，它就是？", "a": "浪费", "w": ["赠品", "服务", "优惠"] },
-                { "q": "将分散的仓库集中起来，可能减少？", "a": "库存 (共享安全库存)", "w": ["搬运", "动作", "等待"] },
-                { "q": "将工具悬挂在弹簧平衡器上，属于？", "a": "Simplify (简化)", "w": ["Eliminate (剔除)", "Combine (合并)", "Rearrange (重排)"] },
-                { "q": "用脚踏开关代替手按开关，属于？", "a": "Simplify (简化) / 动作改善", "w": ["Eliminate (剔除)", "Combine (合并)", "Rearrange (重排)"] },
-                { "q": "将两个零件设计成一个整体，属于？", "a": "Combine (合并) / Eliminate (剔除组装)", "w": ["Simplify (简化)", "Rearrange (重排)", "Eliminate (剔除)"] },
-                { "q": "调整作业台高度以适应员工身高，减少？", "a": "动作浪费 (疲劳)", "w": ["搬运浪费", "库存浪费", "等待浪费"] },
-                { "q": "多能工轮岗可以减少？", "a": "等待 (平衡负荷) 和 人才浪费", "w": ["库存", "搬运", "过加工"] },
-                { "q": "SMED (快速换模) 的目的是减少？", "a": "换型时间 (停机等待) 和 批量", "w": ["加工时间", "动作时间", "搬运时间"] },
-                { "q": "物料配送采用水蜘蛛 (Water Spider) 可以减少作业员的？", "a": "走动 (动作/搬运) 浪费", "w": ["加工浪费", "等待浪费", "库存浪费"] },
-                { "q": "如果一个报表没人看，制作报表是？", "a": "过加工浪费", "w": ["必要工作", "增值工作", "辛苦工作"] },
-                { "q": "过度设计 (Over-engineering) 属于？", "a": "过加工浪费", "w": ["过量生产", "不良浪费", "动作浪费"] },
-                { "q": "在制品 (WIP) 也是？", "a": "库存浪费", "w": ["有用资产", "半成品", "必要的"] },
-                { "q": "浪费的发现需要去？", "a": "现场 (Gemba)", "w": ["办公室", "会议室", "电脑前"] },
-                { "q": "七大浪费的提出者是？", "a": "大野耐一 (Taiichi Ohno)", "w": ["丰田佐吉", "亨利福特", "泰勒"] },
-                { "q": "第八大浪费 (人才) 是后来补充的，强调？", "a": "尊重人性", "w": ["尊重机器", "尊重钱", "尊重客户"] },
-                { "q": "消除浪费是（）的过程？", "a": "永无止境", "w": ["一次性", "短期", "简单"] },
-                { "q": "如果浪费消除了，成本会？", "a": "降低", "w": ["升高", "不变", "不确定"] },
-                { "q": "如果浪费消除了，效率会？", "a": "提高", "w": ["降低", "不变", "不确定"] },
-                { "q": "如果浪费消除了，Lead Time会？", "a": "缩短", "w": ["延长", "不变", "不确定"] },
-                { "q": "ECRS分析表是？", "a": "改善工具", "w": ["统计工具", "绘图工具", "计算工具"] },
-                { "q": "为了消除搬运，最好的方法是？", "a": "改变布局 (Layout)", "w": ["买更快的叉车", "雇更多人", "甚至用飞机"] },
-                { "q": "为了消除等待，最好的方法是？", "a": "线平衡 (Line Balancing)", "w": ["让机器跑快点", "让人跑快点", "甚至增加库存"] },
-                { "q": "为了消除不良，最好的方法是？", "a": "源头防错", "w": ["加强检验", "甚至返工", "甚至报废"] },
-                { "q": "为了消除过量生产，最好的方法是？", "a": "拉动系统 (Pull) 和 均衡化", "w": ["推式生产", "甚至加大批量", "甚至不管"] },
-                { "q": "为了消除库存，最好的方法是？", "a": "单件流 (One Piece Flow)", "w": ["建大仓库", "甚至促销", "甚至不管"] },
-                { "q": "为了消除动作浪费，最好的方法是？", "a": "动作分析与改善", "w": ["做操", "甚至休息", "甚至不管"] },
-                { "q": "为了消除过加工，最好的方法是？", "a": "明确客户标准 (VE/VA)", "w": ["做得更好", "甚至不管", "甚至加价"] },
-                { "q": "为了消除人才浪费，最好的方法是？", "a": "授权与提案制度", "w": ["严格管理", "甚至开除", "甚至不管"] },
-                { "q": "浪费的反义词是？", "a": "增值 (Value)", "w": ["节约", "甚至赚钱", "甚至效率"] },
-                { "q": "精益思想等于？", "a": "消除浪费 + 创造价值", "w": ["消除库存", "甚至消除人员", "甚至消除设备"] },
-                { "q": "如果一个操作需要左手拿螺丝，右手拿螺丝刀，ECRS建议？", "a": "使用自动送螺丝机 (Simplify/Combine)", "w": ["练就左右互搏", "甚至不管", "甚至招两个人"] },
-                { "q": "将打印机放在办公室角落，导致大家都要走过去，是？", "a": "动作/搬运浪费", "w": ["锻炼身体", "甚至合理布局", "甚至美观"] }
+                { "q": "在八大浪费中，库存 (Inventory) 被认为是万恶之源。", "a": false, "expl": "过量生产 (Overproduction) 才是万恶之源，因为它导致了库存和其他所有浪费。" },
+                { "q": "检验员的工作属于增值活动 (Value Added)。", "a": false, "expl": "检验属于非增值活动 (NVA)，虽然必要，但不改变产品形态或性能。" },
+                { "q": "ECRS 改善原则中，首先应该考虑的是 Simplify (简化)。", "a": false, "expl": "首先应考虑 Eliminate (剔除)，如果不做就能解决问题，成本最低。" },
+                { "q": "人员的动作 (Motion) 浪费和物料的搬运 (Transportation) 浪费是一回事。", "a": false, "expl": "Motion 指'人'的多余动作；Transportation 指'物'的移动。" },
+                { "q": "等待 (Waiting) 浪费通常是由于线不平衡或缺料引起的。", "a": true, "expl": "人或机器闲置无法创造价值。" }
             ]
         };
 
@@ -1037,114 +962,53 @@
                 this.cache = {};
             }
 
-            // 生成不重复题目
             generateForSubject(subj) {
-                let seeds = QUESTION_SEEDS[subj];
+                // 1. 获取选择题种子
+                let mcqSeeds = QUESTION_SEEDS[subj] || [];
+                // 2. 获取判断题种子
+                let tfSeeds = TF_SEEDS[subj] || [];
+                
                 let generated = [];
-                let questionSet = new Set(); // 用于文本去重
                 let idCounter = 1;
 
-                // 辅助函数：添加题目并查重
-                const addQ = (qObj) => {
-                    if (!questionSet.has(qObj.text)) {
-                        questionSet.add(qObj.text);
-                        generated.push(qObj);
-                        return true;
-                    }
-                    return false;
-                };
-
-                // 1. 基础选择题 (MCQ) - 直接使用种子
-                seeds.forEach(seed => {
-                    addQ(this.createQ(subj, idCounter++, seed.q, seed.a, seed.w));
-                });
-
-                // 2. 判断题 - 正确 (True/False)
-                seeds.forEach(seed => {
-                    let text = "";
-                    if(seed.q.includes("？")) {
-                        let statement = seed.q.replace("？", "");
-                        if(statement.includes("是")) {
-                             text = `判断：${statement.split("是")[0]} 是 ${seed.a}。`;
-                        } else if (statement.includes("属于")) {
-                             text = `判断：${statement.split("属于")[0]} 属于 ${seed.a}。`;
-                        } else {
-                             text = `判断：${statement} 的答案是 ${seed.a}。`;
-                        }
-                    } else {
-                        text = `判断：${seed.q} ${seed.a}。`;
-                    }
+                // --- 处理选择题 (MCQ) ---
+                mcqSeeds.forEach(seed => {
+                    let options = [
+                        { text: seed.a, isCorrect: true },
+                        { text: seed.w[0] || "以上皆非", isCorrect: false },
+                        { text: seed.w[1] || "不确定", isCorrect: false },
+                        { text: seed.w[2] || "其他", isCorrect: false }
+                    ];
+                    // 打乱选项
+                    options.sort(() => Math.random() - 0.5);
                     
-                    addQ({
-                        id: `${subj}-TF-T-${idCounter++}`,
-                        text: text,
-                        options: [
-                            { text: "正确", isCorrect: true },
-                            { text: "错误", isCorrect: false }
-                        ],
-                        correctIndex: 0
+                    generated.push({
+                        id: `${subj}-MCQ-${idCounter++}`,
+                        type: 'MCQ',
+                        text: seed.q,
+                        options: options,
+                        correctIndex: options.findIndex(o => o.isCorrect),
+                        explanation: "" // 选择题暂无详解，可后续扩展
                     });
                 });
 
-                // 3. 判断题 - 错误 (True/False)
-                seeds.forEach(seed => {
-                    let wrongAns = seed.w[0];
-                    let text = "";
-                    if(seed.q.includes("？")) {
-                        let statement = seed.q.replace("？", "");
-                        if(statement.includes("是")) {
-                             text = `判断：${statement.split("是")[0]} 是 ${wrongAns}。`;
-                        } else if (statement.includes("属于")) {
-                             text = `判断：${statement.split("属于")[0]} 属于 ${wrongAns}。`;
-                        } else {
-                             text = `判断：${statement} 的答案是 ${wrongAns}。`;
-                        }
-                    } else {
-                        text = `判断：${seed.q} ${wrongAns}。`;
-                    }
-
-                    addQ({
-                        id: `${subj}-TF-F-${idCounter++}`,
-                        text: text,
+                // --- 处理判断题 (T/F) ---
+                tfSeeds.forEach(seed => {
+                    generated.push({
+                        id: `${subj}-TF-${idCounter++}`,
+                        type: 'TF', // 标记类型，用于前端渲染区分
+                        text: `【判断题】${seed.q}`,
                         options: [
-                            { text: "正确", isCorrect: false },
-                            { text: "错误", isCorrect: true }
+                            { text: "正确 (Correct)", isCorrect: seed.a === true },
+                            { text: "错误 (Incorrect)", isCorrect: seed.a === false }
                         ],
-                        correctIndex: 1
+                        correctIndex: seed.a === true ? 0 : 1,
+                        explanation: seed.expl // 包含解析
                     });
                 });
 
-                // 4. 反向选择题 (Inverted MCQ)
-                seeds.forEach(seed => {
-                    if (!seed.q.includes("不") && seed.w.length >= 2) {
-                        let subject = seed.q.split("的")[0].split("中")[0].replace("计算", ""); 
-                        if(subject.length > 2) {
-                            let newQ = `关于“${subject}”，以下说法错误的是？`;
-                            let newA = seed.w[0]; 
-                            let newW = [seed.a, seed.w[1]]; 
-                            addQ(this.createQ(subj, idCounter++, newQ, newA, newW));
-                        }
-                    }
-                });
-
-                return generated;
-            }
-
-            createQ(subj, id, q, a, w) {
-                let options = [
-                    { text: a, isCorrect: true },
-                    { text: w[0] || "以上皆非", isCorrect: false },
-                    { text: w[1] || "以上皆是", isCorrect: false },
-                    { text: w[2] || "不确定", isCorrect: false }
-                ];
-                options.sort(() => Math.random() - 0.5);
-                
-                return {
-                    id: `${subj}-${id}`,
-                    text: q,
-                    options: options,
-                    correctIndex: options.findIndex(o => o.isCorrect)
-                };
+                // 混合题目
+                return generated.sort(() => Math.random() - 0.5);
             }
         }
 
@@ -1233,7 +1097,7 @@
             
             // 生成题目并打乱
             let allQ = engine.generateForSubject(appState.subject);
-            appState.questions = [...allQ].sort(() => 0.5 - Math.random());
+            appState.questions = [...allQ]; // 已经是打乱的了
             
             appState.currentIndex = 0;
             renderQuestion();
@@ -1247,12 +1111,11 @@
             document.getElementById('q-nav-grid').style.display = 'grid';
             document.getElementById('prev-btn').style.visibility = 'visible';
             
-            // 考试模式隐藏跳过按钮（可以通过导航栏跳转，不需要显式跳过）
+            // 考试模式隐藏跳过按钮
             document.getElementById('skip-btn').style.display = 'none';
 
             let allQ = engine.generateForSubject(appState.subject);
-            let shuffled = [...allQ].sort(() => 0.5 - Math.random());
-            appState.questions = shuffled.slice(0, 20);
+            appState.questions = allQ.slice(0, 20); // 取前20题
             
             appState.currentIndex = 0;
             appState.examAnswers = new Array(20).fill(null);
@@ -1299,13 +1162,30 @@
             
             let container = document.getElementById('options-container');
             container.innerHTML = '';
-            document.getElementById('feedback-container').style.display = 'none';
+            // 重置反馈框
+            const feedback = document.getElementById('feedback-container');
+            feedback.style.display = 'none';
+            feedback.className = 'feedback-box'; // reset classes
+
+            // 设置网格布局：判断题2列，选择题1列
+            if (q.type === 'TF') {
+                container.style.gridTemplateColumns = '1fr 1fr';
+            } else {
+                container.style.gridTemplateColumns = '1fr';
+            }
 
             q.options.forEach((opt, idx) => {
                 let div = document.createElement('div');
                 div.className = 'option';
                 div.dataset.idx = idx;
-                div.innerHTML = `<div class="opt-char">${String.fromCharCode(65+idx)}</div><div>${opt.text}</div>`;
+                
+                // 判断题不显示 A/B 
+                if(q.type === 'TF') {
+                    div.innerHTML = `<div style="text-align:center; width:100%; font-weight:bold;">${opt.text}</div>`;
+                } else {
+                    div.innerHTML = `<div class="opt-char">${String.fromCharCode(65+idx)}</div><div>${opt.text}</div>`;
+                }
+                
                 div.onclick = () => selectOption(div, idx);
                 
                 if (appState.mode === 'exam' && appState.examAnswers[appState.currentIndex] === idx) {
@@ -1354,13 +1234,21 @@
                 selected.classList.add('correct');
                 feedback.style.background = '#e7f9ee';
                 feedback.style.color = 'var(--success-green)';
+                feedback.style.borderLeftColor = 'var(--success-green)';
                 feedback.innerHTML = "<strong>✅ 回答正确！</strong>";
+                if(q.explanation) {
+                    feedback.innerHTML += `<br><span style="font-size:0.9rem; color:#555; margin-top:5px; display:block;">解析：${q.explanation}</span>`;
+                }
             } else {
                 selected.classList.add('wrong');
                 opts[q.correctIndex].classList.add('correct');
                 feedback.style.background = '#fceaea';
                 feedback.style.color = 'var(--fail-red)';
-                feedback.innerHTML = `<strong>❌ 回答错误</strong><br>正确答案是：${String.fromCharCode(65+q.correctIndex)}`;
+                feedback.style.borderLeftColor = 'var(--fail-red)';
+                feedback.innerHTML = "<strong>❌ 回答错误</strong>";
+                if(q.explanation) {
+                    feedback.innerHTML += `<br><span style="font-size:0.9rem; color:#555; margin-top:5px; display:block;">解析：${q.explanation}</span>`;
+                }
             }
             feedback.style.display = 'block';
 
