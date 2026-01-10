@@ -40,24 +40,44 @@
         .btn-ghost { background: var(--bright-yellow); color: var(--klein-blue); }
         .btn-ghost:hover { background: #e6c200; }
 
-        /* --- 英雄页 --- */
-        #hero-page { text-align: center; padding: 60px 20px; animation: fadeIn 0.8s ease-out; }
-        .hero-title { font-size: 3rem; color: var(--klein-blue); margin-bottom: 15px; font-weight: 900; letter-spacing: -1px; }
-        .hero-subtitle { font-size: 1.2rem; color: var(--text-light); margin-bottom: 60px; max-width: 700px; margin-left: auto; margin-right: auto; }
-        
-        .mode-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
-        .mode-card { 
-            background: var(--pure-white); border: 1px solid #e0e0e0; border-radius: 12px; padding: 40px 30px; 
-            cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        /* --- 首页（无背景图，标题居中） --- */
+        #hero-page { padding: 96px 0 70px; animation: fadeIn 0.8s ease-out; }
+        .cover-section { background: transparent; }
+        .cover-inner { max-width: 1200px; margin: 0 auto; padding: 0 20px; text-align: center; }
+
+        .hero-title { font-size: 3.45rem; color: var(--klein-blue); margin-bottom: 22px; font-weight: 950; letter-spacing: -0.5px; text-align:center; }
+        .hero-subtitle { font-size: 1.08rem; color: #4b5563; margin-bottom: 18px; max-width: 980px; font-weight: 650; margin-left: auto; margin-right: auto; text-align:center; }
+        .hero-slogan { margin-bottom: 52px; color: #0b1b3a; font-weight: 950; letter-spacing: 1px; text-align:center; }
+
+        .mode-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 26px; }
+        .mode-card { background: #ffffff; border: 1px solid rgba(17,24,39,0.10); border-radius: 22px; padding: 34px 26px 30px; cursor: pointer; transition: 0.18s; position: relative; overflow: hidden; text-align: center; box-shadow: 0 14px 40px rgba(17,24,39,0.06); }
+        .mode-card::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 50% 0%, rgba(0,47,167,0.14), transparent 55%); opacity: 0.28; }
+        .mode-card > * { position: relative; z-index: 1; }
+        .mode-card:hover { transform: translateY(-4px); box-shadow: 0 22px 60px rgba(17,24,39,0.10); border-color: rgba(0,47,167,0.20); }
+
+        .mode-num { position: absolute; top: 16px; left: 16px; display: inline-flex; align-items: center; justify-content: center; padding: 7px 11px; border-radius: 999px; background: rgba(17,24,39,0.05); color: #111827; font-weight: 950; font-size: 0.9rem; letter-spacing: 0.6px; }
+        .mode-icon { width: 72px; height: 72px; border-radius: 22px; display: grid; place-items: center; margin: 6px auto 16px; }
+        .mode-icon svg { width: 34px; height: 34px; }
+        .mode-icon.study { background: rgba(0,47,167,0.12); color: var(--klein-blue); }
+        .mode-icon.practice { background: rgba(255,215,0,0.26); color: #7a5b00; }
+        .mode-icon.exam { background: rgba(220,53,69,0.12); color: #b42318; }
+
+        .mode-title { font-size: 1.9rem; color: #111827; font-weight: 950; letter-spacing: 0.2px; line-height: 1.1; }
+        .mode-caption { margin-top: 6px; font-size: 0.9rem; color: #6b7280; font-weight: 850; letter-spacing: 1.1px; text-transform: uppercase; }
+        .mode-desc { margin-top: 14px; color: #4b5563; font-size: 0.98rem; line-height: 1.75; }
+
+        .mode-arrow { position: absolute; right: 16px; top: 16px; width: 36px; height: 36px; border-radius: 999px; border: 1px solid rgba(17,24,39,0.10); display:flex; align-items:center; justify-content:center; color: rgba(17,24,39,0.55); background: rgba(255,255,255,0.7); }
+        .mode-card:hover .mode-arrow { color: var(--klein-blue); border-color: rgba(0,47,167,0.22); background: rgba(0,47,167,0.04); }
+
+        @media (max-width: 980px) {
+            .mode-grid { grid-template-columns: 1fr; }
         }
-        .mode-card:hover { transform: translateY(-10px); border-color: var(--klein-blue); box-shadow: 0 20px 40px rgba(0, 47, 167, 0.15); }
-        .mode-card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: #eee; transition: 0.3s; }
-        .mode-card:hover::before { background: var(--klein-blue); }
-        .mode-icon { font-size: 3.5rem; margin-bottom: 25px; display: block; transition: 0.3s; }
-        .mode-card:hover .mode-icon { transform: scale(1.1); }
-        .mode-card h3 { font-size: 1.5rem; color: var(--text-dark); margin-bottom: 15px; }
-        .mode-card p { color: var(--text-light); font-size: 0.95rem; }
+
+        @media (max-width: 900px) {
+            #hero-page { padding: 72px 0 52px; }
+            .hero-title { font-size: 2.45rem; }
+            .hero-slogan { margin-bottom: 40px; }
+        }
 
         /* --- 科目选择 --- */
         .subject-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; animation: slideUp 0.5s ease-out; }
@@ -185,6 +205,21 @@
         .result-msg { font-size: 1.5rem; margin: 20px 0 40px; font-weight: 600; }
         .user-info-display { font-size: 1.2rem; color: #555; background: #f0f0f0; padding: 10px 20px; border-radius: 20px; display: inline-block; margin-bottom: 20px; border: 1px solid #ddd; }
 
+        .exam-report { margin-top: 18px; text-align: left; background: #f8fafc; border: 1px solid rgba(17,24,39,0.10); border-radius: 16px; padding: 16px; }
+        .report-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+        .report-title { font-weight: 950; color: #111827; letter-spacing: 0.2px; }
+        .report-summary { color: #4b5563; font-weight: 750; margin-bottom: 10px; }
+        .report-list { display: grid; gap: 12px; }
+        .report-item { background: #ffffff; border: 1px solid rgba(17,24,39,0.10); border-radius: 14px; padding: 12px 14px; }
+        .report-q { font-weight: 900; color: #111827; line-height: 1.55; }
+        .report-qno { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 8px; background: rgba(0,47,167,0.10); color: var(--klein-blue); margin-right: 8px; font-weight: 950; }
+        .report-rows { margin-top: 10px; display: grid; gap: 6px; }
+        .report-row { color: #374151; font-weight: 750; }
+        .report-row .label { color: #6b7280; font-weight: 850; margin-right: 8px; }
+        .report-row .bad { color: var(--fail-red); }
+        .report-row .good { color: var(--success-green); }
+        .report-expl { margin-top: 10px; color: #4b5563; font-size: 0.95rem; line-height: 1.6; border-top: 1px dashed rgba(17,24,39,0.16); padding-top: 10px; }
+
         .confetti { position: absolute; width: 10px; height: 10px; background-color: var(--bright-yellow); animation: fall linear forwards; opacity: 0; }
 
         /* 动画 */
@@ -197,13 +232,34 @@
         .toolbar { display: flex; justify-content: space-between; margin-top: 30px; align-items: center; }
         #timer-box { font-family: monospace; font-size: 1.5rem; font-weight: bold; background: var(--klein-blue); color: white; padding: 8px 20px; border-radius: 6px; display: none; box-shadow: 0 4px 10px rgba(0,47,167,0.3); }
 
-        footer { text-align: center; padding: 40px; color: #999; font-size: 0.9rem; border-top: 1px solid #eee; margin-top: auto; transition: all 0.3s; }
-        footer.hero-footer { background: var(--klein-blue); color: white; border-top: none; padding: 60px 20px; font-size: 1.1rem; font-weight: 700; letter-spacing: 1px; box-shadow: 0 -10px 30px rgba(0,47,167,0.1); }
-        footer.hero-footer p { opacity: 0.9; }
+        footer { margin-top: auto; }
+        .site-footer { border-top: 1px solid rgba(17,24,39,0.10); background: #ffffff; }
+        .footer-inner { max-width: 1200px; margin: 0 auto; padding: 42px 20px; }
+        .footer-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 28px; align-items: start; }
+        .footer-brand { display: grid; gap: 10px; }
+        .footer-brand-title { font-weight: 950; color: #111827; letter-spacing: 0.2px; font-size: 1.05rem; }
+        .footer-brand-sub { color: #4b5563; font-weight: 700; }
+        .footer-slogan { margin-top: 6px; color: #0b1b3a; font-weight: 950; letter-spacing: 1px; }
+        .footer-meta { margin-top: 10px; color: #6b7280; font-size: 0.95rem; }
+        .footer-links { display: grid; gap: 10px; justify-items: end; }
+        .footer-link-row { display: flex; gap: 14px; flex-wrap: wrap; justify-content: end; }
+        .footer-link { cursor: pointer; color: #374151; font-weight: 800; text-decoration: none; padding: 8px 10px; border-radius: 10px; border: 1px solid transparent; }
+        .footer-link:hover { color: var(--klein-blue); background: rgba(0,47,167,0.04); border-color: rgba(0,47,167,0.14); }
+        .footer-sign { color: #9aa3b2; font-size: 0.9rem; text-align: right; }
+
+        .footer-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 12px; background: var(--klein-blue); color: #ffffff; font-weight: 950; letter-spacing: 0.3px; width: fit-content; }
+        #footer-home { max-width: none; padding: 0; }
+        #footer-home .footer-badge { width: 100%; justify-content: center; border-radius: 0; padding: 30px 20px; font-size: 1.15rem; letter-spacing: 0.6px; }
+
+        
 
         @media (max-width: 900px) {
             .question-wrapper { flex-direction: column-reverse; }
             .q-nav-grid { width: 100%; position: static; grid-template-columns: repeat(10, 1fr); }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-links { justify-items: start; }
+            .footer-link-row { justify-content: start; }
+            .footer-sign { text-align: left; }
         }
     </style>
 </head>
@@ -234,25 +290,55 @@
             </div>
         </nav>
 
-        <section id="hero-page">
-            <h1 class="hero-title">哈尔斯带级认证学习系统</h1>
-            <p class="hero-subtitle">哈尔斯集团精益革新办出品 | 打造全员精益基因</p>
-            
-            <div class="mode-grid">
-                <div class="mode-card" onclick="selectMode('study')">
-                    <span class="mode-icon">📖</span>
-                    <h3>深度学习</h3>
-                    <p>6大核心模块，包含详细定义、公式推导、图解案例。中英对照，扫除语言障碍。</p>
-                </div>
-                <div class="mode-card" onclick="selectMode('practice')">
-                    <span class="mode-icon">⚡</span>
-                    <h3>强化训练</h3>
-                    <p>海量题库智能生成。混合单选与专业判断题，直击知识盲区，实时解析。</p>
-                </div>
-                <div class="mode-card" onclick="selectMode('exam')">
-                    <span class="mode-icon">🏅</span>
-                    <h3>资格认证</h3>
-                    <p>20题 | 80分及格。模拟真实考试环境，倒计时机制，系统自动评分。</p>
+        <section id="hero-page" class="cover-section">
+            <div class="cover-inner">
+                <h1 class="hero-title">哈尔斯带级认证学习系统</h1>
+                <p class="hero-subtitle">面向全员的精益知识体系与认证平台</p>
+                <div class="hero-slogan">让AI更有温度 让制作更有速度</div>
+
+                <div class="mode-grid">
+                    <div class="mode-card" onclick="selectMode('study')">
+                        <div class="mode-arrow">&gt;</div>
+                        <span class="mode-num">01</span>
+                        <div class="mode-icon study" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 19c-3-2-6-2-9-1V5c3-1 6-1 9 1" />
+                                <path d="M12 19c3-2 6-2 9-1V5c-3-1-6-1-9 1" />
+                                <path d="M12 6v13" />
+                            </svg>
+                        </div>
+                        <div class="mode-title">深度学习</div>
+                        <div class="mode-caption">Deep Learning</div>
+                        <div class="mode-desc">按模块归纳成清晰条目：定义、方法、易错点与典型场景，一眼能学会，一页能复习。</div>
+                    </div>
+                    <div class="mode-card" onclick="selectMode('practice')">
+                        <div class="mode-arrow">&gt;</div>
+                        <span class="mode-num">02</span>
+                        <div class="mode-icon practice" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M13.1 2 3 14h7.1L9 22l12-14h-7.2L13.1 2Z" />
+                            </svg>
+                        </div>
+                        <div class="mode-title">强化训练</div>
+                        <div class="mode-caption">Practice</div>
+                        <div class="mode-desc">高质量干扰项贴近现场场景，做题同时学“为什么错”，提升辨析与应用能力。</div>
+                    </div>
+                    <div class="mode-card" onclick="selectMode('exam')">
+                        <div class="mode-arrow">&gt;</div>
+                        <span class="mode-num">03</span>
+                        <div class="mode-icon exam" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="6" y="3" width="12" height="14" rx="2" />
+                                <path d="M9 7h6" />
+                                <path d="M9 10h6" />
+                                <path d="M12 13h3" />
+                                <path d="M10 21v-3l2-1 2 1v3l-2-1-2 1Z" />
+                            </svg>
+                        </div>
+                        <div class="mode-title">资格认证</div>
+                        <div class="mode-caption">Certification</div>
+                        <div class="mode-desc">标准化考试流程：20题 / 80分及格，倒计时与自动评分，输出可追溯的认证结果。</div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -353,6 +439,15 @@
                 </div>
 
                 <div class="result-msg" id="result-message"></div>
+
+                <div class="exam-report" id="exam-report" style="display:none;">
+                    <div class="report-head">
+                        <div class="report-title">错题报告</div>
+                        <button class="btn btn-outline" id="toggle-report-btn" onclick="toggleExamReport()">收起</button>
+                    </div>
+                    <div class="report-summary" id="report-summary"></div>
+                    <div class="report-list" id="report-list"></div>
+                </div>
                 
                 <div style="display:flex; justify-content:center; gap:20px;">
                     <button class="btn btn-outline" onclick="goHome()">返回首页</button>
@@ -361,8 +456,16 @@
             </div>
         </section>
 
-        <footer>
-            <p>&copy; 2026 哈尔斯集团精益革新办</p>
+        <footer class="site-footer" id="site-footer">
+            <div class="footer-inner" id="footer-home">
+                <div class="footer-badge">© 2026 哈尔斯集团精益革新办</div>
+            </div>
+            <div class="footer-inner" id="footer-simple" style="display:none; padding: 22px 20px;">
+                <div style="display:flex; justify-content: space-between; align-items:center; gap: 14px; flex-wrap: wrap;">
+                    <div style="font-weight:950; color:#111827;">哈尔斯带级认证学习系统</div>
+                    <div style="color:#9aa3b2; font-size:0.95rem;">2026 哈尔斯集团精益革新办</div>
+                </div>
+            </div>
         </footer>
     </div>
 
@@ -1194,6 +1297,108 @@
             ]
         };
 
+        function sanitizeText(text) {
+            if (typeof text !== 'string') return text;
+            return text.replace(/甚至\s*/g, '').replace(/\s{2,}/g, ' ').trim();
+        }
+
+        function buildFallbackExplanation(seed) {
+            const ans = sanitizeText(seed && seed.a ? seed.a : '');
+            if (!ans) return '';
+            return `正确答案：${ans}`;
+        }
+
+        function escapeHtml(s) {
+            return String(s)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function optionLabel(idx) {
+            if (idx === null || idx === undefined) return '';
+            const labels = ['A', 'B', 'C', 'D', 'E', 'F'];
+            return labels[idx] || String(idx + 1);
+        }
+
+        function toggleExamReport() {
+            const box = document.getElementById('exam-report');
+            const btn = document.getElementById('toggle-report-btn');
+            if (!box || !btn) return;
+            const list = document.getElementById('report-list');
+            const summary = document.getElementById('report-summary');
+            const hidden = (list && list.style.display === 'none');
+            if (list) list.style.display = hidden ? 'grid' : 'none';
+            if (summary) summary.style.display = hidden ? 'block' : 'none';
+            btn.textContent = hidden ? '收起' : '展开';
+        }
+
+        function renderExamReport() {
+            const box = document.getElementById('exam-report');
+            const summary = document.getElementById('report-summary');
+            const list = document.getElementById('report-list');
+            const btn = document.getElementById('toggle-report-btn');
+            if (!box || !summary || !list || !btn) return;
+
+            const total = appState.questions.length;
+            let correctCount = 0;
+            let unansweredCount = 0;
+            const wrongItems = [];
+
+            appState.questions.forEach((q, i) => {
+                const userIdx = appState.examAnswers[i];
+                if (userIdx === null) unansweredCount++;
+                if (userIdx === q.correctIndex) {
+                    correctCount++;
+                    return;
+                }
+                const correctOpt = q.options[q.correctIndex];
+                const userOpt = (userIdx === null) ? null : q.options[userIdx];
+                wrongItems.push({
+                    no: i + 1,
+                    q,
+                    userIdx,
+                    userText: userOpt ? userOpt.text : '未作答',
+                    correctText: correctOpt ? correctOpt.text : '',
+                });
+            });
+
+            const wrongCount = total - correctCount;
+            summary.textContent = `共 ${total} 题｜答对 ${correctCount} 题｜答错 ${wrongCount} 题｜未答 ${unansweredCount} 题`;
+
+            if (wrongItems.length === 0) {
+                list.innerHTML = `<div class="report-item"><div class="report-q">本次全部答对，无错题。</div></div>`;
+                box.style.display = 'block';
+                btn.textContent = '收起';
+                return;
+            }
+
+            list.innerHTML = wrongItems.map(item => {
+                const questionText = escapeHtml(item.q.text);
+                const correctText = escapeHtml(item.correctText);
+                const userText = escapeHtml(item.userText);
+                const expl = item.q.explanation ? `<div class="report-expl">解析：${escapeHtml(item.q.explanation)}</div>` : '';
+                const userLabel = (item.userIdx === null) ? '' : optionLabel(item.userIdx);
+                const correctLabel = optionLabel(item.q.correctIndex);
+
+                return `
+                    <div class="report-item">
+                        <div class="report-q"><span class="report-qno">${item.no}</span>${questionText}</div>
+                        <div class="report-rows">
+                            <div class="report-row"><span class="label">你的答案</span><span class="bad">${userLabel ? userLabel + '：' : ''}${userText}</span></div>
+                            <div class="report-row"><span class="label">正确答案</span><span class="good">${correctLabel ? correctLabel + '：' : ''}${correctText}</span></div>
+                        </div>
+                        ${expl}
+                    </div>
+                `;
+            }).join('');
+
+            box.style.display = 'block';
+            btn.textContent = '收起';
+        }
+
         class QuestionEngine {
             constructor() {
                 this.cache = {};
@@ -1207,19 +1412,19 @@
 
                 mcqSeeds.forEach(seed => {
                     let options = [
-                        { text: seed.a, isCorrect: true },
-                        { text: seed.w[0] || "以上皆非", isCorrect: false },
-                        { text: seed.w[1] || "不确定", isCorrect: false },
-                        { text: seed.w[2] || "其他", isCorrect: false }
+                        { text: sanitizeText(seed.a), isCorrect: true },
+                        { text: sanitizeText(seed.w[0] || "以上皆非"), isCorrect: false },
+                        { text: sanitizeText(seed.w[1] || "不确定"), isCorrect: false },
+                        { text: sanitizeText(seed.w[2] || "其他"), isCorrect: false }
                     ];
                     options.sort(() => Math.random() - 0.5);
                     generated.push({
                         id: `${subj}-MCQ-${idCounter++}`,
                         type: 'MCQ',
-                        text: seed.q,
+                        text: sanitizeText(seed.q),
                         options: options,
                         correctIndex: options.findIndex(o => o.isCorrect),
-                        explanation: "" 
+                        explanation: sanitizeText(seed.expl || seed.e || '') || buildFallbackExplanation(seed)
                     });
                 });
 
@@ -1227,13 +1432,13 @@
                     generated.push({
                         id: `${subj}-TF-${idCounter++}`,
                         type: 'TF', 
-                        text: `【判断题】${seed.q}`,
+                        text: `【判断题】${sanitizeText(seed.q)}`,
                         options: [
                             { text: "正确 (Correct)", isCorrect: seed.a === true },
                             { text: "错误 (Incorrect)", isCorrect: seed.a === false }
                         ],
                         correctIndex: seed.a === true ? 0 : 1,
-                        explanation: seed.expl 
+                        explanation: sanitizeText(seed.expl) 
                     });
                 });
 
@@ -1256,6 +1461,19 @@
             userInfo: { name: "", id: "" } // 新增考生信息
         };
 
+        function setFooterVariant(variant) {
+            const home = document.getElementById('footer-home');
+            const simple = document.getElementById('footer-simple');
+            if (!home || !simple) return;
+            if (variant === 'home') {
+                home.style.display = 'block';
+                simple.style.display = 'none';
+            } else {
+                home.style.display = 'none';
+                simple.style.display = 'block';
+            }
+        }
+
         function selectMode(mode) {
             appState.mode = mode;
             const titles = { 'study': '知识学习', 'practice': '强化练习', 'exam': '正式考试' };
@@ -1264,8 +1482,7 @@
             
             document.getElementById('hero-page').style.display = 'none';
             document.getElementById('subject-page').style.display = 'block';
-            
-            document.querySelector('footer').classList.remove('hero-footer');
+            setFooterVariant('simple');
             window.scrollTo(0,0);
         }
 
@@ -1275,14 +1492,14 @@
             document.getElementById('hero-page').style.display = 'block';
             document.getElementById('timer-box').style.display = 'none';
             document.getElementById('login-modal').style.display = 'none'; // 确保弹窗关闭
-            
-            document.querySelector('footer').classList.add('hero-footer');
+            setFooterVariant('home');
             window.scrollTo(0,0);
         }
 
         function backToSubject() {
             document.getElementById('study-page').style.display = 'none';
             document.getElementById('subject-page').style.display = 'block';
+            setFooterVariant('simple');
         }
 
         function startActivity(subj) {
@@ -1298,6 +1515,7 @@
                 if (appState.mode === 'study') initStudy();
                 else if (appState.mode === 'practice') initPractice();
             }
+            setFooterVariant('simple');
         }
 
         function closeLoginModal() {
@@ -1319,12 +1537,14 @@
             document.getElementById('login-modal').style.display = 'none';
             document.getElementById('subject-page').style.display = 'none';
             initExam();
+            setFooterVariant('simple');
         }
 
         function initStudy() {
             document.getElementById('study-page').style.display = 'block';
             document.getElementById('study-subject-title').textContent = KNOWLEDGE_BASE[appState.subject].title;
             document.getElementById('study-content').innerHTML = KNOWLEDGE_BASE[appState.subject].content;
+            setFooterVariant('simple');
             window.scrollTo(0,0);
         }
 
@@ -1605,6 +1825,8 @@
                 msg.textContent = "很遗憾未通过，请复习知识点后再试。";
                 msg.style.color = "var(--fail-red)";
             }
+
+            renderExamReport();
         }
 
         function animateScore(target) {
