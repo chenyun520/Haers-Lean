@@ -249,7 +249,7 @@
 
         .footer-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 12px; background: var(--klein-blue); color: #ffffff; font-weight: 950; letter-spacing: 0.3px; width: fit-content; }
         #footer-home { max-width: none; padding: 0; }
-        #footer-home .footer-badge { width: 100%; justify-content: center; border-radius: 0; padding: 30px 20px; font-size: 1.15rem; letter-spacing: 0.6px; }
+        #footer-home .footer-badge { width: 100%; justify-content: center; border-radius: 0; padding: 44px 20px; font-size: 1.22rem; letter-spacing: 0.8px; }
 
         
 
@@ -513,6 +513,25 @@
                     <div class="k-title-sub">4. 异常响应闭环 (Andon System)</div>
                     <p>遵循“三现主义”：<strong>现场 (Genba)、现物 (Genbutsu)、现实 (Genjitsu)</strong>。</p>
                     <p>流程：发现异常 → 停止生产 (Stop) → 呼叫班长 (Call) → 等待/处理 (Wait)。<br>原则：<strong>不接受、不制造、不流出不良</strong>。</p>
+
+                    <div class="k-title-sub">5. 案例：SQDC 红灯如何当天闭环</div>
+                    <p><span class="k-strong">场景</span>：当班直通率 (FPY) 低于目标，看板出现 <span class="k-strong">Q 红灯</span>。</p>
+                    <table class="k-table">
+                        <tr><th>步骤</th><th>现场动作</th><th>输出物</th></tr>
+                        <tr><td>1. 立即止血</td><td>围堵可疑批次，确认流出范围；必要时停线。</td><td>隔离清单/范围确认</td></tr>
+                        <tr><td>2. 快速定位</td><td>用 5W2H 描述缺陷：发生在哪道工序/哪个班次/多少件。</td><td>问题描述表</td></tr>
+                        <tr><td>3. 临时对策</td><td>在不扩散风险前提下恢复生产（加严检验/工装调整/换人等）。</td><td>临时对策 + 验证方式</td></tr>
+                        <tr><td>4. 根因与固化</td><td>5Why/鱼骨验证真因；有效做法写进 SOP/点检/看板。</td><td>标准更新记录</td></tr>
+                    </table>
+
+                    <div class="k-title-sub">6. 班前会 5 分钟脚本（可直接照做）</div>
+                    <ul>
+                        <li><span class="k-strong">30秒</span>：确认人机料法变化点（新员工/换刀/代用料/参数调整）。</li>
+                        <li><span class="k-strong">90秒</span>：复盘昨日 SQDC 红灯与对策完成度（谁、何时完成、验证结果）。</li>
+                        <li><span class="k-strong">90秒</span>：宣贯当班安全要点与风险点（KYT）。</li>
+                        <li><span class="k-strong">60秒</span>：发布当班目标与关键管控点（首件/点检/巡检节奏）。</li>
+                        <li><span class="k-strong">30秒</span>：确认异常响应路径（Andon 触发条件、到场责任人）。</li>
+                    </ul>
                 `
             },
             "PSP": {
@@ -556,6 +575,31 @@
                         <li><span class="k-term">D (Do)</span>：执行对策。</li>
                         <li><span class="k-term">C (Check)</span>：检查效果，验证 Gap 是否消除。</li>
                         <li><span class="k-term">A (Act)</span>：如果有效，进行<strong>标准化 (Standardization)</strong> 和横向展开 (Yokoten)；无效则重新开始。</li>
+                    </ul>
+
+                    <div class="k-title-sub">4. 案例：客诉划痕的 PSP 闭环</div>
+                    <p><span class="k-strong">场景</span>：客户反馈“杯体表面划痕”客诉上升。</p>
+                    <div class="concept-grid">
+                        <div class="concept-card">
+                            <span class="concept-title">📌 5W2H 描述</span>
+                            What：杯体表面划痕<br>
+                            Where：包装后抽检发现<br>
+                            When：夜班集中出现<br>
+                            How much：3天内 18 件
+                        </div>
+                        <div class="concept-card">
+                            <span class="concept-title">🧯 围堵止血</span>
+                            隔离夜班批次；加严外观检；确认流出范围；临时增加防护垫。
+                        </div>
+                    </div>
+                    <p><span class="k-strong">真因示例</span>：包装工位治具护套磨损 → 造成二次刮擦（用现场证据与复现验证）。</p>
+                    <p><span class="k-strong">固化</span>：护套点检项加入日点检表；更换周期写入作业指导；异常时触发隔离动作与再确认。</p>
+
+                    <div class="k-title-sub">5. 对策有效性怎么判定（避免“做了就算”）</div>
+                    <ul>
+                        <li>看<span class="k-strong">趋势</span>：缺陷率连续下降，而不是单日偶然。</li>
+                        <li>看<span class="k-strong">复发</span>：相同条件下不再出现同类问题。</li>
+                        <li>看<span class="k-strong">过程</span>：对策执行有记录（点检/参数/培训）。</li>
                     </ul>
                 `
             },
@@ -601,6 +645,22 @@
                         <tr><td><strong>标准作业三要素</strong></td><td>1. 节拍时间 (TT)<br>2. 作业顺序 (Work Sequence)<br>3. 标准手持 (SWIP)</td></tr>
                         <tr><td><strong>标准作业三票</strong></td><td>1. 工程别能力表 (各工序能力)<br>2. 标准作业组合票 (人机时间组合)<br>3. 标准作业票 (布局与动线)</td></tr>
                     </table>
+
+                    <div class="k-title-sub">3. 案例：瓶颈 CT 大于 TT 的改善思路</div>
+                    <p><span class="k-strong">场景</span>：客户需求提升后，产线欠交；测得瓶颈工序 CT=68s，而 TT=55s。</p>
+                    <ul>
+                        <li><span class="k-strong">第一步</span>：确认数据口径一致（TT 的净可用时间是否扣除了计划停机；CT是否为连续多次实测代表值）。</li>
+                        <li><span class="k-strong">第二步</span>：用 ECRS 做方法改善（先剔除无价值动作，再合并/重排/简化）。</li>
+                        <li><span class="k-strong">第三步</span>：人机分离/并行作业（把自动等待时间与人工动作拆开），让“人不等机、机不等人”。</li>
+                        <li><span class="k-strong">第四步</span>：改善后更新标准作业三票，并设置 SWIP，防止回退。</li>
+                    </ul>
+
+                    <div class="k-title-sub">4. 易错点（中级难度常考）</div>
+                    <ul>
+                        <li>把 TT 当成设备能力：TT 是需求节奏，不是设备极限速度。</li>
+                        <li>用“加人/加班”替代方法改善：会把浪费固化，成本上升。</li>
+                        <li>改善后不更新标准：结果是换人就回退。</li>
+                    </ul>
                 `
             },
             "VSM": {
@@ -652,6 +712,23 @@
                         <li><span class="k-term">Pacemaker (定拍工序)</span>：全厂唯一接收计划的工序。</li>
                         <li><span class="k-term">Heijunka (均衡化)</span>：混合排产，平抑波动。</li>
                     </ul>
+
+                    <div class="k-title-sub">4. 案例：把推式改成“可落地”的拉动</div>
+                    <p><span class="k-strong">场景</span>：现状图显示各工序按计划推送，工序间库存高，Lead Time 被等待吃掉。</p>
+                    <table class="k-table">
+                        <tr><th>改造点</th><th>做法</th><th>验证指标</th></tr>
+                        <tr><td>选定拍工序</td><td>让计划只下达到一个工序，其余按信号补给。</td><td>欠交次数下降</td></tr>
+                        <tr><td>设置超市</td><td>在无法连续流处设定上/下限水位，明确补给周期。</td><td>WIP下降、断料减少</td></tr>
+                        <tr><td>看板信号</td><td>用取用触发补充（Pull），而不是生产完就推走。</td><td>过量生产减少</td></tr>
+                        <tr><td>时间线复算</td><td>重新计算库存LT与VA比率，锁定最大等待点。</td><td>Lead Time缩短</td></tr>
+                    </table>
+
+                    <div class="k-title-sub">5. 易错点</div>
+                    <ul>
+                        <li>“画了未来态”但没有参数：没有批量/补给周期/水位线，就无法落地。</li>
+                        <li>把超市当成大仓库：超市是受控库存，用于稳定拉动，而不是无限堆积。</li>
+                        <li>只改物流不改信息流：信息触发方式不改，库存会很快反弹。</li>
+                    </ul>
                 `
             },
             "5S": {
@@ -685,6 +762,28 @@
                         <li><strong>挂牌</strong>：对不确定或不需要的物品贴红牌。</li>
                         <li><strong>移送</strong>：移动到暂存区 (Red Tag Area)。</li>
                         <li><strong>处置</strong>：冻结期满后，废弃、变卖或归位。</li>
+                    </ul>
+
+                    <div class="k-title-sub">4. 案例：三定让缺件“一眼可见”</div>
+                    <p><span class="k-strong">场景</span>：某装配工位频繁缺螺丝，作业员来回寻找导致节拍不稳。</p>
+                    <ul>
+                        <li><span class="k-strong">定品</span>：明确螺丝型号与名称，标识统一。</li>
+                        <li><span class="k-strong">定点</span>：在工位左前方固定位置设置取用盒，贴定置线。</li>
+                        <li><span class="k-strong">定量</span>：设定最小/最大水位线；低于最小线立即触发补给。</li>
+                    </ul>
+                    <p><span class="k-strong">效果</span>：缺料从“事后抱怨”变成“现场异常”，管理者可及时响应。</p>
+
+                    <div class="k-title-sub">5. 清扫即点检：把故障前兆提前暴露</div>
+                    <ul>
+                        <li>清扫时发现漏油/松动/异响，必须标识并进入处理流程。</li>
+                        <li>把高频异常写进点检表：位置、判定标准、处理动作、责任人。</li>
+                    </ul>
+
+                    <div class="k-title-sub">6. 维持机制（否则一定反弹）</div>
+                    <ul>
+                        <li><span class="k-strong">责任区</span>：区域边界清晰，责任人明确。</li>
+                        <li><span class="k-strong">稽核节奏</span>：班组自查 + 周巡查 + 月度抽查。</li>
+                        <li><span class="k-strong">闭环</span>：发现问题必须有对策与复查，不能只打分。</li>
                     </ul>
                 `
             },
@@ -739,6 +838,23 @@
                         <tr><td><strong>R 重排</strong></td><td>Rearrange</td><td>改变顺序。例：将检验放到瓶颈工序之前。</td></tr>
                         <tr><td><strong>S 简化</strong></td><td>Simplify</td><td>让动作更简单。例：使用工装夹具、滑槽。</td></tr>
                     </table>
+
+                    <div class="k-title-sub">3. 案例：用 ECRS 降低换型时间</div>
+                    <p><span class="k-strong">场景</span>：换型需要 25 分钟，导致小批量难落地，库存不断上升。</p>
+                    <ul>
+                        <li><span class="k-strong">E</span>：取消不必要的签字/等待（把“等确认”改为并行确认）。</li>
+                        <li><span class="k-strong">C</span>：把两次重复测量合并为一次，并设定判定标准。</li>
+                        <li><span class="k-strong">R</span>：把“找工具/找夹具”提前到停机前准备（外部作业）。</li>
+                        <li><span class="k-strong">S</span>：使用快速定位销与颜色标识，减少调试动作。</li>
+                    </ul>
+                    <p><span class="k-strong">验证</span>：换型时间下降、在制下降、欠交减少；有效做法写入标准作业与点检。</p>
+
+                    <div class="k-title-sub">4. 中级难度要点</div>
+                    <ul>
+                        <li>不要把浪费“自动化”：先消除浪费，再考虑自动化与信息化。</li>
+                        <li>浪费要可量化：时间、距离、次数、金额，才能验证改善。</li>
+                        <li>人才浪费常被忽视：授权与提案制度能持续产生改善。</li>
+                    </ul>
                 `
             }
         };
@@ -1252,7 +1368,12 @@
                 { "q": "Andon 系统亮红灯时，操作员应继续生产，等待班长到来。", "a": false, "expl": "应立即停止生产 (Stop) 并呼叫 (Call)，遵循不制造不良的原则。" },
                 { "q": "班前会的主要目的是为了点名考勤。", "a": false, "expl": "核心目的是工作对齐 (Alignment)、安全宣贯和目标设定。" },
                 { "q": "KYT (危险预知训练) 属于质量管理的范畴。", "a": false, "expl": "KYT 属于安全 (Safety) 管理范畴。" },
-                { "q": "日常管理是为了维持现状，防止业绩倒退。", "a": true, "expl": "这是日常管理与方针管理（旨在突破）的主要区别。" }
+                { "q": "日常管理是为了维持现状，防止业绩倒退。", "a": true, "expl": "这是日常管理与方针管理（旨在突破）的主要区别。" },
+                { "q": "SQDC 看板只要每周更新一次即可，日常波动不影响管理。", "a": false, "expl": "日常管理强调当班/当天节奏，红灯必须当天触发动作与责任人，周更会延迟响应。" },
+                { "q": "三现主义强调管理者应该通过报表判断现场，而不是到现场确认。", "a": false, "expl": "三现主义是现场/现物/现实，要求到现场看现物，用事实确认。" },
+                { "q": "Andon 的目标是让问题在产生处被停止与处理，而不是事后挑出不良。", "a": true, "expl": "Andon 体现“自働化”，问题要在源头停止并呼叫支援，防止流出。" },
+                { "q": "4M 变化点管理的关键之一是先定义“什么算变化”，再规定触发动作。", "a": true, "expl": "没有清晰的变化定义，就无法稳定触发首件确认/加强点检等动作。" },
+                { "q": "日常管理指标越多越好，越全面越能管住现场。", "a": false, "expl": "指标过多会稀释注意力；应围绕SQDC等关键指标，做到可视化、可行动、可闭环。" }
             ],
             "PSP": [
                 { "q": "5W2H 中的 Who 是为了找出责任人并进行处罚。", "a": false, "expl": "Who 是为了分析与人员技能、班次等相关的规律，精益强调'对事不对人'。" },
@@ -1261,7 +1382,13 @@
                 { "q": "PDCA 循环中的 A (Act) 仅指采取纠正措施。", "a": false, "expl": "Act 还包含标准化 (Standardize) 和横向展开，以防止问题再发。" },
                 { "q": "解决问题的最高境界是预防问题发生。", "a": true, "expl": "从救火到防火，是精益管理的最终目标。" },
                 { "q": "能够用数据量化描述问题，是解决问题的第一步。", "a": true, "expl": "模糊的问题描述会导致模糊的解决方案。" },
-                { "q": "暂时的围堵措施 (Containment) 等同于根本对策。", "a": false, "expl": "围堵只是止血，根本对策 (Root Cause Countermeasure) 才能防止再发。" }
+                { "q": "暂时的围堵措施 (Containment) 等同于根本对策。", "a": false, "expl": "围堵只是止血，根本对策 (Root Cause Countermeasure) 才能防止再发。" },
+                { "q": "5Why 可以跳过证据验证，直接写到“系统原因”以提高效率。", "a": false, "expl": "每一层Why都要证据支撑；没有验证会把猜测当真因，导致对策无效。" },
+                { "q": "临时对策验证有效后，可以不做标准化，靠班组经验维持。", "a": false, "expl": "不标准化就无法复制与维持，问题容易复发；有效对策必须固化到标准/点检/培训。" },
+                { "q": "对策有效性的判定应基于趋势与复发情况，而非单次结果。", "a": true, "expl": "单次改善可能是偶然；应看数据趋势、复发率与过程稳定性来判定有效。" },
+                { "q": "帕累托分析可以用于识别主要矛盾，从而做改善优先级排序。", "a": true, "expl": "帕累托强调少数关键原因造成多数问题，用于抓主要原因并排序。" },
+                { "q": "鱼骨图的作用是直接确认真因，画完即可执行对策。", "a": false, "expl": "鱼骨图用于头脑风暴潜在原因；真因仍需数据与现场证据验证。" },
+                { "q": "一个合格的问题描述通常必须包含 How many（数量/频率）。", "a": true, "expl": "没有数量就无法量化差距与验证改善效果；How many 是问题可验证的关键字段。" }
             ],
             "SW": [
                 { "q": "节拍时间 (Takt Time) 是由设备的最快运行速度决定的。", "a": false, "expl": "TT 由客户需求决定，与设备能力无关。" },
@@ -1270,7 +1397,13 @@
                 { "q": "标准手持 (SWIP) 的数量越多越好，可以防止断料。", "a": false, "expl": "SWIP 应是维持标准作业循环所需的'最小'在制品数量。" },
                 { "q": "标准作业不仅规定了怎么做，还规定了做多少时间。", "a": true, "expl": "包含 TT、作业顺序和 SWIP 三要素。" },
                 { "q": "线平衡率 (LBE) 越低，说明生产线效率越高。", "a": false, "expl": "LBE 越低说明等待浪费越多，效率越低。" },
-                { "q": "ECRS 中的 'C' 代表 Clean (清洁)。", "a": false, "expl": "'C' 代表 Combine (合并)。" }
+                { "q": "ECRS 中的 'C' 代表 Clean (清洁)。", "a": false, "expl": "'C' 代表 Combine (合并)。" },
+                { "q": "TT 与产能是等价概念，TT 越小表示产能越小。", "a": false, "expl": "TT 是客户需求节奏，TT 越小表示需求越高；产能取决于CT与资源，不与TT等价。" },
+                { "q": "CT 的测量建议连续多次采样，并剔除明显异常后取代表值。", "a": true, "expl": "CT要反映“常态过程”，需要多次测量并识别异常点，避免用一次值误判。" },
+                { "q": "SWIP 的作用之一是稳定作业循环，数量过多会掩盖问题。", "a": true, "expl": "SWIP过多会让缺料/不平衡被库存掩盖；标准在制应是维持循环所需最小量。" },
+                { "q": "线平衡的目标是让每个人都同样忙，忙到没有空档。", "a": false, "expl": "线平衡追求节拍稳定与等待更少，不是让人更累；应以TT与过程稳定为目标。" },
+                { "q": "标准作业改善后不需要更新标准作业票，口头传达即可。", "a": false, "expl": "不更新标准会导致回退与人员差异；改善必须固化到标准作业票与培训点检。" },
+                { "q": "瓶颈改善的首选策略通常是直接加人或加设备。", "a": false, "expl": "优先用ECRS、方法改善、人机分离等降低CT；盲目加人加设备成本高且可能引入新浪费。" }
             ],
             "VSM": [
                 { "q": "VSM 与普通流程图的区别在于它包含了信息流和时间线。", "a": true, "expl": "这是 VSM 的核心特征，用于识别系统性浪费。" },
@@ -1278,7 +1411,12 @@
                 { "q": "VSM 中的推式箭头 (黑白格) 代表精益的拉动生产。", "a": false, "expl": "推式箭头代表按计划生产 (Push)，容易造成过量生产。" },
                 { "q": "超市 (Supermarket) 是用来存放无限量库存的地方。", "a": false, "expl": "超市是受控的拉动系统，有明确的最高和最低库存水位。" },
                 { "q": "定拍工序 (Pacemaker) 是全厂唯一接收生产计划的工序。", "a": true, "expl": "这是实现连续流和拉动的关键控制点。" },
-                { "q": "未来态 (Future State) 规划应尽量实现单件流。", "a": true, "expl": "单件流是消除库存和等待的最佳方式。" }
+                { "q": "未来态 (Future State) 规划应尽量实现单件流。", "a": true, "expl": "单件流是消除库存和等待的最佳方式。" },
+                { "q": "未来态图不需要绑定参数（节拍、批量、补给周期），画出流程即可。", "a": false, "expl": "没有参数就无法落地；未来态必须明确拉动点、补给节奏、批量与换型等关键约束。" },
+                { "q": "定拍工序一定是全价值流中节拍最慢、CT 最大的工序。", "a": false, "expl": "定拍工序是计划唯一入口与节奏控制点，不等同于瓶颈；选择要综合考虑信息流与可控性。" },
+                { "q": "推式系统往往带来过量生产与库存，从而拉长 Lead Time。", "a": true, "expl": "推式按计划生产，容易过量生产；库存与等待会拉长交付周期。" },
+                { "q": "时间线的一个关键用途是量化等待与停滞，从而定位主要浪费。", "a": true, "expl": "把加工与等待分开，才能看到浪费主要发生在哪里并形成改善优先级。" },
+                { "q": "增值比率越高，通常说明系统性浪费越少。", "a": true, "expl": "增值比率=增值时间/总Lead Time，越高说明等待/库存等浪费占比更低。" }
             ],
             "5S": [
                 { "q": "5S 中的清扫 (Seiso) 仅仅是为了让车间看起来干净。", "a": false, "expl": "清扫即点检 (Inspection)，目的是发现微小的异常（如漏油、螺丝松动）。" },
@@ -1286,14 +1424,26 @@
                 { "q": "根据哈尔斯 VCS 标准，红色区域通常用于存放合格品。", "a": false, "expl": "红色通常表示不良品区、危险区或消防设备；合格品一般用绿色。" },
                 { "q": "5S 的最终目的是为了应付客户参观。", "a": false, "expl": "目的是构建异常探测系统，提升企业体质。" },
                 { "q": "三定原则是指：定点、定品、定量。", "a": true, "expl": "这是整顿 (Seiton) 的核心，旨在消除寻找的浪费。" },
-                { "q": "素养 (Shitsuke) 是 5S 中最难坚持的一环。", "a": true, "expl": "因为它涉及到人员习惯和文化的改变。" }
+                { "q": "素养 (Shitsuke) 是 5S 中最难坚持的一环。", "a": true, "expl": "因为它涉及到人员习惯和文化的改变。" },
+                { "q": "清扫中发现的漏油、松动属于设备管理问题，与 5S 无关。", "a": false, "expl": "清扫即点检，发现异常并推动处理是5S的重要价值，能提前暴露设备隐患。" },
+                { "q": "三定中的“定量”需要设定上限/下限，才能触发补给与异常暴露。", "a": true, "expl": "没有数量阈值就无法判断缺料或过量，定量本质是用标准让异常可见。" },
+                { "q": "5S 稽核的作用只是打分排名，不需要结合对策改善。", "a": false, "expl": "稽核是发现差距与推动对策的机制；只打分不改善会导致形式化。" },
+                { "q": "素养可以通过一次集中整顿活动完成，之后无需维持机制。", "a": false, "expl": "素养靠长期机制：标准化、教育训练、日常点检与稽核，形成习惯才算完成。" },
+                { "q": "红牌作战中“暂时保留”的物品也需要设定期限与处置方式。", "a": true, "expl": "没有期限会变成永久堆放；红牌的价值在于推动决策与清理隐性库存。" },
+                { "q": "5S 与安全没有直接关系，主要是提升现场美观。", "a": false, "expl": "5S是安全基础：通道畅通、标识清晰、异常可见，能显著降低事故风险。" }
             ],
             "TIMWOODS": [
                 { "q": "在八大浪费中，库存 (Inventory) 被认为是万恶之源。", "a": false, "expl": "过量生产 (Overproduction) 才是万恶之源，因为它导致了库存和其他所有浪费。" },
                 { "q": "检验员的工作属于增值活动 (Value Added)。", "a": false, "expl": "检验属于非增值活动 (NVA)，虽然必要，但不改变产品形态或性能。" },
                 { "q": "ECRS 改善原则中，首先应该考虑的是 Simplify (简化)。", "a": false, "expl": "首先应考虑 Eliminate (剔除)，如果不做就能解决问题，成本最低。" },
                 { "q": "人员的动作 (Motion) 浪费和物料的搬运 (Transportation) 浪费是一回事。", "a": false, "expl": "Motion 指'人'的多余动作；Transportation 指'物'的移动。" },
-                { "q": "等待 (Waiting) 浪费通常是由于线不平衡或缺料引起的。", "a": true, "expl": "人或机器闲置无法创造价值。" }
+                { "q": "等待 (Waiting) 浪费通常是由于线不平衡或缺料引起的。", "a": true, "expl": "人或机器闲置无法创造价值。" },
+                { "q": "过量生产 (Overproduction) 常被认为是其他浪费的根源之一。", "a": true, "expl": "过量生产会制造库存与等待，并掩盖质量与效率问题，牵引其他浪费发生。" },
+                { "q": "动作浪费只指走动距离，不包含弯腰、伸手、扭转等多余动作。", "a": false, "expl": "动作浪费包含所有多余动作：走动、伸手、弯腰、寻找、转身等。" },
+                { "q": "过度加工 (Over-processing) 的常见原因之一是客户标准不清或过度追求完美。", "a": true, "expl": "没有明确标准容易做多做过；应以客户价值与标准为准做VE/VA。" },
+                { "q": "等待浪费通常只能通过增加人员或加班来解决。", "a": false, "expl": "等待多由不平衡、缺料、换型、故障等引起；应通过线平衡、拉动、稳定化等解决。" },
+                { "q": "ECRS 的四步可以随意跳过或颠倒顺序，不影响改善质量。", "a": false, "expl": "ECRS强调先E再C/R/S，先取消无价值动作成本最低，顺序是方法论核心。" },
+                { "q": "人才浪费不仅是缺人，更包括员工技能未被使用或建议不被采纳。", "a": true, "expl": "人才浪费强调“能力未发挥”，通过授权、提案制度与多能工培养来改善。" }
             ]
         };
 
@@ -1302,10 +1452,169 @@
             return text.replace(/甚至\s*/g, '').replace(/\s{2,}/g, ' ').trim();
         }
 
-        function buildFallbackExplanation(seed) {
-            const ans = sanitizeText(seed && seed.a ? seed.a : '');
-            if (!ans) return '';
-            return `正确答案：${ans}`;
+        function normalizeWhitespace(s) {
+            return String(s || '').replace(/\s+/g, ' ').trim();
+        }
+
+        function isBannedOption(text) {
+            const t = normalizeWhitespace(text);
+            if (!t) return true;
+            const banned = [
+                '碎纸机', '烧掉', '迷路', '洗澡', '洗手', '洗脸', '自拍', '朋友圈', '斑马线', '圣旨', '独角戏',
+                '飞机', '打仗', '导航', '恐怖', '礼貌用语', '穿西装', '总经理', '保洁阿姨', '炫耀', '涂鸦',
+                '垃圾', '倒霉', '诅咒', '躺着', '蹲着', '懒惰', '万恶之源', '百丑遮',
+                '颜色好看', '省钱', '模仿军队', '练习打钩', '私人八卦', '零食', '倒水', '跑步比赛', '饭后散步', '跳跃'
+            ];
+            return banned.some(w => t.includes(w));
+        }
+
+        function hashString(s) {
+            let h = 2166136261;
+            const str = String(s || '');
+            for (let i = 0; i < str.length; i++) {
+                h ^= str.charCodeAt(i);
+                h = Math.imul(h, 16777619);
+            }
+            return h >>> 0;
+        }
+
+        function dedupeKeepOrder(items) {
+            const seen = new Set();
+            const out = [];
+            for (const it of items) {
+                const key = normalizeWhitespace(it).toLowerCase();
+                if (!key || seen.has(key)) continue;
+                seen.add(key);
+                out.push(normalizeWhitespace(it));
+            }
+            return out;
+        }
+
+        const DISTRACTOR_BANK = {
+            DM: [
+                '方针管理 (Hoshin Kanri)',
+                '标准作业 (Standard Work)',
+                '目视化管理 (Visual Management)',
+                'TPM (全员生产维护)',
+                'JIT (准时化)',
+                '安灯 (Andon) 异常呼叫',
+                '4M 变化点管理',
+                'KYT 危险预知训练'
+            ],
+            PSP: [
+                '5W2H 问题描述',
+                '5Why 真因分析',
+                '鱼骨图 (因果图)',
+                '帕累托分析 (80/20)',
+                'PDCA 循环',
+                '临时对策 (围堵)',
+                '标准化与防复发',
+                '数据验证与对策确认'
+            ],
+            SW: [
+                'TT (节拍时间)',
+                'CT (循环时间)',
+                'SWIP (标准在制品)',
+                '线平衡 (LBE)',
+                '作业顺序与要点',
+                '人机分离与并行作业',
+                'ECRS 动作改善',
+                '瓶颈工序改善'
+            ],
+            VSM: [
+                'Lead Time (交付周期)',
+                'Processing Time (加工时间)',
+                '增值/非增值 (VA/NVA)',
+                '超市 (Supermarket) 拉动',
+                '看板 (Kanban) 补给信号',
+                '定拍工序 (Pacemaker)',
+                '推式与拉式生产',
+                '未来态 (Future State)'
+            ],
+            '5S': [
+                '整理 (Seiri)',
+                '整顿 (Seiton)',
+                '清扫 (Seiso)',
+                '清洁 (Seiketsu)',
+                '素养 (Shitsuke)',
+                '红牌作战 (Red Tag)',
+                '三定 (定品/定量/定位)',
+                '责任区与稽核机制'
+            ],
+            TIMWOODS: [
+                '运输浪费 (Transportation)',
+                '库存浪费 (Inventory)',
+                '动作浪费 (Motion)',
+                '等待浪费 (Waiting)',
+                '过度加工 (Over-processing)',
+                '过量生产 (Overproduction)',
+                '缺陷浪费 (Defects)',
+                '人才浪费 (Skills)'
+            ]
+        };
+
+        function pickFallbackWrong(subj, seed, used) {
+            const bank = DISTRACTOR_BANK[subj] || [];
+            const start = bank.length ? (hashString(`${subj}::${seed && seed.q ? seed.q : ''}`) % bank.length) : 0;
+            for (let i = 0; i < bank.length; i++) {
+                const item = bank[(start + i) % bank.length];
+                const t = sanitizeText(item);
+                const key = normalizeWhitespace(t).toLowerCase();
+                if (!t || used.has(key) || isBannedOption(t)) continue;
+                used.add(key);
+                return t;
+            }
+            return '不完全正确，需要进一步确认';
+        }
+
+        function buildMcqExplanation(subj, seed) {
+            const q = sanitizeText(seed.q);
+            const a = sanitizeText(seed.a);
+            const base = {
+                DM: '依据日常管理原则，应以现场可视化与标准化为准绳，确保异常可暴露且可闭环。',
+                PSP: '依据问题解决流程，先界定问题，再用证据验证真因，并以对策闭环防复发。',
+                SW: '依据标准作业逻辑，应围绕节拍与循环时间建立稳定的方法与在制控制。',
+                VSM: '依据价值流方法，用时间线与信息流识别浪费，并以拉动机制规划未来态。',
+                '5S': '依据5S与目视化原则，通过三定与稽核机制把异常显现并形成习惯。',
+                TIMWOODS: '依据八大浪费与ECRS原则，先识别浪费，再用数据验证改善效果。'
+            };
+            const hint = base[subj] || '';
+            return `正确答案：${a}<br>${hint}`;
+        }
+
+        function normalizeWrongOptions(subj, seed) {
+            const ans = sanitizeText(seed.a);
+            const used = new Set([normalizeWhitespace(ans).toLowerCase()]);
+            const raw = Array.isArray(seed.w) ? seed.w : [];
+            const cleaned = raw.map(sanitizeText).map(normalizeWhitespace).filter(Boolean);
+            const filtered = cleaned
+                .filter(x => {
+                    const key = normalizeWhitespace(x).toLowerCase();
+                    if (!key || used.has(key)) return false;
+                    if (isBannedOption(x)) return false;
+                    used.add(key);
+                    return true;
+                });
+
+            let wrongs = dedupeKeepOrder(filtered);
+            if (wrongs.length > 6) wrongs = wrongs.slice(0, 6);
+
+            const targetLen = normalizeWhitespace(ans).length;
+            wrongs.sort((a, b) => Math.abs(a.length - targetLen) - Math.abs(b.length - targetLen));
+
+            const picked = [];
+            const pickedUsed = new Set([normalizeWhitespace(ans).toLowerCase()]);
+            for (const w of wrongs) {
+                const key = normalizeWhitespace(w).toLowerCase();
+                if (pickedUsed.has(key)) continue;
+                pickedUsed.add(key);
+                picked.push(w);
+                if (picked.length >= 3) break;
+            }
+            while (picked.length < 3) {
+                picked.push(pickFallbackWrong(subj, seed, pickedUsed));
+            }
+            return picked.slice(0, 3);
         }
 
         function escapeHtml(s) {
@@ -1411,11 +1720,12 @@
                 let idCounter = 1;
 
                 mcqSeeds.forEach(seed => {
+                    const normalizedWrongs = normalizeWrongOptions(subj, seed);
                     let options = [
                         { text: sanitizeText(seed.a), isCorrect: true },
-                        { text: sanitizeText(seed.w[0] || "以上皆非"), isCorrect: false },
-                        { text: sanitizeText(seed.w[1] || "不确定"), isCorrect: false },
-                        { text: sanitizeText(seed.w[2] || "其他"), isCorrect: false }
+                        { text: normalizedWrongs[0] || "以上皆非", isCorrect: false },
+                        { text: normalizedWrongs[1] || "不确定", isCorrect: false },
+                        { text: normalizedWrongs[2] || "其他", isCorrect: false }
                     ];
                     options.sort(() => Math.random() - 0.5);
                     generated.push({
@@ -1424,7 +1734,7 @@
                         text: sanitizeText(seed.q),
                         options: options,
                         correctIndex: options.findIndex(o => o.isCorrect),
-                        explanation: sanitizeText(seed.expl || seed.e || '') || buildFallbackExplanation(seed)
+                        explanation: sanitizeText(seed.expl || seed.e || seed.explanation || '') || buildMcqExplanation(subj, seed)
                     });
                 });
 
